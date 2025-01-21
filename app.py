@@ -9,7 +9,7 @@ def home():
 
 @app.route("/login")
 def log():
-    return render_template("ejem.html")  
+    return render_template("ingreso.html")  
 
 
 
