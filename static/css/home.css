@@ -1,0 +1,252 @@
+/* General */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #F7F8FC;
+}
+
+.contenedor {
+    display: flex;
+}
+
+/* Barra lateral */
+.barra_lateral {
+    width: 300px;
+    background-color: #1f50e47e;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.logo h2 {
+    margin: 10px 0 5px 0;
+    font-size: 20px;
+}
+
+.logo p {
+    font-size: 12px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu_item {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    margin: 6px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.menu_item img {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+}
+
+.menu_item.activo,
+.menu_item:hover {
+    background-color: #143BB7;
+}
+
+#sub_opcion{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 40px;
+    font-size: 13px;
+}
+
+/* Contenido */
+.contenido {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Cabecera */
+.cabecera .titulo h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Vista General */
+.vista_general {
+    margin-top: 20px;
+}
+
+.contenedor_tarjetas {
+    display: flex;
+    gap: 24px; 
+    justify-content: space-between; 
+}
+
+.tarjeta {
+    flex: 1;
+    padding: 16px; 
+    border-radius: 16px; 
+    text-align: left;
+    background-color: #F7F9FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-4px); 
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); 
+}
+
+.tarjeta_azul_claro {
+    background-color: #e1e3fa; 
+}
+
+.tarjeta_azul {
+    background-color: #cde5ff; 
+}
+
+.titulo_tarjeta {
+    font-size: 15px; 
+    font-weight: 500;
+    color: #3f3f3f; 
+    margin-bottom: 12px;
+}
+
+.numero_tarjeta {
+    font-size: 24px; 
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0;
+}
+
+.cambio_tarjeta {
+    font-size: 13px; 
+    font-weight: 500;
+    color: #888; 
+    display: flex;
+    align-items: center;
+    gap: 4px; 
+}
+
+.cambio_tarjeta.positivo {
+    color: #28A745; 
+}
+
+.cambio_tarjeta.negativo {
+    color: #DC3545; 
+}
+
+.icono {
+    font-size: 12px; 
+    font-weight: 700;
+}
+
+/* Resumen Datos */
+.resumen_datos {
+    display: flex;
+    gap: 24px;
+    margin-top: 40px;
+    justify-content: space-between;
+}
+
+/* Ganancias por Mes */
+.grafica_ganancias {
+    flex: 2;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.titulo_seccion {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.contenedor_barras {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px; /* Altura suficiente para las barras */
+}
+.barra .valor {
+    width: 100%;
+    background-color: #6c82ff;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+}
+
+.barra {
+    text-align: center;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.barra p {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #888888;
+}
+
+/* Producto más Vendido */
+.productos_vendidos {
+    flex: 1;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lista_productos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista_productos li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 12px;
+}
+
+.barra_producto {
+    display: inline-block;
+    height: 8px;
+    background-color: #6c82ff;
+    border-radius: 4px;
+}
+
+
+
+@media (max-width: 768px) {
+    .contenedor_tarjetas {
+        flex-direction: column;
+        gap: 16px;
+    }
+}

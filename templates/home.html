@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <link rel="stylesheet" href="/static/css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    {% block css %} {% endblock %}
+</head>
+
+<body>
+    <div class="contenedor">
+        <aside class="barra_lateral">
+            <div class="logo">
+                <img src="/static/images/tienda.png" alt="Logo Tienda">
+                <h2>TIENDA QUITO</h2>
+                <p>UX/UI Designer</p>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu_item">
+                    <img src="/static/images/casa.png" alt="Icono Casa">
+                    Casa
+                </a>
+                <a href="#" class="menu_item activo">
+                    <img src="/static/images/cliente.png" alt="Icono Clientes">
+                    Clientes
+                </a>
+                <a href="#" class="menu_item" id="sub_opcion">
+                    <img src="/static/images/infocliente.png" alt="Icono Empleados">
+                    Clientes información
+                </a>
+                <a href="#" class="menu_item" id="sub_opcion">
+                    <img src="/static/images/estrecli.png" alt="Icono Empleados">
+                    Clientes membresía
+                </a>
+                <a href="#" class="menu_item">
+                    <img src="/static/images/empleado.png" alt="Icono Empleados">
+                    Empleados
+                </a>
+                <a href="#" class="menu_item" id="sub_opcion">
+                    <img src="/static/images/infoempleado.png" alt="Icono Empleados">
+                    Empleados información
+                </a>
+                <a href="#" class="menu_item" id="sub_opcion">
+                    <img src="/static/images/estreemp.png" alt="Icono Empleados">
+                    Empleados laborales
+                </a>
+                <a href="#" class="menu_item">
+                    <img src="/static/images/productos.png" alt="Icono Productos">
+                    Productos
+                </a>
+                <a href="#" class="menu_item">
+                    <img src="/static/images/proveedor.png" alt="Icono Proveedores">
+                    Proveedores
+                </a>
+                <a href="#" class="menu_item">
+                    <img src="/static/images/factura.png" alt="Icono Factura">
+                    Factura
+                </a>
+                <a href="#" class="menu_item">
+                    <img src="/static/images/detFac.png" alt="Icono Detalle Factura">
+                    Detalle factura
+                </a>
+                <a href="#" class="menu_item">
+                    <img src="/static/images/perfil.png" alt="Icono Perfil">
+                    Perfil
+                </a>
+            </nav>
+        </aside>
+
+        {% block content %}
+        <main class="contenido">
+            <header class="cabecera">
+                <div class="titulo">
+                    <h1>Vista general</h1>
+                </div>
+            </header>
+
+            <section class="vista_general">
+                <div class="contenedor_tarjetas">
+                    <div class="tarjeta tarjeta_azul_claro">
+                        <h3 class="titulo_tarjeta">Clientes</h3>
+                        <p class="numero_tarjeta">7,265</p>
+                        <p class="cambio_tarjeta positivo">+11.01% <span class="icono">↗</span></p>
+                    </div>
+                    <div class="tarjeta tarjeta_azul">
+                        <h3 class="titulo_tarjeta">Empleados</h3>
+                        <p class="numero_tarjeta">3,671</p>
+                        <p class="cambio_tarjeta negativo">-0.03% <span class="icono">↘</span></p>
+                    </div>
+                    <div class="tarjeta tarjeta_azul_claro">
+                        <h3 class="titulo_tarjeta">Productos</h3>
+                        <p class="numero_tarjeta">156</p>
+                        <p class="cambio_tarjeta positivo">+15.03% <span class="icono">↗</span></p>
+                    </div>
+                    <div class="tarjeta tarjeta_azul">
+                        <h3 class="titulo_tarjeta">Proveedores</h3>
+                        <p class="numero_tarjeta">2,318</p>
+                        <p class="cambio_tarjeta positivo">+6.08% <span class="icono">↗</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="resumen_datos">
+                <div class="grafica_ganancias">
+                    <h3 class="titulo_seccion">Ganancias por mes</h3>
+                    <div class="contenedor_barras">
+                        <div class="barra">
+                            <div class="valor" style="height: 40%;"></div>
+                            <p>Ene</p>
+                        </div>
+                        <div class="barra">
+                            <div class="valor" style="height: 70%;"></div>
+                            <p>Feb</p>
+                        </div>
+                        <div class="barra">
+                            <div class="valor" style="height: 50%; background-color: black;"></div>
+                            <p>Mar</p>
+                        </div>
+                        <div class="barra">
+                            <div class="valor" style="height: 90%; background-color: #62b4ff;"></div>
+                            <p>Abr</p>
+                        </div>
+                        <div class="barra">
+                            <div class="valor" style="height: 30%;"></div>
+                            <p>May</p>
+                        </div>
+                        <div class="barra">
+                            <div class="valor" style="height: 60%; background-color: #54d39f;"></div>
+                            <p>Jun</p>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="productos_vendidos">
+                    <h3 class="titulo_seccion">Producto más vendido</h3>
+                    <ul class="lista_productos">
+                        <li>Leche <span class="barra_producto" style="width: 80%;"></span></li>
+                        <li>Huevos <span class="barra_producto" style="width: 65%;"></span></li>
+                        <li>Arroz <span class="barra_producto" style="width: 50%;"></span></li>
+                        <li>Azúcar <span class="barra_producto" style="width: 60%;"></span></li>
+                        <li>Aceite <span class="barra_producto" style="width: 40%;"></span></li>
+                        <li>Harina <span class="barra_producto" style="width: 35%;"></span></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+        {% endblock %}
+
+
+
+    </div>
+
+
+    <script src="/static/js/home.js"></script>
+    {% block scriptjs %}
+    <script>
+        const datosGanancias = [40, 70, 50, 90, 30, 60]; // Porcentajes de altura para cada mes
+        const colores = ["#6c82ff", "#6c82ff", "black", "#62b4ff", "#6c82ff", "#54d39f"];
+
+        document.querySelectorAll(".barra .valor").forEach((barra, index) => {
+            barra.style.height = datosGanancias[index] + "%";
+            barra.style.backgroundColor = colores[index];
+        });
+    </script>
+    {% endblock %}
+</body>
+
+</html>
