@@ -1,0 +1,75 @@
+<!-- Herencia -->
+{% extends "home.html"%}
+
+<!-- Css -->
+{% block css %}
+<link rel="stylesheet" href="/static/css/clientesinfo.css" />
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<main class="contenido">
+    <header class="cabecera">
+        <div class="titulo">
+            <h1>Cliente información</h1>
+            <p>Información personal de los clientes</p>
+        </div>
+        <div class="acciones">
+            <button class="boton accion eliminar">
+                <img src="/static/images/basura.png" alt="Eliminar"> Delete
+            </button>
+            <button class="boton accion filtros">
+                <img src="/static/images/filtro.png" alt="Filtros"> Filters
+            </button>
+            <button class="boton accion exportar">
+                <img src="/static/images/descarga.png" alt="Exportar"> Export
+            </button>
+            <button class="boton accion agregar">
+                <img src="/static/images/mas.png" alt="Agregar"> Add
+            </button>
+        </div>
+    </header>
+
+    <section class="tabla_clientes">
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox"></th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Ciudad</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>001</td>
+                    <td>Cesar Pantoja</td>
+                    <td>99999999</td>
+                    <td>003</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>002</td>
+                    <td>Jaime Sanchez</td>
+                    <td>99999999</td>
+                    <td>001</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>003</td>
+                    <td>Paul Salas</td>
+                    <td>99999999</td>
+                    <td>002</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}
+
+<!-- Scripts -->
+{% block scriptjs %}
+<script src="/static/js/clientesinfo.js"></script>
+{% endblock %}
