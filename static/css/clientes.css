@@ -11,7 +11,7 @@ body {
 
 /* Barra lateral */
 .barra_lateral {
-    width: 250px;
+    width: 300px;
     background-color: #1F4FE4;
     color: white;
     height: 100vh;
@@ -48,7 +48,7 @@ body {
     align-items: center;
     color: white;
     text-decoration: none;
-    margin: 10px 0;
+    margin: 6px 0;
     padding: 10px 15px;
     border-radius: 8px;
     font-size: 16px;
@@ -64,6 +64,13 @@ body {
 .menu_item.activo,
 .menu_item:hover {
     background-color: #143BB7;
+}
+
+#sub_opcion{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 40px;
+    font-size: 13px;
 }
 
 /* Contenido principal */
