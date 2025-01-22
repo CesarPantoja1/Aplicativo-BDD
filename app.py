@@ -8,8 +8,12 @@ def home():
 
 
 @app.route("/login")
-def log():
+def login():
     return render_template("ingreso.html")  
+
+@app.route("/clientes")
+def clientes():
+    return render_template("clientes.html")  
 
 
 
