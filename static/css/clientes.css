@@ -1,0 +1,209 @@
+/* General */
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: #F7F8FC;
+}
+
+.contenedor {
+    display: flex;
+}
+
+/* Barra lateral */
+.barra_lateral {
+    width: 250px;
+    background-color: #1F4FE4;
+    color: white;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo img {
+    width: 60px;
+    border-radius: 50%;
+}
+
+.logo h2 {
+    margin: 10px 0 5px 0;
+    font-size: 20px;
+}
+
+.logo p {
+    font-size: 12px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu_item {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.menu_item img {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+}
+
+.menu_item.activo,
+.menu_item:hover {
+    background-color: #143BB7;
+}
+
+/* Contenido principal */
+.contenido {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+/* Cabecera */
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cabecera .titulo h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.cabecera .titulo p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #888;
+}
+
+.cabecera .acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.boton.accion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500; 
+    color: #5A5A5A; 
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+.boton.accion img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.9; 
+}
+
+
+.boton.accion:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-color: #D0D0D0;
+    background-color: #F9FAFB;
+}
+
+/* Botones específicos */
+.boton.eliminar {
+    color: #E01B1B; 
+}
+
+.boton.eliminar:hover {
+    background-color: #FFEBEE;
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(224, 27, 27, 0.2);
+}
+
+.boton.filtros {
+    color: #DA9621; 
+}
+
+.boton.filtros:hover {
+    background-color: #FFF4E5;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(218, 150, 33, 0.2); 
+}
+
+.boton.exportar {
+    color: #388E3C; 
+}
+
+.boton.exportar:hover {
+    background-color: #E8F5E9;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(56, 142, 60, 0.2); 
+}
+
+.boton.agregar {
+    color: white;
+    background-color: #1976D2;
+    border: none;
+}
+
+.boton.agregar:hover {
+    background-color: #1565C0;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(21, 101, 192, 0.2); 
+}
+
+
+/* Tabla */
+.tabla_clientes table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabla_clientes th, .tabla_clientes td {
+    padding: 15px;
+    text-align: left;
+    color: #555;
+}
+
+.tabla_clientes th {
+    font-weight: bold;
+    background-color: #F7F8FC;
+    border-bottom: 2px solid #ddd;
+}
+
+.tabla_clientes td {
+    border-bottom: 1px solid #eee;
+}
+
+.tabla_clientes tr:hover {
+    background-color: #F7F8FC;
+}
+
+.tabla_clientes input[type="checkbox"] {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+}
