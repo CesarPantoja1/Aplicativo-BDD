@@ -16,5 +16,9 @@ def clientes():
 def register():
     return render_template("register.html")  
 
+@app.route("/ingreso")
+def ingreso():
+    return render_template("ingreso.html")  
+
 if __name__ == "__main__":
     app.run(debug=True)
