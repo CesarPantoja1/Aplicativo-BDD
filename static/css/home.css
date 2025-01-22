@@ -162,6 +162,88 @@ body {
     font-weight: 700;
 }
 
+/* Resumen Datos */
+.resumen_datos {
+    display: flex;
+    gap: 24px;
+    margin-top: 40px;
+    justify-content: space-between;
+}
+
+/* Ganancias por Mes */
+.grafica_ganancias {
+    flex: 2;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.titulo_seccion {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.contenedor_barras {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 200px; /* Altura suficiente para las barras */
+}
+.barra .valor {
+    width: 100%;
+    background-color: #6c82ff;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.3s ease;
+}
+
+.barra {
+    text-align: center;
+    flex: 1;
+    margin: 0 5px;
+}
+
+.barra p {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #888888;
+}
+
+/* Producto más Vendido */
+.productos_vendidos {
+    flex: 1;
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lista_productos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.lista_productos li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 12px;
+}
+
+.barra_producto {
+    display: inline-block;
+    height: 8px;
+    background-color: #6c82ff;
+    border-radius: 4px;
+}
+
+
+
 @media (max-width: 768px) {
     .contenedor_tarjetas {
         flex-direction: column;
