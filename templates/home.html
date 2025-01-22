@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     {% block css %} {% endblock %}
 </head>
+
 <body>
     <div class="contenedor">
         <aside class="barra_lateral">
@@ -67,14 +69,49 @@
                 </a>
             </nav>
         </aside>
+
         {% block content %}
-        
+        <main class="contenido">
+            <header class="cabecera">
+                <div class="titulo">
+                    <h1>Vista general</h1>
+                </div>
+            </header>
+
+            <section class="vista_general">
+                <div class="contenedor_tarjetas">
+                    <div class="tarjeta tarjeta_azul_claro">
+                        <h3 class="titulo_tarjeta">Clientes</h3>
+                        <p class="numero_tarjeta">7,265</p>
+                        <p class="cambio_tarjeta positivo">+11.01% <span class="icono">↗</span></p>
+                    </div>
+                    <div class="tarjeta tarjeta_azul">
+                        <h3 class="titulo_tarjeta">Empleados</h3>
+                        <p class="numero_tarjeta">3,671</p>
+                        <p class="cambio_tarjeta negativo">-0.03% <span class="icono">↘</span></p>
+                    </div>
+                    <div class="tarjeta tarjeta_azul_claro">
+                        <h3 class="titulo_tarjeta">Productos</h3>
+                        <p class="numero_tarjeta">156</p>
+                        <p class="cambio_tarjeta positivo">+15.03% <span class="icono">↗</span></p>
+                    </div>
+                    <div class="tarjeta tarjeta_azul">
+                        <h3 class="titulo_tarjeta">Proveedores</h3>
+                        <p class="numero_tarjeta">2,318</p>
+                        <p class="cambio_tarjeta positivo">+6.08% <span class="icono">↗</span></p>
+                    </div>
+                </div>
+            </section>
+        </main>
         {% endblock %}
+
+
+
     </div>
 
 
     <script src="/static/js/home.js"></script>
-    {% block scriptjs %} {% endblock %} 
+    {% block scriptjs %} {% endblock %}
 </body>
 
 </html>
