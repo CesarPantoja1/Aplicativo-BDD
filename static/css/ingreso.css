@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 110vh;
 }
 
 
@@ -28,6 +28,7 @@ body {
 }
 
 .formulario input{
+    position: relative;
     width: 100%;
     padding: 10px 10px 10px 40px; 
     border: 2px solid white;
@@ -37,6 +38,7 @@ body {
     color: white;
     outline: none;
     box-sizing: border-box;
+    /* margin-bottom: 30px; */
 }
 
 .formulario input::placeholder{
@@ -56,8 +58,35 @@ body {
     cursor: pointer;
     width: 100%; 
     transition: background-color 0.3s ease;
+    margin-bottom: 5px;
 }
 
+.boton_ingresar{
+    margin-bottom: 100px;
+}
+
+.icono_carrito {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.icono_input{
+    position: relative;
+    right: 155px;
+    top: 50%;
+    transform: translateY(160%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+}
+
+.formulario a{
+    color: white;
+    display: inline-block;
+    margin-left: 175px;
+    text-decoration: none;
+    margin-top: 3px;
+}
 /* .formulario button:hover{
     background-color: #f1f1f1;
 } */
