@@ -3,18 +3,16 @@
 
 <!-- Css -->
 {% block css %}
-<link rel="stylesheet" href="/static/css/empleadosinfo.css" />
+<link rel="stylesheet" href="/static/css/factura.css" />
 {% endblock %}
-
-<!-- Contenido -->
 
 <!-- Contenido -->
 {% block content %}
 <main class="contenido">
     <header class="cabecera">
         <div class="titulo">
-            <h1>Empleado información</h1>
-            <p>Información personal sobre los empleados</p>
+            <h1>Facturas</h1>
+            <p>Facturas registradas en la tienda</p>
         </div>
         <div class="acciones">
             <button class="boton accion eliminar">
@@ -32,15 +30,18 @@
         </div>
     </header>
 
-    <section class="tabla_empleados">
+    <section class="tabla_facturas">
         <table>
             <thead>
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
+                    <th>Cliente</th>
+                    <th>Tienda</th>
+                    <th>Empleado</th>
+                    <th>Fecha</th>
+                    <th>Método de pago</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,6 +51,9 @@
                     <td>Cesar Pantoja</td>
                     <td>99999999</td>
                     <td>cesar.com</td>
+                    <td>cesar.com</td>
+                    <td>cesar.com</td>
+                    <td>cesar.com</td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
@@ -57,12 +61,18 @@
                     <td>Jaime Sanchez</td>
                     <td>99999999</td>
                     <td>sebas.com</td>
+                    <td>sebas.com</td>
+                    <td>sebas.com</td>
+                    <td>sebas.com</td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>003</td>
                     <td>Paul Salas</td>
                     <td>99999999</td>
+                    <td>paul.com</td>
+                    <td>paul.com</td>
+                    <td>paul.com</td>
                     <td>paul.com</td>
                 </tr>
             </tbody>
@@ -73,5 +83,5 @@
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosinfo.js"></script>
+<script src="/static/js/factura.js"></script>
 {% endblock %}

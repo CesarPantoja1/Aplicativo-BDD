@@ -3,18 +3,16 @@
 
 <!-- Css -->
 {% block css %}
-<link rel="stylesheet" href="/static/css/empleadosinfo.css" />
+<link rel="stylesheet" href="/static/css/clientesMembresia.css" />
 {% endblock %}
-
-<!-- Contenido -->
 
 <!-- Contenido -->
 {% block content %}
 <main class="contenido">
     <header class="cabecera">
         <div class="titulo">
-            <h1>Empleado información</h1>
-            <p>Información personal sobre los empleados</p>
+            <h1>Cliente membresía</h1>
+            <p>Información sobre las membresías de los clientes</p>
         </div>
         <div class="acciones">
             <button class="boton accion eliminar">
@@ -32,38 +30,38 @@
         </div>
     </header>
 
-    <section class="tabla_empleados">
+    <section class="tabla_clientes">
         <table>
             <thead>
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
+                    <th>Membresía</th>
+                    <th>Estado</th>
+                    <th>Puntos</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
+                    <td>Platimun</td>
+                    <td>Activo</td>
+                    <td>300</td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>002</td>
-                    <td>Jaime Sanchez</td>
-                    <td>99999999</td>
-                    <td>sebas.com</td>
+                    <td>Estandar</td>
+                    <td>Activo</td>
+                    <td>450</td>
                 </tr>
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>003</td>
-                    <td>Paul Salas</td>
-                    <td>99999999</td>
-                    <td>paul.com</td>
+                    <td>Gold</td>
+                    <td>Inactivo</td>
+                    <td>500</td>
                 </tr>
             </tbody>
         </table>
@@ -73,5 +71,5 @@
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosinfo.js"></script>
+<script src="/static/js/clientesMembresia.js"></script>
 {% endblock %}

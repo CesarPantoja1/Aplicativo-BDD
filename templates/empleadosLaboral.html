@@ -3,7 +3,7 @@
 
 <!-- Css -->
 {% block css %}
-<link rel="stylesheet" href="/static/css/empleadosinfo.css" />
+<link rel="stylesheet" href="/static/css/empleadosLaboral.css" />
 {% endblock %}
 
 <!-- Contenido -->
@@ -13,8 +13,8 @@
 <main class="contenido">
     <header class="cabecera">
         <div class="titulo">
-            <h1>Empleado información</h1>
-            <p>Información personal sobre los empleados</p>
+            <h1>Empleado laboral</h1>
+            <p>Información laboral de los empleados</p>
         </div>
         <div class="acciones">
             <button class="boton accion eliminar">
@@ -38,9 +38,9 @@
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Teléfono</th>
-                    <th>Correo</th>
+                    <th>Salario</th>
+                    <th>Cargo</th>
+                    <th>Fecha ingreso</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,5 +73,5 @@
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosinfo.js"></script>
+<script src="/static/js/empleadosLaboral.js"></script>
 {% endblock %}

@@ -106,7 +106,7 @@
 
 
 /* Tabla */
-.tabla_empleados table {
+.tabla_productos table {
     width: 100%;
     border-collapse: collapse;
     background-color: white;
@@ -114,27 +114,27 @@
     overflow: hidden;
 }
 
-.tabla_empleados th, .tabla_empleados td {
+.tabla_productos th, .tabla_productos td {
     padding: 15px;
     text-align: left;
     color: #555;
 }
 
-.tabla_empleados th {
+.tabla_productos th {
     font-weight: bold;
     background-color: #F7F8FC;
     border-bottom: 2px solid #ddd;
 }
 
-.tabla_empleados td {
+.tabla_productos td {
     border-bottom: 1px solid #eee;
 }
 
-.tabla_empleados tr:hover {
+.tabla_productos tr:hover {
     background-color: #F7F8FC;
 }
 
-.tabla_empleados input[type="checkbox"] {
+.tabla_productos input[type="checkbox"] {
     margin: 0;
     width: 18px;
     height: 18px;

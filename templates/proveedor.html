@@ -3,18 +3,16 @@
 
 <!-- Css -->
 {% block css %}
-<link rel="stylesheet" href="/static/css/empleadosinfo.css" />
+<link rel="stylesheet" href="/static/css/proveedor.css" />
 {% endblock %}
-
-<!-- Contenido -->
 
 <!-- Contenido -->
 {% block content %}
 <main class="contenido">
     <header class="cabecera">
         <div class="titulo">
-            <h1>Empleado información</h1>
-            <p>Información personal sobre los empleados</p>
+            <h1>Proveedores</h1>
+            <p>Proveedores disponibles en la tienda</p>
         </div>
         <div class="acciones">
             <button class="boton accion eliminar">
@@ -32,15 +30,15 @@
         </div>
     </header>
 
-    <section class="tabla_empleados">
+    <section class="tabla_proveedores">
         <table>
             <thead>
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>ID</th>
                     <th>Nombre</th>
+                    <th>Ciudad</th>
                     <th>Teléfono</th>
-                    <th>Correo</th>
                 </tr>
             </thead>
             <tbody>
@@ -73,5 +71,5 @@
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosinfo.js"></script>
+<script src="/static/js/proveedor.js"></script>
 {% endblock %}
