@@ -3,6 +3,10 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 @app.route("/")
+def ingreso():
+    return render_template("ingreso.html")  
+
+@app.route("/home")
 def home():
     return render_template("home.html")  
 
@@ -18,9 +22,7 @@ def clientesLaboral():
 def register():
     return render_template("register.html")  
 
-@app.route("/ingreso")
-def ingreso():
-    return render_template("ingreso.html")  
+
 
 @app.route("/empleadosInfo")
 def empleadoInfo():

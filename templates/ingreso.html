@@ -13,7 +13,7 @@
         <div class="formulario">
             <img src="/static/images/tienda.png" alt="Icono de carrito" class="icono_carrito">
 
-            <form action="" method="">
+            <form id='formulario_ingreso' action="" method="">
                 <img src="/static/images/usuario.png" alt="Icono nombre" class="icono_input">
                 <input type="text" id="nombre_tienda" name="nombre_tienda" placeholder="NOMBRE TIENDA">
 
@@ -23,10 +23,13 @@
                 <img src="/static/images/contra.png" alt="Icono contraseña" class="icono_input">
                 <input type="password" id="contrasena" name="contrasena" placeholder="CONTRASEÑA">
 
-                <button type="submit" class="boton_registrarse">REGISTRARSE</button>
+                <button id= "btn_ingresar" class="boton_ingresar">INGRESAR</button>
             </form>
         </div>
     </div>
+
+    <script defer src="/static/js/ingreso.js"></script>
+
 </body>
 
 </html>

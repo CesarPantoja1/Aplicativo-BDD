@@ -67,7 +67,7 @@ body {
     margin-right: 12px;
 }
 
-.menu_item.activo,
+/* .menu_item.activo, */
 .menu_item:hover {
     background-color: #143BB7;
 }
