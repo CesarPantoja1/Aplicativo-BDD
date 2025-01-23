@@ -3,20 +3,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Datos del gráfico
     const datosGanancias = {
-        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'], // Meses
+        labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'], 
         datasets: [{
             label: 'Ganancias ($)',
-            data: [10, 25, 15, 30, 8, 20], // Valores de cada mes
+            data: [10, 25, 15, 30, 8, 20], 
             backgroundColor: [
-                'rgba(120, 100, 255, 0.6)',  // Ene (morado claro)
-                'rgba(80, 200, 180, 0.6)',  // Feb (verde agua)
-                'rgba(0, 0, 0, 0.8)',       // Mar (negro)
-                'rgba(100, 150, 255, 0.7)', // Abr (azul claro)
-                'rgba(150, 180, 255, 0.5)', // May (azul suave)
-                'rgba(120, 220, 150, 0.6)'  // Jun (verde claro)
+                'rgba(120, 100, 255, 0.6)',  
+                'rgba(80, 200, 180, 0.6)',  
+                'rgba(0, 0, 0, 0.8)',       
+                'rgba(100, 150, 255, 0.7)', 
+                'rgba(150, 180, 255, 0.5)', 
+                'rgba(120, 220, 150, 0.6)'  
             ],
-            borderRadius: 10, // Bordes redondeados
-            borderWidth: 0 // Sin bordes
+            borderRadius: 30, 
+            borderWidth: 0,
+            barPercentage: 0.6,
         }]
     };
 
