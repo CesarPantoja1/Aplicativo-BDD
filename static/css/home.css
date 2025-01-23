@@ -199,7 +199,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    height: 200px; /* Altura suficiente para las barras */
+    height: auto;
 }
 .barra .valor {
     width: 100%;
@@ -227,6 +227,7 @@ body {
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
 }
 
 .lista_productos {

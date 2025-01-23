@@ -106,32 +106,8 @@
             <section class="resumen_datos">
                 <div class="grafica_ganancias">
                     <h3 class="titulo_seccion">Ganancias por mes</h3>
-                    <div class="contenedor_barras">
-                        <div class="barra">
-                            <div class="valor" style="height: 40%;"></div>
-                            <p>Ene</p>
-                        </div>
-                        <div class="barra">
-                            <div class="valor" style="height: 70%;"></div>
-                            <p>Feb</p>
-                        </div>
-                        <div class="barra">
-                            <div class="valor" style="height: 50%; background-color: black;"></div>
-                            <p>Mar</p>
-                        </div>
-                        <div class="barra">
-                            <div class="valor" style="height: 90%; background-color: #62b4ff;"></div>
-                            <p>Abr</p>
-                        </div>
-                        <div class="barra">
-                            <div class="valor" style="height: 30%;"></div>
-                            <p>May</p>
-                        </div>
-                        <div class="barra">
-                            <div class="valor" style="height: 60%; background-color: #54d39f;"></div>
-                            <p>Jun</p>
-                        </div>
-                    </div>
+                    <!-- Aquí se renderizará el gráfico -->
+                    <canvas id="graficaGanancias"></canvas>
 
                 </div>
                 <div class="productos_vendidos">
@@ -187,7 +163,7 @@
                     </table>
                 </div>
             </section>
-            
+
         </main>
         {% endblock %}
 
@@ -197,17 +173,12 @@
 
 
     <script src="/static/js/home.js"></script>
-    {% block scriptjs %}
-    <script>
-        const datosGanancias = [40, 70, 50, 90, 30, 60]; // Porcentajes de altura para cada mes
-        const colores = ["#6c82ff", "#6c82ff", "black", "#62b4ff", "#6c82ff", "#54d39f"];
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-        document.querySelectorAll(".barra .valor").forEach((barra, index) => {
-            barra.style.height = datosGanancias[index] + "%";
-            barra.style.backgroundColor = colores[index];
-        });
-    </script>
+    {% block scriptjs %}
+
     {% endblock %}
+  
 </body>
 
 </html>
