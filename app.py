@@ -14,15 +14,13 @@ def home():
 def clientesInfo():
     return render_template("clientesinfo.html")  
 
-@app.route("/clientesLaboral")
-def clientesLaboral():
+@app.route("/clientesMembresia")
+def clientesMembresia():
     return render_template("clientesMembresia.html") 
 
 @app.route("/register")
 def register():
     return render_template("register.html")  
-
-
 
 @app.route("/empleadosInfo")
 def empleadoInfo():
