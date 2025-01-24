@@ -48,33 +48,17 @@
                 </tr>
             </thead>
             <tbody>
+                {% for producto in productosQuito %}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
+                    <td>{{ producto.productoID }}</td>
+                    <td>{{ producto.tiendaID }}</td>
+                    <td>{{ producto.proveedorID }}</td>
+                    <td>{{ producto.nombreProducto}}</td>
+                    <td>{{ producto.precioProducto }}</td>
+                    <td>{{ producto.stockProducto }}</td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>002</td>
-                    <td>Jaime Sanchez</td>
-                    <td>99999999</td>
-                    <td>sebas.com</td>
-                    <td>99999999</td>
-                    <td>sebas.com</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>003</td>
-                    <td>Paul Salas</td>
-                    <td>99999999</td>
-                    <td>paul.com</td>
-                    <td>99999999</td>
-                    <td>paul.com</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>
