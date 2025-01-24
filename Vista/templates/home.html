@@ -21,7 +21,7 @@
                 <p>UX/UI Designer</p>
             </div>
             <nav class="menu">
-                <a href="home" class="menu_item">
+                <a href="{{ url_for('home') }}" class="menu_item">
                     <img id='home' src="/static/images/casa.png" alt="Icono Casa">
                     Casa
                 </a>
@@ -29,11 +29,11 @@
                     <img src="/static/images/cliente.png" alt="Icono Clientes">
                     Clientes
                 </a>
-                <a href="clientesinfo" class="menu_item" id="sub_opcion">
-                    <img id="clienteInfo" src="/static/images/infocliente.png" alt="Icono Clientes">
+                <a href="{{ url_for('clientesInfo') }}" class="menu_item" id="sub_opcion">
+                    <img src="/static/images/infocliente.png" alt="Icono Clientes">
                     Clientes información
                 </a>
-                <a href="clientesMembresia" class="menu_item" id="sub_opcion">
+                <a href="{{ url_for('clientesMembresia') }}" class="menu_item" id="sub_opcion">
                     <img id='clienteMembresia' src="/static/images/estrecli.png" alt="Icono Empleados">
                     Clientes membresía
                 </a>
@@ -41,27 +41,27 @@
                     <img src="/static/images/empleado.png" alt="Icono Empleados">
                     Empleados
                 </a>
-                <a href="empleadosInfo" class="menu_item" id="sub_opcion">
+                <a href="{{ url_for('empleadoInfo') }}" class="menu_item" id="sub_opcion">
                     <img id='empleadoInfo' src="/static/images/infoempleado.png" alt="Icono Empleados">
                     Empleados información
                 </a>
-                <a href="empleadosLaboral" class="menu_item" id="sub_opcion">
+                <a href="{{ url_for('empleadoLaboral') }}" class="menu_item" id="sub_opcion">
                     <img id='empleadoLaboral' src="/static/images/estreemp.png" alt="Icono Empleados">
                     Empleados laborales
                 </a>
-                <a href="producto" class="menu_item">
+                <a href="{{ url_for('producto') }}" class="menu_item">
                     <img id='productos'src="/static/images/productos.png" alt="Icono Productos">
                     Productos
                 </a>
-                <a href="proveedor" class="menu_item">
+                <a href="{{ url_for('proveedor') }}" class="menu_item">
                     <img id='proveedores' src="/static/images/proveedor.png" alt="Icono Proveedores">
                     Proveedores
                 </a>
-                <a href="factura" class="menu_item">
+                <a href="{{ url_for('factura') }}" class="menu_item">
                     <img id='facturas' src="/static/images/factura.png" alt="Icono Factura">
                     Factura
                 </a>
-                <a href="detalleFactura" class="menu_item">
+                <a href="{{ url_for('detalleFactura') }}" class="menu_item">
                     <img id='detalleFacturas' src="/static/images/detFac.png" alt="Icono Detalle Factura">
                     Detalle factura
                 </a>

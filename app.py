@@ -1,18 +1,19 @@
 from flask import Flask, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static'
+)
 
-@app.route("/")
+@app.route("/ingreso")
 def ingreso():
     return render_template("ingreso.html")  
 
-@app.route("/home")
+@app.route("/")
 def home():
     return render_template("home.html")  
 
-@app.route("/clientesinfo")
+@app.route("/clientesInfo")
 def clientesInfo():
-    return render_template("clientesinfo.html")  
+    return render_template("clientesInfo.html")  
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
@@ -22,11 +23,11 @@ def clientesMembresia():
 def register():
     return render_template("register.html")  
 
-@app.route("/empleadosInfo")
+@app.route("/empleadoInfo")
 def empleadoInfo():
     return render_template("empleadosInfo.html")  
 
-@app.route("/empleadosLaboral")
+@app.route("/empleadoLaboral")
 def empleadoLaboral():
     return render_template("empleadosLaboral.html")  
 
