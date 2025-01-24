@@ -26,6 +26,10 @@ def home():
 def clientesInfo():
     return render_template("clientesInfo.html")  
 
+@app.route("/clientesRegistro")
+def clientesRegistro():
+    return render_template("clientes.html")  
+
 @app.route("/clientesMembresia")
 def clientesMembresia():
     return render_template("clientesMembresia.html") 
@@ -34,15 +38,17 @@ def clientesMembresia():
 def register():
     return render_template("register.html")  
 
-@app.route("/empleadoInfo")
+@app.route("/empleados")
+def empleadoRegistro():
+    return render_template("empleados.html") 
+
+@app.route("/empleadosInfo")
 def empleadoInfo():
     return render_template("empleadosInfo.html")  
 
-@app.route("/empleadoLaboral")
+@app.route("/empleadosLaboral")
 def empleadoLaboral():
     return render_template("empleadosLaboral.html")  
-
-
 
 @app.route("/proveedor")
 def proveedor():

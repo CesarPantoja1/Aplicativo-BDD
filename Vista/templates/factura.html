@@ -19,18 +19,14 @@
             <p>Facturas registradas en la tienda</p>
         </div>
         <div class="acciones">
-            <button class="boton accion eliminar">
-                <img src="/static/images/basura.png" alt="Eliminar"> Delete
-            </button>
+            
             <button class="boton accion filtros">
                 <img src="/static/images/filtro.png" alt="Filtros"> Filters
             </button>
             <button class="boton accion exportar">
-                <img src="/static/images/descarga.png" alt="Exportar"> Export
+                <img src="/static/images/descarga.png" alt="Exportar"> Generar Factura
             </button>
-            <button class="boton accion agregar">
-                <img src="/static/images/mas.png" alt="Agregar"> Add
-            </button>
+            
         </div>
     </header>
 
@@ -46,6 +42,8 @@
                     <th>Fecha</th>
                     <th>Método de pago</th>
                     <th>Total</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -58,26 +56,16 @@
                     <td>cesar.com</td>
                     <td>cesar.com</td>
                     <td>cesar.com</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>002</td>
-                    <td>Jaime Sanchez</td>
-                    <td>99999999</td>
-                    <td>sebas.com</td>
-                    <td>sebas.com</td>
-                    <td>sebas.com</td>
-                    <td>sebas.com</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>003</td>
-                    <td>Paul Salas</td>
-                    <td>99999999</td>
-                    <td>paul.com</td>
-                    <td>paul.com</td>
-                    <td>paul.com</td>
-                    <td>paul.com</td>
+                    <td>
+                        <button class="boton accion agregar">
+                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="boton accion eliminar">
+                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>

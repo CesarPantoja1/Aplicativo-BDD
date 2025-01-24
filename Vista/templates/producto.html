@@ -1,8 +1,8 @@
 <!-- Herencia -->
 {% extends "home.html"%}
 
-{% block tittle %} 
-    <title>Productos</title>
+{% block tittle %}
+<title>Productos</title>
 {% endblock %}
 
 <!-- Css -->
@@ -19,18 +19,11 @@
             <p>Productos disponibles en la tienda</p>
         </div>
         <div class="acciones">
-            <button class="boton accion eliminar">
-                <img src="/static/images/basura.png" alt="Eliminar"> Delete
-            </button>
+
             <button class="boton accion filtros">
-                <img src="/static/images/filtro.png" alt="Filtros"> Filters
+                <img src="/static/images/filtro.png" alt="Filtros"> Filtrar
             </button>
-            <button class="boton accion exportar">
-                <img src="/static/images/descarga.png" alt="Exportar"> Export
-            </button>
-            <button class="boton accion agregar">
-                <img src="/static/images/mas.png" alt="Agregar"> Add
-            </button>
+
         </div>
     </header>
 
@@ -45,6 +38,8 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Stock</th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -57,6 +52,16 @@
                     <td>{{ producto.nombreProducto}}</td>
                     <td>{{ producto.precioProducto }}</td>
                     <td>{{ producto.stockProducto }}</td>
+                    <td>
+                        <button class="boton accion agregar">
+                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="boton accion eliminar">
+                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                        </button>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

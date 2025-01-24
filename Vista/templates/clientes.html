@@ -1,0 +1,66 @@
+<!-- Herencia -->
+{% extends "home.html"%}
+
+
+{% block tittle %} 
+    <title>Registro de nuevos clientes</title>
+{% endblock %}
+
+<!-- Css -->
+{% block css %}
+<link rel="stylesheet" href="/static/css/clientes.css" />
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<main class="contenido">
+    <header class="cabecera">
+        <div class="titulo">
+            <h1>Cliente</h1>
+            <p>Registro de nuevos clientes</p>
+        </div>
+        <div class="acciones">
+            <button class="boton accion exportar">
+                <img src="/static/images/descarga.png" alt="Exportar"> Nuevo cliente
+            </button>
+            <button class="boton accion agregar">
+                <img src="/static/images/mas.png" alt="Agregar"> Registrar
+            </button>
+            
+        </div>
+    </header>
+
+    <section class="tabla_clientes">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Ciudad</th>
+                    <th>Membresía</th>
+                    <th>Estado</th>
+                    <th>Puntos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="ID" placeholder="ID cliente"></td>
+                    <td><input type="text" id="Nombre" placeholder="Nombre cliente"></td>
+                    <td><input type="text" id="Telefono" placeholder="Telefono cliente"></td>
+                    <td><input type="text" id="Ciudad" placeholder="Ciudad cliente"></td>
+                    <td><input type="text" id="Membresía" placeholder="Membresía cliente"></td>
+                    <td><input type="text" id="Estado" placeholder="Estado"></td>
+                    <td><input type="text" id="Puntos" placeholder="Puntos cliente"></td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}
+
+<!-- Scripts -->
+{% block scriptjs %}
+<script src="/static/js/clientes.js"></script>
+{% endblock %}

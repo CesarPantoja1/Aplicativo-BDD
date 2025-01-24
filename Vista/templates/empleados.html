@@ -1,0 +1,66 @@
+<!-- Herencia -->
+{% extends "home.html"%}
+
+
+{% block tittle %} 
+    <title>Registro de nuevos empleados</title>
+{% endblock %}
+
+<!-- Css -->
+{% block css %}
+<link rel="stylesheet" href="/static/css/clientes.css" />
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<main class="contenido">
+    <header class="cabecera">
+        <div class="titulo">
+            <h1>Empleados</h1>
+            <p>Registro de nuevos empleados</p>
+        </div>
+        <div class="acciones">
+            <button class="boton accion exportar">
+                <img src="/static/images/descarga.png" alt="Exportar"> Nuevo empleado
+            </button>
+            <button class="boton accion agregar">
+                <img src="/static/images/mas.png" alt="Agregar"> Registrar
+            </button>
+            
+        </div>
+    </header>
+
+    <section class="tabla_clientes">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th>Salario</th>
+                    <th>Cargo</th>
+                    <th>Fecha ingreso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="ID" placeholder="ID empleado"></td>
+                    <td><input type="text" id="Nombre" placeholder="Nombre empleado"></td>
+                    <td><input type="text" id="Telefono" placeholder="Telefono empleado"></td>
+                    <td><input type="text" id="Correo" placeholder="Correo empleado"></td>
+                    <td><input type="text" id="Salario" placeholder="Salario empleado"></td>
+                    <td><input type="text" id="Cargo" placeholder="Cargo"></td>
+                    <td><input type="text" id="Fecha_ingreso" placeholder="Fecha ingreso"></td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}
+
+<!-- Scripts -->
+{% block scriptjs %}
+<script src="/static/js/clientes.js"></script>
+{% endblock %}
