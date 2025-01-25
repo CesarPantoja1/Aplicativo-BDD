@@ -8,6 +8,7 @@
 <!-- Css -->
 {% block css %}
 <link rel="stylesheet" href="/static/css/factura.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 {% endblock %}
 
 <!-- Contenido -->
@@ -62,6 +63,87 @@
             </tbody>
         </table>
     </section>
+
+    <div id="overlay"></div>
+    <div class="modal" id = "modal">
+        <button class="cerrar_modal" id="cerrar">×</button>
+        <div class="superior">
+            <div class="logo">
+                <img src="/static/images/logofac.png" alt="Poli Market">
+                <h1>FACTURA</h1>
+            </div>
+            <div class="detalles">
+                <p>FACTURA: <strong>N°0001234</strong></p>
+                <p>FECHA: <strong>16/08/2024</strong></p>
+            </div>
+        </div>
+
+        <div class="cliente_info">
+            <h2>INFORMACIÓN DEL CLIENTE</h2>
+            <p><strong>Nombre:</strong> Cesar Pantoja</p>
+            <p><strong>Número:</strong> 0995132228</p>
+            <p><strong>Tienda:</strong> Quito</p>
+        </div>
+
+        <table class="articulos">
+            <thead>
+                <tr>
+                    <th>ARTÍCULO</th>
+                    <th>CANT.</th>
+                    <th>PRECIO</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Arroz Favorita</td>
+                    <td>2</td>
+                    <td>$65</td>
+                    <td>$130</td>
+                </tr>
+                <tr>
+                    <td>Yogur Alpina</td>
+                    <td>1</td>
+                    <td>$43.2</td>
+                    <td>$43.2</td>
+                </tr>
+                <tr>
+                    <td>Pollo Pronaca</td>
+                    <td>2</td>
+                    <td>$32.43</td>
+                    <td>$64.86</td>
+                </tr>
+                <tr>
+                    <td>Papas Fritolay</td>
+                    <td>3</td>
+                    <td>$23.0</td>
+                    <td>$69</td>
+                </tr>
+                <tr>
+                    <td>Banano Dole</td>
+                    <td>1</td>
+                    <td>$12.5</td>
+                    <td>$12.5</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="total">
+            <h3>TOTAL</h3>
+            <p>$319.56</p>
+        </div>
+
+        <div class="pago">
+            <h2>INFORMACIÓN DE PAGO</h2>
+            <p><strong>Tipo:</strong> Efectivo</p>
+            <p><strong>Nombre del empleado:</strong> Jaime Sanchéz</p>
+            <p><strong>Número de teléfono:</strong> 099 513 8822</p>
+        </div>
+
+        <footer class="final">
+            <p>Contacto: 99999 | PoliMercado Quito | Quito</p>
+        </footer>
+    </div>
 </main>
 {% endblock %}
 
