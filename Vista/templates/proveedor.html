@@ -33,6 +33,7 @@
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>ID</th>
+                    <th>Tienda</th>
                     <th>Nombre</th>
                     <th>Ciudad</th>
                     <th>Teléfono</th>
@@ -41,12 +42,14 @@
                 </tr>
             </thead>
             <tbody>
+                {%for proveedor in proveedores%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
+                    <td>{{proveedor.proveedorID}}</td>
+                    <td>{{proveedor.tiendaID}}</td>
+                    <td>{{proveedor.nombreProveedor}}</td>
+                    <td>{{proveedor.ciudad}}</td>
+                    <td>{{proveedor.telefono}}</td>
                     <td>
                         <button class="boton accion agregar">
                             <img src="/static/images/mas.png" alt="Agregar"> Editar
@@ -58,7 +61,7 @@
                         </button>
                     </td>
                 </tr>
-                
+                {%endfor%}
             </tbody>
         </table>
     </section>

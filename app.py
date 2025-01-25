@@ -1,7 +1,8 @@
-from flask import Flask, render_template
-from Modelo.database import dbQuito, ProductoQuito
+from flask import Flask, render_template, request, jsonify, url_for, flash, redirect
+from Modelo.database import dbQuito, ClienteInfo, ClienteMembresiaQuito, EmpleadoInfo, EmpleadoLaboralQuito, ProductoQuito, ProveedorQuito, FacturaQuito, DetalleFacturaQuito, Tienda
 
 app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static')
+app.secret_key = "supersecretkey"
 
 # Configura la conexión con SQL Server
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://sa:P%40ssw0rd@26.236.136.95/Quito?driver=ODBC+Driver+17+for+SQL+Server'
@@ -9,30 +10,39 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 dbQuito.init_app(app)
 
-@app.route("/producto")
-def producto():
-    productosQuito = ProductoQuito.query.all()
-    return render_template("producto.html", productosQuito=productosQuito)  
+tienda = None
 
-@app.route("/ingreso")
+@app.route("/")
 def ingreso():
     return render_template("ingreso.html")  
 
-@app.route("/")
+@app.route("/guardar", methods=["POST"])
+def guardar():
+    print("¡Ruta /guardar activada!")
+    tienda = request.form.get("nombre_tienda")
+    # Verificar si las credenciales son correctas
+    if tienda == "QUITO" or tienda == "CUMBAYA":
+        return render_template("home.html", usuario=tienda)  
+    else:
+        return render_template("ingreso.html") 
+
+@app.route("/home")
 def home():
     return render_template("home.html")  
-
-@app.route("/clientesInfo")
-def clientesInfo():
-    return render_template("clientesInfo.html")  
 
 @app.route("/clientesRegistro")
 def clientesRegistro():
     return render_template("clientes.html")  
 
+@app.route("/clientesInfo")
+def clientesInfo():
+    clientesInfo = ClienteInfo.query.all()
+    return render_template("clientesInfo.html", clientesInfo=clientesInfo)  
+
 @app.route("/clientesMembresia")
 def clientesMembresia():
-    return render_template("clientesMembresia.html") 
+    clientesMembresia = ClienteMembresiaQuito.query.all()
+    return render_template("clientesMembresia.html", clientesMembresia=clientesMembresia) 
 
 @app.route("/register")
 def register():
@@ -44,23 +54,44 @@ def empleadoRegistro():
 
 @app.route("/empleadosInfo")
 def empleadoInfo():
-    return render_template("empleadosInfo.html")  
+    empleadosInfo = EmpleadoInfo.query.all()
+    return render_template("empleadosInfo.html", empleadosInfo=empleadosInfo)  
 
 @app.route("/empleadosLaboral")
 def empleadoLaboral():
-    return render_template("empleadosLaboral.html")  
+    empleadosLaboral = EmpleadoLaboralQuito.query.all()    
+    return render_template("empleadosLaboral.html", empleadosLaboral=empleadosLaboral) 
+
+@app.route("/producto")
+def producto():
+    productosQuito = ProductoQuito.query.all()
+    return render_template("producto.html", productosQuito=productosQuito)   
 
 @app.route("/proveedor")
 def proveedor():
-    return render_template("proveedor.html")  
+    proveedores = ProveedorQuito.query.all()
+    return render_template("proveedor.html", proveedores=proveedores)  
 
 @app.route("/factura")
 def factura():
-    return render_template("factura.html")  
+    facturas = FacturaQuito.query.all()
+    return render_template("factura.html", facturas=facturas)  
 
 @app.route("/detalleFactura")
 def detalleFactura():
-    return render_template("detalleFactura.html") 
+    detallesFactura = DetalleFacturaQuito.query.all()
+    return render_template("detalleFactura.html", detallesFactura=detallesFactura) 
+
+@app.route("/tienda")
+def tienda():
+    tiendas = Tienda.query.all()
+    return render_template("tienda.html", tiendas=tiendas) 
+
+# =========================================
+# ============== EDICION ==================
+# =========================================
+
+
 
 if __name__ == "__main__":
     # try:

@@ -19,18 +19,11 @@
             <p>Detalle de las facturas registradas</p>
         </div>
         <div class="acciones">
-            <button class="boton accion eliminar">
-                <img src="/static/images/basura.png" alt="Eliminar"> Delete
-            </button>
+            
             <button class="boton accion filtros">
                 <img src="/static/images/filtro.png" alt="Filtros"> Filters
             </button>
-            <button class="boton accion exportar">
-                <img src="/static/images/descarga.png" alt="Exportar"> Export
-            </button>
-            <button class="boton accion agregar">
-                <img src="/static/images/mas.png" alt="Agregar"> Add
-            </button>
+            
         </div>
     </header>
 
@@ -39,7 +32,8 @@
             <thead>
                 <tr>
                     <th><input type="checkbox"></th>
-                    <th>ID</th>
+                    <th>Numero detalle</th>
+                    <th>Tienda</th>
                     <th>Factura</th>
                     <th>Producto</th>
                     <th>Cantidad</th>
@@ -47,30 +41,17 @@
                 </tr>
             </thead>
             <tbody>
+                {%for detalle in detallesFactura%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
-                    <td>cesar.com</td>
+                    <td>{{detalle.numDetalle}}</td>
+                    <td>{{detalle.tiendaID}}</td>
+                    <td>{{detalle.facturaID}}</td>
+                    <td>{{detalle.productoID}}</td>
+                    <td>{{detalle.cantidad}}</td>
+                    <td>{{detalle.precio}}</td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>002</td>
-                    <td>Jaime Sanchez</td>
-                    <td>99999999</td>
-                    <td>sebas.com</td>
-                    <td>sebas.com</td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>003</td>
-                    <td>Paul Salas</td>
-                    <td>99999999</td>
-                    <td>paul.com</td>
-                    <td>paul.com</td>
-                </tr>
+                {%endfor%}
             </tbody>
         </table>
     </section>

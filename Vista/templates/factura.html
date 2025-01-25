@@ -19,14 +19,9 @@
             <p>Facturas registradas en la tienda</p>
         </div>
         <div class="acciones">
-            
             <button class="boton accion filtros">
                 <img src="/static/images/filtro.png" alt="Filtros"> Filters
             </button>
-            <button class="boton accion exportar">
-                <img src="/static/images/descarga.png" alt="Exportar"> Generar Factura
-            </button>
-            
         </div>
     </header>
 
@@ -43,30 +38,27 @@
                     <th>Método de pago</th>
                     <th>Total</th>
                     <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
+                {%for factura in facturas%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
-                    <td>cesar.com</td>
-                    <td>cesar.com</td>
-                    <td>cesar.com</td>
+                    <td>{{factura.facturaID}}</td>
+                    <td>{{factura.tiendaID}}</td>
+                    <td>{{factura.empleadoID}}</td>
+                    <td>{{factura.clieteID}}</td>
+                    <td>{{factura.fechaFactura}}</td>
+                    <td>{{factura.metodoPago}}</td>
+                    <td>{{factura.total}}</td>
                     <td>
                         <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                            <img src="/static/images/mas.png" alt="Agregar"> Generar factura
                         </button>
                     </td>
-                    <td>
-                        <button class="boton accion eliminar">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
+                    
                 </tr>
+                {%endfor%}
             </tbody>
         </table>
     </section>

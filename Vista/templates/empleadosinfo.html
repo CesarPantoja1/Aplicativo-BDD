@@ -42,12 +42,13 @@
                 </tr>
             </thead>
             <tbody>
+                {%for empleados in empleadosInfo%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>cesar.com</td>
+                    <td>{{empleados.empleadoID}}</td>
+                    <td>{{empleados.nombreEmp}}</td>
+                    <td>{{empleados.telefono}}</td>
+                    <td>{{empleados.correo}}</td>
                     <td>
                         <button class="boton accion agregar">
                             <img src="/static/images/mas.png" alt="Agregar"> Editar
@@ -59,7 +60,7 @@
                         </button>
                     </td>
                 </tr>
-                
+                {%endfor%}
             </tbody>
         </table>
     </section>

@@ -17,7 +17,7 @@
         <aside class="barra_lateral">
             <div class="logo">
                 <img src="/static/images/tienda.png" alt="Logo Tienda">
-                <h2>TIENDA QUITO</h2>
+                <h2>TIENDA {{ usuario }}</h2>
                 <p>UX/UI Designer</p>
             </div>
             <nav class="menu">
@@ -65,7 +65,7 @@
                     <img id='detalleFacturas' src="/static/images/detFac.png" alt="Icono Detalle Factura">
                     Detalle factura
                 </a>
-                <a href="#" class="menu_item">
+                <a href="{{ url_for('tienda') }}" class="menu_item">
                     <img src="/static/images/perfil.png" alt="Icono Perfil">
                     Perfil
                 </a>

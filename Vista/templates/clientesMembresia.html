@@ -33,6 +33,7 @@
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>ID</th>
+                    <th>Tienda</th>
                     <th>Membresía</th>
                     <th>Estado</th>
                     <th>Puntos</th>
@@ -41,12 +42,14 @@
                 </tr>
             </thead>
             <tbody>
+                {% for clientes in clientesMembresia%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Platimun</td>
-                    <td>Activo</td>
-                    <td>300</td>
+                    <td>{{clientes.clienteID}}</td>
+                    <td>{{clientes.tiendaID}}</td>
+                    <td>{{clientes.tipoMembresia}}</td>
+                    <td>{{clientes.estado}}</td>
+                    <td>{{clientes.puntos}}</td>
                     <td>
                         <button class="boton accion agregar">
                             <img src="/static/images/mas.png" alt="Agregar"> Editar
@@ -58,6 +61,7 @@
                         </button>
                     </td>
                 </tr>
+                {%endfor%}
                                
             </tbody>
         </table>

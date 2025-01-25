@@ -2,66 +2,55 @@
 {% extends "home.html"%}
 
 {% block tittle %} 
-    <title>Información laboral de empleados</title>
+    <title>Tienda</title>
 {% endblock %}
 
 <!-- Css -->
 {% block css %}
-<link rel="stylesheet" href="/static/css/empleadosLaboral.css" />
+<link rel="stylesheet" href="/static/css/tienda.css" />
 {% endblock %}
-
-<!-- Contenido -->
 
 <!-- Contenido -->
 {% block content %}
 <main class="contenido">
     <header class="cabecera">
         <div class="titulo">
-            <h1>Empleado laboral</h1>
-            <p>Información laboral de los empleados</p>
+            <h1>Tienda</h1>
+            <p>Información de las surcursales</p>
         </div>
         <div class="acciones">
-            
             <button class="boton accion filtros">
                 <img src="/static/images/filtro.png" alt="Filtros"> Filters
             </button>
-            
         </div>
     </header>
 
-    <section class="tabla_empleados">
+    <section class="tabla_tiendas">
         <table>
             <thead>
                 <tr>
                     <th><input type="checkbox"></th>
-                    <th>ID</th>
                     <th>Tienda</th>
-                    <th>Salario</th>
-                    <th>Cargo</th>
-                    <th>Fecha ingreso</th>
-                    <th></th>
+                    <th>Nombre</th>
+                    <th>Ubicacion</th>
+                    <th>Teléfono</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                {% for empleados in empleadosLaboral %}
+                {%for tienda in tiendas%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>{{empleados.empleadoID}}</td>
-                    <td>{{empleados.tiendaID}}</td>
-                    <td>{{empleados.salario}}</td>
-                    <td>{{empleados.cargo}}</td>
-                    <td>{{empleados.fechaIngreso}}</td>
+                    <td>{{tienda.tiendaID}}</td>
+                    <td>{{tienda.nombreTienda}}</td>
+                    <td>{{tienda.ubicacion}}</td>
+                    <td>{{tienda.telefono}}</td>
                     <td>
                         <button class="boton accion agregar">
                             <img src="/static/images/mas.png" alt="Agregar"> Editar
                         </button>
                     </td>
-                    <td>
-                        <button class="boton accion eliminar">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
+                    
                 </tr>
                 {%endfor%}
             </tbody>
@@ -72,5 +61,5 @@
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosLaboral.js"></script>
+<script src="/static/js/tienda.js"></script>
 {% endblock %}

@@ -42,12 +42,13 @@
                 </tr>
             </thead>
             <tbody>
+                {% for clientes in clientesInfo%}
                 <tr>
                     <td><input type="checkbox"></td>
-                    <td>001</td>
-                    <td>Cesar Pantoja</td>
-                    <td>99999999</td>
-                    <td>003</td>
+                    <td>{{clientes.clienteID}}</td>
+                    <td>{{clientes.nombreCliente}}</td>
+                    <td>{{clientes.telefono}}</td>
+                    <td>{{clientes.ciudad}}</td>
                     <td>
                         <button class="boton accion agregar">
                             <img src="/static/images/mas.png" alt="Agregar"> Editar
@@ -59,6 +60,7 @@
                         </button>
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>
