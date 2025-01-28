@@ -165,5 +165,41 @@ class DetalleFactura(dbQuito.Model):
         }
         
 
+class ClienteInfo(dbQuito.Model):
+    _tablename_ = 'Cliente_Info'
+    # Columnas
+    clienteID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Llave primaria
+    nombreCliente = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
+    telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
+    ciudad = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
+    def _repr_(self):
+        return f'<ClienteInfo {self.nombreCliente}>'
+    def to_dict(self):
+        return {
+            "clienteID": self.clienteID,
+            "nombreCliente": self.nombreCliente,
+            "telefono": self.telefono,
+            "ciudad": self.ciudad,
+        }
+              
+
+class EmpleadoInfo(dbQuito.Model):
+    _tablename_ = 'Empleado_Info'
+    # Columnas
+    empleadoID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Llave primaria
+    nombreEmp = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
+    telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
+    correo = dbQuito.Column(dbQuito.String(40), nullable=False)  # Convertir CHAR a String
+    def _repr_(self):
+        return f'<EmpleadoInfo {self.nombreEmp}>'
+    def to_dict(self):
+        return {
+            "empleadoID": self.empleadoID,
+            "nombreEmp": self.nombreEmp,
+            "telefono": self.telefono,
+            "correo": self.correo,
+        }
+        
+
 dbCumbaya = SQLAlchemy()
     

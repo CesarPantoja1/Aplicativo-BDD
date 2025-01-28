@@ -29,10 +29,12 @@
                     <img src="/static/images/cliente.png" alt="Icono Clientes">
                     Clientes
                 </a>
+                {% if usuario == "QUITO" %}
                 <a href="{{ url_for('clientesInfo') }}" class="menu_item" id="sub_opcion">
                     <img src="/static/images/infocliente.png" alt="Icono Clientes">
                     Clientes información
                 </a>
+                {% endif %}
                 <a href="{{ url_for('clientesMembresia') }}" class="menu_item" id="sub_opcion">
                     <img id='clienteMembresia' src="/static/images/estrecli.png" alt="Icono Empleados">
                     Clientes membresía
@@ -41,10 +43,12 @@
                     <img src="/static/images/empleado.png" alt="Icono Empleados">
                     Empleados
                 </a>
-                <a href="{{ url_for('empleadoInfo') }}" class="menu_item" id="sub_opcion">
+                {% if usuario == "QUITO" %}
+                <a href="{{ url_for('empleadosInfo') }}" class="menu_item" id="sub_opcion">
                     <img id='empleadoInfo' src="/static/images/infoempleado.png" alt="Icono Empleados">
                     Empleados información
                 </a>
+                {% endif %}
                 <a href="{{ url_for('empleadoLaboral') }}" class="menu_item" id="sub_opcion">
                     <img id='empleadoLaboral' src="/static/images/estreemp.png" alt="Icono Empleados">
                     Empleados laborales

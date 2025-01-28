@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, url_for, flash, redirect
-from Modelo.database import dbQuito, ClienteInfo, ClienteMembresiaQuito, EmpleadoInfo, EmpleadoLaboralQuito, ProductoQuito, ProveedorQuito, FacturaQuito, DetalleFacturaQuito, Tienda
+from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo
 
 app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static')
 app.secret_key = "supersecretkey"
@@ -41,7 +41,7 @@ def clientesInfo():
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
-    clientesMembresia = ClienteMembresiaQuito.query.all()
+    clientesMembresia = ClienteMembresia.query.all()
     return render_template("clientesMembresia.html", clientesMembresia=clientesMembresia) 
 
 @app.route("/register")
@@ -53,33 +53,33 @@ def empleadoRegistro():
     return render_template("empleados.html") 
 
 @app.route("/empleadosInfo")
-def empleadoInfo():
+def empleadosInfo():
     empleadosInfo = EmpleadoInfo.query.all()
-    return render_template("empleadosInfo.html", empleadosInfo=empleadosInfo)  
+    return render_template("empleadosInfo.html", empleadosInfo=empleadosInfo) 
 
 @app.route("/empleadosLaboral")
 def empleadoLaboral():
-    empleadosLaboral = EmpleadoLaboralQuito.query.all()    
+    empleadosLaboral = EmpleadoLaboral.query.all()    
     return render_template("empleadosLaboral.html", empleadosLaboral=empleadosLaboral) 
 
 @app.route("/producto")
 def producto():
-    productosQuito = ProductoQuito.query.all()
+    productosQuito = Producto.query.all()
     return render_template("producto.html", productosQuito=productosQuito)   
 
 @app.route("/proveedor")
 def proveedor():
-    proveedores = ProveedorQuito.query.all()
+    proveedores = Proveedor.query.all()
     return render_template("proveedor.html", proveedores=proveedores)  
 
 @app.route("/factura")
 def factura():
-    facturas = FacturaQuito.query.all()
+    facturas = Factura.query.all()
     return render_template("factura.html", facturas=facturas)  
 
 @app.route("/detalleFactura")
 def detalleFactura():
-    detallesFactura = DetalleFacturaQuito.query.all()
+    detallesFactura = DetalleFactura.query.all()
     return render_template("detalleFactura.html", detallesFactura=detallesFactura) 
 
 @app.route("/tienda")
@@ -93,7 +93,7 @@ def tienda():
 
 @app.route("/getProductos", methods=["GET"])
 def api_productos():
-    productos = ProductoQuito.query.all()
+    productos = Producto.query.all()
     return jsonify([producto.to_dict() for producto in productos])
 
 
