@@ -97,17 +97,5 @@ def api_productos():
     return jsonify([producto.to_dict() for producto in productos])
 
 
-if __name__ == "__main__":
-    # try:
-    #     conn = pyodbc.connect(
-    #         "DRIVER={ODBC Driver 17 for SQL Server};"
-    #         "SERVER=DESKTOP-QMS69UL;"
-    #         "DATABASE=Quito;"
-    #         "UID=sa;"
-    #         "PWD=P@ssw0rd;"
-    #     )
-    #     print("Conexión exitosa")
-    # except pyodbc.Error as e:
-    #     print("Error al conectar:", e) 
-    
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, port=8000)  
