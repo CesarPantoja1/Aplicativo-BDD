@@ -21,30 +21,11 @@ class Tienda(dbQuito.Model):
             "ubicacion": self.ubicacion,
             "telefono": self.telefono,
         }
+              
+# VISTAS
 
-
-class ClienteInfo(dbQuito.Model):
-    __tablename__ = 'Cliente_Info'
-
-    # Columnas
-    clienteID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Llave primaria
-    nombreCliente = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
-    telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
-    ciudad = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
-
-    def __repr__(self):
-        return f'<ClienteInfo {self.nombreCliente}>'
-
-    def to_dict(self):
-        return {
-            "clienteID": self.clienteID,
-            "nombreCliente": self.nombreCliente,
-            "telefono": self.telefono,
-            "ciudad": self.ciudad,
-        }
-
-class ClienteMembresiaQuito(dbQuito.Model):
-    __tablename__ = 'Cliente_MembresiaQuito'
+class ClienteMembresia(dbQuito.Model):
+    __tablename__ = 'Cliente_Membresia'
 
     # Columnas
     clienteID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
@@ -54,7 +35,7 @@ class ClienteMembresiaQuito(dbQuito.Model):
     puntos = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
 
     def __repr__(self):
-        return f'<ClienteMembresiaQuito {self.clienteID}>'
+        return f'<ClienteMembresia {self.clienteID}>'
 
     def to_dict(self):
         return {
@@ -65,28 +46,8 @@ class ClienteMembresiaQuito(dbQuito.Model):
             "puntos": self.puntos,
         }
 
-class EmpleadoInfo(dbQuito.Model):
-    __tablename__ = 'Empleado_Info'
-
-    # Columnas
-    empleadoID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Llave primaria
-    nombreEmp = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
-    telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
-    correo = dbQuito.Column(dbQuito.String(40), nullable=False)  # Convertir CHAR a String
-
-    def __repr__(self):
-        return f'<EmpleadoInfo {self.nombreEmp}>'
-
-    def to_dict(self):
-        return {
-            "empleadoID": self.empleadoID,
-            "nombreEmp": self.nombreEmp,
-            "telefono": self.telefono,
-            "correo": self.correo,
-        }
-
-class EmpleadoLaboralQuito(dbQuito.Model):
-    __tablename__ = 'Empleado_LaboralQuito'
+class EmpleadoLaboral(dbQuito.Model):
+    __tablename__ = 'Empleado_Laboral'
 
     # Columnas
     empleadoID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
@@ -96,7 +57,7 @@ class EmpleadoLaboralQuito(dbQuito.Model):
     fechaIngreso = dbQuito.Column(dbQuito.Date, nullable=False)  # Tipo de dato fecha
 
     def __repr__(self):
-        return f'<EmpleadoLaboralQuito {self.empleadoID} - {self.tiendaID} - {self.cargo}>'
+        return f'<EmpleadoLaboral {self.empleadoID}>'
 
     def to_dict(self):
         return {
@@ -107,8 +68,8 @@ class EmpleadoLaboralQuito(dbQuito.Model):
             "fechaIngreso": self.fechaIngreso.isoformat() if self.fechaIngreso else None,
         }
 
-class ProductoQuito(dbQuito.Model):
-    __tablename__ = 'ProductoQuito'
+class Producto(dbQuito.Model):
+    __tablename__ = 'Producto'
 
     # Columnas
     productoID = dbQuito.Column(dbQuito.Integer, primary_key=True)
@@ -119,7 +80,7 @@ class ProductoQuito(dbQuito.Model):
     stockProducto = dbQuito.Column(dbQuito.Integer, nullable=False)
 
     def __repr__(self):
-        return f'<ProductoQuito {self.nombreProducto}>'
+        return f'<Producto {self.nombreProducto}>'
 
     def to_dict(self):
         return {
@@ -131,8 +92,8 @@ class ProductoQuito(dbQuito.Model):
             "stockProducto": self.stockProducto,
         }       
 
-class ProveedorQuito(dbQuito.Model):
-    __tablename__ = 'ProveedorQuito'
+class Proveedor(dbQuito.Model):
+    __tablename__ = 'Proveedor'
 
     # Columnas
     proveedorID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
@@ -142,7 +103,7 @@ class ProveedorQuito(dbQuito.Model):
     telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
 
     def __repr__(self):
-        return f'<ProveedorQuito {self.proveedorID} - {self.tiendaID} - {self.nombreProveedor}>'
+        return f'<Proveedor {self.proveedorID}>'
 
     def to_dict(self):
         return {
@@ -153,8 +114,8 @@ class ProveedorQuito(dbQuito.Model):
             "telefono": self.telefono,
         }
 
-class FacturaQuito(dbQuito.Model):
-    __tablename__ = 'FacturaQuito'
+class Factura(dbQuito.Model):
+    __tablename__ = 'Factura'
 
     # Columnas
     facturaID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
@@ -166,7 +127,7 @@ class FacturaQuito(dbQuito.Model):
     total = dbQuito.Column(dbQuito.Float, nullable=False)  # Campo tipo float
 
     def __repr__(self):
-        return f'<FacturaQuito {self.facturaID} - Tienda {self.tiendaID}>'
+        return f'<Factura {self.facturaID} - Tienda {self.tiendaID}>'
 
     def to_dict(self):
         return {
@@ -179,8 +140,8 @@ class FacturaQuito(dbQuito.Model):
             "total": self.total,
         }
 
-class DetalleFacturaQuito(dbQuito.Model):
-    __tablename__ = 'Detalle_FacturaQuito'
+class DetalleFactura(dbQuito.Model):
+    __tablename__ = 'Detalle_Factura'
 
     # Columnas
     numDetalle = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
@@ -191,7 +152,7 @@ class DetalleFacturaQuito(dbQuito.Model):
     precio = dbQuito.Column(dbQuito.Float, nullable=False)  # Campo tipo float
 
     def __repr__(self):
-        return f'<DetalleFacturaQuito NumDetalle: {self.numDetalle}, FacturaID: {self.facturaID}, TiendaID: {self.tiendaID}>'
+        return f'<DetalleFactura {self.numDetalle}>'
 
     def to_dict(self):
         return {
@@ -203,5 +164,6 @@ class DetalleFacturaQuito(dbQuito.Model):
             "precio": self.precio,
         }
         
-dbCumbaya = SQLAlchemy()
 
+dbCumbaya = SQLAlchemy()
+    
