@@ -46,15 +46,20 @@
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>{{factura.facturaID}}</td>
+                    <td>{{factura.clienteID}}</td>
                     <td>{{factura.tiendaID}}</td>
                     <td>{{factura.empleadoID}}</td>
-                    <td>{{factura.clieteID}}</td>
                     <td>{{factura.fechaFactura}}</td>
                     <td>{{factura.metodoPago}}</td>
                     <td>{{factura.total}}</td>
                     <td>
+<<<<<<< HEAD
                         <button class="boton accion agregar" id = "abrir">
                             <img src="/static/images/ojo.png" alt="Agregar"> Ver factura
+=======
+                        <button class="boton accion agregar" id = "fact">
+                            <img src="/static/images/mas.png" alt="Agregar"> Generar factura
+>>>>>>> 99eda3f43794fce0315baaf0e5426c5673bc57ef
                         </button>
                     </td>
                     
@@ -64,9 +69,10 @@
         </table>
     </section>
 
+
     <div id="overlay"></div>
     <div class="modal" id = "modal">
-        <button class="cerrar_modal" id="cerrar">×</button>
+        <button class="cerrar_modal" id="cerrar">x</button>
         <div class="superior">
             <div class="logo">
                 <img src="/static/images/logofac.png" alt="Poli Market">

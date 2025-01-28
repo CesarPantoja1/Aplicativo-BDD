@@ -1,4 +1,4 @@
-const abrirModal = document.getElementById('abrir');
+const abrirModal = document.getElementById('fact');
 const cerrarModal = document.getElementById('cerrar');
 const modal = document.getElementById('modal');
 const overlay = document.getElementById('overlay');
