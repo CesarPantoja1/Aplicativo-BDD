@@ -91,6 +91,10 @@ def tienda():
 # ============== EDICION ==================
 # =========================================
 
+@app.route("/getProductos", methods=["GET"])
+def api_productos():
+    productos = ProductoQuito.query.all()
+    return jsonify([producto.to_dict() for producto in productos])
 
 
 if __name__ == "__main__":

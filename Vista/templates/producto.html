@@ -42,28 +42,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                {% for producto in productosQuito %}
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>{{ producto.productoID }}</td>
-                    <td>{{ producto.tiendaID }}</td>
-                    <td>{{ producto.proveedorID }}</td>
-                    <td>{{ producto.nombreProducto }}</td>
-                    <td>{{ producto.precioProducto }}</td>
-                    <td>{{ producto.stockProducto }}</td>
-                    <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="boton accion eliminar">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
+            <tbody id = "productos_info">
+               
             </tbody>
         </table>
     </section>
