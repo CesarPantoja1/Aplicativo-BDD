@@ -41,7 +41,7 @@ def clientesInfo():
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
-    clientesMembresia = ClienteMembresia.query.all()
+    clientesMembresia = ClienteMembresia.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("clientesMembresia.html", clientesMembresia=clientesMembresia) 
 
 @app.route("/register")
@@ -59,27 +59,27 @@ def empleadosInfo():
 
 @app.route("/empleadosLaboral")
 def empleadoLaboral():
-    empleadosLaboral = EmpleadoLaboral.query.all()    
+    empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("empleadosLaboral.html", empleadosLaboral=empleadosLaboral) 
 
 @app.route("/producto")
 def producto():
-    productosQuito = Producto.query.all()
+    productosQuito = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("producto.html", productosQuito=productosQuito)   
 
 @app.route("/proveedor")
 def proveedor():
-    proveedores = Proveedor.query.all()
+    proveedores = Proveedor.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("proveedor.html", proveedores=proveedores)  
 
 @app.route("/factura")
 def factura():
-    facturas = Factura.query.all()
+    facturas = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("factura.html", facturas=facturas)  
 
 @app.route("/detalleFactura")
 def detalleFactura():
-    detallesFactura = DetalleFactura.query.all()
+    detallesFactura = DetalleFactura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("detalleFactura.html", detallesFactura=detallesFactura) 
 
 @app.route("/tienda")
@@ -93,7 +93,7 @@ def tienda():
 
 @app.route("/getProductos", methods=["GET"])
 def api_productos():
-    productos = Producto.query.all()
+    productos = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return jsonify([producto.to_dict() for producto in productos])
 
 
