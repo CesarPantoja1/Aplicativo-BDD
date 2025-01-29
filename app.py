@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, url_for, flash, redirect, session
-from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo
+from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo, ClienteGeneral
 
 app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static')
 app.secret_key = "supersecretkey"
@@ -143,33 +143,28 @@ def insert_cliente():
     if not tienda:
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
-    data = request.json  
+    data = request.json 
 
     try:
-        nuevo_cliente_info = ClienteInfo(
-            clienteID=data.get("clienteID"),
-            nombreCliente=data.get("nombreCliente"),
-            telefono=data.get("telefono"),
-            ciudad=data.get("ciudad")
-        )
-        dbQuito.session.add(nuevo_cliente_info)
-
-        nuevo_cliente_membresia = ClienteMembresia(
+        nuevo_cliente = ClienteGeneral(
             clienteID=data.get("clienteID"),
             tiendaID=1 if tienda == "QUITO" else 2,
+            nombreCliente=data.get("nombreCliente"),
+            telefono=data.get("telefono"),
+            ciudad=data.get("ciudad"),
             tipoMembresia=data.get("tipoMembresia"),
             estado=data.get("estado"),
             puntos=data.get("puntos")
         )
-        dbQuito.session.add(nuevo_cliente_membresia)
-
-        dbQuito.session.commit()  
+        dbQuito.session.add(nuevo_cliente)
+        dbQuito.session.commit()
 
         return jsonify({"message": "Cliente registrado con éxito"}), 201
 
     except Exception as e:
-        dbQuito.session.rollback() 
+        dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == '__main__':

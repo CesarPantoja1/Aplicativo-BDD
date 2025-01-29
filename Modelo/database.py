@@ -25,7 +25,8 @@ class Tienda(dbQuito.Model):
 # VISTAS
 
 class ClienteGeneral(dbQuito.Model):
-    _tablename_ = 'ClientesGeneral'
+    __tablename__ = 'ClientesGeneral'
+    
     # Columnas
     clienteID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Llave primaria
     tiendaID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
@@ -35,11 +36,10 @@ class ClienteGeneral(dbQuito.Model):
     tipoMembresia = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
     estado = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
     puntos = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
-    
-    
-    def _repr_(self):
+
+    def __repr__(self):
         return f'<ClientesGeneral {self.nombreCliente}>'
-    
+
     def to_dict(self):
         return {
             "clienteID": self.clienteID,
@@ -51,6 +51,7 @@ class ClienteGeneral(dbQuito.Model):
             "estado": self.estado,
             "puntos": self.puntos,
         }
+
 
 class ClienteMembresia(dbQuito.Model):
     __tablename__ = 'Cliente_Membresia'
