@@ -22,15 +22,43 @@ document.addEventListener("DOMContentLoaded", function () {
                         </button>
                     </td>
                     <td>
-                        <button class="boton accion eliminar">
+                        <button class="boton accion eliminar" data-id="${producto.productoID}" data-tienda="${producto.tiendaID}">
                             <img src="/static/images/basura.png" alt="Eliminar"> Delete
                         </button>
                     </td>
                 `;
                 tbody.appendChild(row);
             });
+
+            document.querySelectorAll(".boton.eliminar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const productoID = this.getAttribute("data-id");
+                    const tiendaID = this.getAttribute("data-tienda");
+                    eliminarProducto(productoID, tiendaID);
+                });
+            });
         })
         .catch(error => {
             console.error("Error al cargar los productos:", error);
         });
 });
+
+function eliminarProducto(productoID, tiendaID) {
+    if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
+        fetch(`/deleteProducto/${productoID}/${tiendaID}`, {
+            method: "DELETE",
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                location.reload(); 
+            } else {
+                alert("Error: " + data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Error al eliminar el producto:", error);
+        });
+    }
+}

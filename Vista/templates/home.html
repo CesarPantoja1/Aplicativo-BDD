@@ -17,7 +17,7 @@
         <aside class="barra_lateral">
             <div class="logo">
                 <img src="/static/images/tienda.png" alt="Logo Tienda">
-                <h2>TIENDA {{ usuario }}</h2>
+                <h2>TIENDA {{ session["tienda"] }}</h2>
                 <p>UX/UI Designer</p>
             </div>
             <nav class="menu">
@@ -29,7 +29,7 @@
                     <img src="/static/images/cliente.png" alt="Icono Clientes">
                     Clientes
                 </a>
-                {% if usuario == "QUITO" %}
+                {% if session["tienda"] == "QUITO" %}
                 <a href="{{ url_for('clientesInfo') }}" class="menu_item" id="sub_opcion">
                     <img src="/static/images/infocliente.png" alt="Icono Clientes">
                     Clientes información
@@ -43,7 +43,7 @@
                     <img src="/static/images/empleado.png" alt="Icono Empleados">
                     Empleados
                 </a>
-                {% if usuario == "QUITO" %}
+                {% if session["tienda"] == "QUITO" %}
                 <a href="{{ url_for('empleadosInfo') }}" class="menu_item" id="sub_opcion">
                     <img id='empleadoInfo' src="/static/images/infoempleado.png" alt="Icono Empleados">
                     Empleados información

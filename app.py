@@ -1,16 +1,13 @@
-from flask import Flask, render_template, request, jsonify, url_for, flash, redirect
+from flask import Flask, render_template, request, jsonify, url_for, flash, redirect, session
 from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo
 
 app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static')
 app.secret_key = "supersecretkey"
 
-# Configura la conexión con SQL Server
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mssql+pyodbc://sa:P%40ssw0rd@26.236.136.95/Quito?driver=ODBC+Driver+17+for+SQL+Server'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 dbQuito.init_app(app)
-
-tienda = None
 
 @app.route("/")
 def ingreso():
@@ -20,15 +17,19 @@ def ingreso():
 def guardar():
     print("¡Ruta /guardar activada!")
     tienda = request.form.get("nombre_tienda")
-    # Verificar si las credenciales son correctas
     if tienda == "QUITO" or tienda == "CUMBAYA":
+        session["tienda"] = tienda  
         return render_template("home.html", usuario=tienda)  
     else:
         return render_template("ingreso.html") 
 
 @app.route("/home")
 def home():
-    return render_template("home.html")  
+    tienda = session.get("tienda")
+    if not tienda:
+        return redirect(url_for("ingreso"))
+    return render_template("home.html", usuario=tienda)
+
 
 @app.route("/clientesRegistro")
 def clientesRegistro():
@@ -41,6 +42,10 @@ def clientesInfo():
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
+    tienda = session.get("tienda") 
+    if not tienda:
+        return redirect(url_for("ingreso"))
+    
     clientesMembresia = ClienteMembresia.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("clientesMembresia.html", clientesMembresia=clientesMembresia) 
 
@@ -59,26 +64,41 @@ def empleadosInfo():
 
 @app.route("/empleadosLaboral")
 def empleadoLaboral():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return redirect(url_for("ingreso"))
+
     empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("empleadosLaboral.html", empleadosLaboral=empleadosLaboral) 
 
 @app.route("/producto")
 def producto():
-    productosQuito = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return render_template("producto.html", productosQuito=productosQuito)   
+    return render_template("producto.html", productosQuito=Producto)   
 
 @app.route("/proveedor")
 def proveedor():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return redirect(url_for("ingreso"))
+
     proveedores = Proveedor.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("proveedor.html", proveedores=proveedores)  
 
 @app.route("/factura")
 def factura():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return redirect(url_for("ingreso"))
+
     facturas = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("factura.html", facturas=facturas)  
 
 @app.route("/detalleFactura")
 def detalleFactura():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return redirect(url_for("ingreso"))
+
     detallesFactura = DetalleFactura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("detalleFactura.html", detallesFactura=detallesFactura) 
 
@@ -87,14 +107,31 @@ def tienda():
     tiendas = Tienda.query.all()
     return render_template("tienda.html", tiendas=tiendas) 
 
-# =========================================
-# ============== EDICION ==================
-# =========================================
-
 @app.route("/getProductos", methods=["GET"])
 def api_productos():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
     productos = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return jsonify([producto.to_dict() for producto in productos])
+
+
+@app.route("/deleteProducto/<int:productoID>/<int:tiendaID>", methods=["DELETE"])
+def delete_producto(productoID, tiendaID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    producto = Producto.query.filter_by(productoID=productoID, tiendaID=tiendaID).first()
+    
+    if producto:
+        dbQuito.session.delete(producto)
+        dbQuito.session.commit()
+        return jsonify({"message": "Producto eliminado correctamente"}), 200
+    else:
+        return jsonify({"error": "Producto no encontrado"}), 404
+
 
 
 if __name__ == '__main__':
