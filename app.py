@@ -121,6 +121,7 @@ def api_productos():
     return jsonify([producto.to_dict() for producto in productos])
 
 
+
 @app.route("/deleteProducto/<int:productoID>/<int:tiendaID>", methods=["DELETE"])
 def delete_producto(productoID, tiendaID):
     tienda = session.get("tienda")
@@ -135,6 +136,51 @@ def delete_producto(productoID, tiendaID):
         return jsonify({"message": "Producto eliminado correctamente"}), 200
     else:
         return jsonify({"error": "Producto no encontrado"}), 404
+
+@app.route("/api/facturas", methods=["GET"])
+def api_facturas():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    facturas = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([factura.to_dict() for factura in facturas])
+
+
+@app.route("/api/factura/<int:facturaID>", methods=["GET"])
+def api_factura_detalle(facturaID):
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    factura = Factura.query.filter_by(facturaID=facturaID, tiendaID=1 if tienda == "QUITO" else 2).first()
+    if not factura:
+        return jsonify({"error": "Factura no encontrada"}), 404
+
+    detalles_factura = DetalleFactura.query.filter_by(facturaID=facturaID, tiendaID=factura.tiendaID).all()
+    
+    detalles = []
+    for detalle in detalles_factura:
+        producto = Producto.query.filter_by(productoID=detalle.productoID, tiendaID=factura.tiendaID).first()
+        detalles.append({
+            "productoID": detalle.productoID,
+            "nombreProducto": producto.nombreProducto if producto else "Producto Desconocido",
+            "cantidad": detalle.cantidad,
+            "precio": detalle.precio
+        })
+
+    cliente = ClienteGeneral.query.filter_by(clienteID=factura.clienteID, tiendaID=factura.tiendaID).first()
+    empleado = EmpleadoInfo.query.filter_by(empleadoID=factura.empleadoID).first()
+
+    return jsonify({
+        "factura": factura.to_dict(),
+        "cliente": cliente.to_dict() if cliente else None,
+        "empleado": empleado.to_dict() if empleado else None,
+        "detalles": detalles 
+    })
+
+
+
 
 
 @app.route("/insertCliente", methods=["POST"])

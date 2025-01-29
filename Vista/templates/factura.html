@@ -42,24 +42,7 @@
                 </tr>
             </thead>
             <tbody>
-                {%for factura in facturas%}
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>{{factura.facturaID}}</td>
-                    <td>{{factura.clienteID}}</td>
-                    <td>{{factura.tiendaID}}</td>
-                    <td>{{factura.empleadoID}}</td>
-                    <td>{{factura.fechaFactura}}</td>
-                    <td>{{factura.metodoPago}}</td>
-                    <td>{{factura.total}}</td>
-                    <td>
-                        <button class="boton accion agregar" id = "fact">
-                            <img src="/static/images/mas.png" alt="Agregar"> Generar factura
-                        </button>
-                    </td>
-                    
-                </tr>
-                {%endfor%}
+                
             </tbody>
         </table>
     </section>
