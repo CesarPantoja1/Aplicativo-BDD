@@ -71,6 +71,10 @@ def empleadoLaboral():
     empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return render_template("empleadosLaboral.html", empleadosLaboral=empleadosLaboral) 
 
+@app.route("/productoRegistro")
+def productoRegistro():
+    return render_template("productoRegistro.html")   
+
 @app.route("/producto")
 def producto():
     return render_template("producto.html", productosQuito=Producto)   
