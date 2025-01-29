@@ -133,6 +133,40 @@ def delete_producto(productoID, tiendaID):
         return jsonify({"error": "Producto no encontrado"}), 404
 
 
+@app.route("/insertCliente", methods=["POST"])
+def insert_cliente():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    data = request.json  
+
+    try:
+        nuevo_cliente_info = ClienteInfo(
+            clienteID=data.get("clienteID"),
+            nombreCliente=data.get("nombreCliente"),
+            telefono=data.get("telefono"),
+            ciudad=data.get("ciudad")
+        )
+        dbQuito.session.add(nuevo_cliente_info)
+
+        nuevo_cliente_membresia = ClienteMembresia(
+            clienteID=data.get("clienteID"),
+            tiendaID=1 if tienda == "QUITO" else 2,
+            tipoMembresia=data.get("tipoMembresia"),
+            estado=data.get("estado"),
+            puntos=data.get("puntos")
+        )
+        dbQuito.session.add(nuevo_cliente_membresia)
+
+        dbQuito.session.commit()  
+
+        return jsonify({"message": "Cliente registrado con éxito"}), 201
+
+    except Exception as e:
+        dbQuito.session.rollback() 
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  
