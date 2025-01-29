@@ -27,7 +27,7 @@
                 </a>
                 <a href="{{ url_for('clientesRegistro') }}" class="menu_item">
                     <img src="/static/images/cliente.png" alt="Icono Clientes">
-                    Clientes
+                    Registro clientes
                 </a>
                 {% if session["tienda"] == "QUITO" %}
                 <a href="{{ url_for('clientesInfo') }}" class="menu_item" id="sub_opcion">
@@ -41,7 +41,7 @@
                 </a>
                 <a href="{{ url_for('empleadoRegistro') }}" class="menu_item">
                     <img src="/static/images/empleado.png" alt="Icono Empleados">
-                    Empleados
+                    Registro empleados
                 </a>
                 {% if session["tienda"] == "QUITO" %}
                 <a href="{{ url_for('empleadosInfo') }}" class="menu_item" id="sub_opcion">
@@ -53,7 +53,11 @@
                     <img id='empleadoLaboral' src="/static/images/estreemp.png" alt="Icono Empleados">
                     Empleados laborales
                 </a>
-                <a href="{{ url_for('producto') }}" class="menu_item">
+                <a href="{{ url_for('productoRegistro') }}" class="menu_item">
+                    <img id ='productoRegistro'src="/static/images/productos.png" alt="Icono Productos">
+                    Registro productos
+                </a>
+                <a href="{{ url_for('producto') }}" class="menu_item" id="sub_opcion">
                     <img id='productos'src="/static/images/productos.png" alt="Icono Productos">
                     Productos
                 </a>
