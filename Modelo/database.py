@@ -53,6 +53,36 @@ class ClienteGeneral(dbQuito.Model):
         }
 
 
+class EmpleadoGeneral(dbQuito.Model):
+    __tablename__ = 'EmpleadoGeneral'
+
+    # Columnas
+    empleadoID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
+    tiendaID = dbQuito.Column(dbQuito.Integer, primary_key=True)  # Parte de la clave primaria
+    nombreEmp = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
+    telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
+    correo = dbQuito.Column(dbQuito.String(40), nullable=False)  # Convertir CHAR a String
+    salario = dbQuito.Column(dbQuito.Float, nullable=False)  # Campo no nulo
+    cargo = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
+    fechaIngreso = dbQuito.Column(dbQuito.Date, nullable=False)  # Tipo de dato fecha
+    
+    
+    def __repr__(self):
+        return f'<EmpleadoGeneral {self.empleadoID}>'
+
+    def to_dict(self):
+        return {
+            "empleadoID": self.empleadoID,
+            "tiendaID": self.tiendaID,
+            "nombreEmp": self.nombreEmp,
+            "telefono": self.telefono,
+            "correo": self.correo,
+            "salario": self.salario,
+            "cargo": self.cargo,
+            "fechaIngreso": self.fechaIngreso.isoformat() if self.fechaIngreso else None,
+        }
+
+
 class ClienteMembresia(dbQuito.Model):
     __tablename__ = 'Cliente_Membresia'
 

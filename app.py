@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify, url_for, flash, redirect, session
-from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo, ClienteGeneral
+from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo, ClienteGeneral, EmpleadoGeneral
 
 app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static')
 app.secret_key = "supersecretkey"
@@ -194,7 +194,7 @@ def insert_cliente():
     try:
         nuevo_cliente = ClienteGeneral(
             clienteID=data.get("clienteID"),
-            tiendaID=1 if tienda == "QUITO" else 2,
+            tiendaID=data.get("tiendaID"),
             nombreCliente=data.get("nombreCliente"),
             telefono=data.get("telefono"),
             ciudad=data.get("ciudad"),
@@ -210,7 +210,62 @@ def insert_cliente():
     except Exception as e:
         dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+    
+@app.route("/insertEmpleado", methods=["POST"])
+def insert_empleado():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
+    data = request.json 
+
+    try:
+        nuevo_empleado = EmpleadoGeneral(
+            empleadoID=data.get("empleadoID"),
+            tiendaID=data.get("tiendaID"),
+            nombreEmp=data.get("nombreEmp"),
+            telefono=data.get("telefono"),
+            correo=data.get("correo"),
+            salario=data.get("salario"),
+            cargo=data.get("cargo"),
+            fechaIngreso=data.get("fechaIngreso")
+        )
+        dbQuito.session.add(nuevo_empleado)
+        dbQuito.session.commit()
+
+        return jsonify({"message": "Empleado registrado con éxito"}), 201
+
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/insertProducto", methods=["POST"])
+def insert_producto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    data = request.json 
+
+    try:
+        nuevo_producto = Producto(
+            productoID=data.get("productoID"),
+            tiendaID=data.get("tiendaID"),
+            proveedorID=data.get("proveedorID"),
+            nombreProducto=data.get("nombreProducto"),
+            precioProducto=data.get("precioProducto"),
+            stockProducto=data.get("stockProducto"),
+        )
+        dbQuito.session.add(nuevo_producto)
+        dbQuito.session.commit()
+
+        return jsonify({"message": "Producto registrado con éxito"}), 201
+
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':

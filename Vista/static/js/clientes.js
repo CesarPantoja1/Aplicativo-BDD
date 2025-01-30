@@ -8,20 +8,22 @@ function insertarCliente() {
     const filas = document.querySelectorAll("tbody tr");
     filas.forEach(fila => {
         const clienteID = fila.children[0].innerText.trim();
-        const nombreCliente = fila.children[1].innerText.trim();
-        const telefono = fila.children[2].innerText.trim();
-        const ciudad = fila.children[3].innerText.trim();
-        const tipoMembresia = fila.children[4].innerText.trim();
-        const estado = fila.children[5].innerText.trim();
-        const puntos = fila.children[6].innerText.trim();
+        const tiendaID = fila.children[1].innerText.trim();
+        const nombreCliente = fila.children[2].innerText.trim();
+        const telefono = fila.children[3].innerText.trim();
+        const ciudad = fila.children[4].innerText.trim();
+        const tipoMembresia = fila.children[5].innerText.trim();
+        const estado = fila.children[6].innerText.trim();
+        const puntos = fila.children[7].innerText.trim();
 
-        if (!clienteID || !nombreCliente || !telefono || !ciudad || !tipoMembresia || !estado || !puntos) {
+        if (!clienteID || !tiendaID || !nombreCliente || !telefono || !ciudad || !tipoMembresia || !estado || !puntos) {
             alert("Por favor, complete todos los campos antes de registrar el cliente.");
             return;
         }
 
         const clienteData = {
             clienteID: parseInt(clienteID),
+            tiendaID: parseInt(tiendaID),
             nombreCliente: nombreCliente,
             telefono: parseInt(telefono),
             ciudad: ciudad,
