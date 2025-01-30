@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
         datasets: [{
             label: 'Ganancias ($)',
-            data: [10, 25, 15, 30, 8, 20],
+            data: [10, 25, 15, 40, 8, 20],
             backgroundColor: [
                 'rgba(120, 100, 255, 0.6)',
                 'rgba(80, 200, 180, 0.6)',
@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }]
     };
 
-    // Configuración del gráfico
     const config = {
         type: 'bar',
         data: datosGanancias,

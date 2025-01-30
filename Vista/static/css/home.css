@@ -25,6 +25,16 @@ body {
     overflow-y: auto; 
 }
 
+
+.barra_lateral::-webkit-scrollbar {
+    width: 10px;
+}
+
+.barra_lateral::-webkit-scrollbar-thumb {
+    background: #5876d1;
+    border-radius: 10px;
+}
+
 .logo {
     text-align: center;
     margin-bottom: 20px;
