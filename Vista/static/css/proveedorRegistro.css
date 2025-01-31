@@ -1,0 +1,146 @@
+
+.contenido {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+/* Cabecera */
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cabecera .titulo h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.cabecera .titulo p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #888;
+}
+
+.cabecera .acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.boton.accion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500; 
+    color: #5A5A5A; 
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+.boton.accion img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.9; 
+}
+
+
+.boton.accion:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-color: #D0D0D0;
+    background-color: #F9FAFB;
+}
+
+/* Botones específicos */
+.boton.eliminar {
+    color: #E01B1B; 
+}
+
+.boton.eliminar:hover {
+    background-color: #FFEBEE;
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(224, 27, 27, 0.2);
+}
+
+.boton.filtros {
+    color: #DA9621; 
+}
+
+.boton.filtros:hover {
+    background-color: #FFF4E5;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(218, 150, 33, 0.2); 
+}
+
+.boton.exportar {
+    color: #388E3C; 
+}
+
+.boton.exportar:hover {
+    background-color: #E8F5E9;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(56, 142, 60, 0.2); 
+}
+
+.boton.agregar {
+    color: white;
+    background-color: #1976D2;
+    border: none;
+}
+
+.boton.agregar:hover {
+    background-color: #1565C0;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(21, 101, 192, 0.2); 
+}
+
+
+/* Tabla */
+.tabla_proveedor table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabla_proveedor th, .tabla_proveedor td {
+    padding: 15px;
+    text-align: left;
+    color: #555;
+}
+
+.tabla_proveedor th {
+    font-weight: bold;
+    background-color: #F7F8FC;
+    border-bottom: 2px solid #ddd;
+}
+
+.tabla_proveedor td {
+    border-bottom: 1px solid #eee;
+}
+
+.tabla_proveedor tr:hover {
+    background-color: #F7F8FC;
+}
+
+.tabla_proveedor input {
+    margin: 0;
+    border: 1px solid transparent;
+    width: 120px;
+    height: 20px;
+}
+
+.tabla_proveedor input::placeholder {
+    color: rgba(0, 0, 0, 0.3); /* Color negro con 50% de opacidad */
+}

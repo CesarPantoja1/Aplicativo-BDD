@@ -77,7 +77,11 @@ def productoRegistro():
 
 @app.route("/producto")
 def producto():
-    return render_template("producto.html", productosQuito=Producto)   
+    return render_template("producto.html")   
+
+@app.route("/proveedorRegistro")
+def proveedorRegistro():
+    return render_template("proveedorRegistro.html")   
 
 @app.route("/proveedor")
 def proveedor():
@@ -267,6 +271,31 @@ def insert_producto():
         dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
+@app.route("/insertProveedor", methods=["POST"])
+def insert_proveedor():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    data = request.json 
+
+    try:
+        nuevo_proveedor = Proveedor(
+            proveedorID=data.get("proveedorID"),
+            tiendaID=data.get("tiendaID"),
+            nombreProveedor=data.get("nombreProveedor"),
+            ciudad=data.get("ciudad"),
+            telefono=data.get("telefono"),
+        )
+        dbQuito.session.add(nuevo_proveedor)
+        dbQuito.session.commit()
+
+        return jsonify({"message": "Proveedor registrado con éxito"}), 201
+
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  

@@ -1,0 +1,62 @@
+<!-- Herencia -->
+{% extends "home.html"%}
+
+
+{% block tittle %} 
+    <title>Registro de nuevos proveedores</title>
+{% endblock %}
+
+<!-- Css -->
+{% block css %}
+<link rel="stylesheet" href="/static/css/proveedorRegistro.css" />
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<main class="contenido">
+    <header class="cabecera">
+        <div class="titulo">
+            <h1>Provedores</h1>
+            <p>Registro de nuevos proveedores</p>
+        </div>
+        <div class="acciones">
+            <button class="boton accion exportar">
+                <img src="/static/images/descarga.png" alt="Exportar"> Nuevo producto
+            </button>
+            <button class="boton accion agregar">
+                <img src="/static/images/mas.png" alt="Agregar"> Registrar
+            </button>
+            
+        </div>
+    </header>
+
+    <section class="tabla_proveedor">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tienda</th>
+                    <th>Nombre</th>
+                    <th>Ciudad</th>
+                    <th>Telefono</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true" data-id="" data-field="Id_proveedor">  </td>
+                    <td contenteditable="true" data-id="" data-field="Tienda">  </td>
+                    <td contenteditable="true" data-id="" data-field="Nombre">  </td>
+                    <td contenteditable="true" data-id="" data-field="Ciudad">  </td>
+                    <td contenteditable="true" data-id="" data-field="Telefono">  </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+{% endblock %}
+
+<!-- Scripts -->
+{% block scriptjs %}
+<script src="/static/js/proveedorRegistro.js"></script>
+{% endblock %}
