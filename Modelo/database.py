@@ -231,8 +231,10 @@ class ClienteInfo(dbQuito.Model):
     nombreCliente = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
     telefono = dbQuito.Column(dbQuito.Integer, nullable=False)  # Campo no nulo
     ciudad = dbQuito.Column(dbQuito.String(20), nullable=False)  # Convertir CHAR a String
+   
     def _repr_(self):
         return f'<ClienteInfo {self.nombreCliente}>'
+   
     def to_dict(self):
         return {
             "clienteID": self.clienteID,

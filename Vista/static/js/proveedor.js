@@ -1,0 +1,63 @@
+document.addEventListener("DOMContentLoaded", function () {
+    fetch("/getProveedores")
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById("proveedores_info");
+            tbody.innerHTML = ""; 
+
+            data.forEach(proveedor => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${proveedor.proveedorID}</td>
+                    <td>${proveedor.tiendaID}</td>
+                    <td>${proveedor.nombreProveedor}</td>
+                    <td>${proveedor.ciudad}</td>
+                    <td>${proveedor.telefono}</td>
+                    <td>
+                        <button class="boton accion agregar">
+                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="boton accion eliminar" data-id="${proveedor.proveedorID}" data-tienda="${proveedor.tiendaID}">
+                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll(".boton.eliminar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const proveedorID = this.getAttribute("data-id");
+                    const tiendaID = this.getAttribute("data-tienda");
+                    eliminarProducto(proveedorID, tiendaID);
+                });
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar los proveedores", error);
+        });
+});
+
+function eliminarProducto(proveedorID, tiendaID) {
+    if (confirm("¿Estás seguro de que deseas eliminar el proveedor?")) {
+        fetch(`/deleteProveedor/${proveedorID}/${tiendaID}`, {
+            method: "DELETE",
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert(data.message);
+                location.reload(); 
+            } else {
+                alert("Error: " + data.error);
+            }
+        })
+        .catch(error => {
+            console.error("Error al eliminar el proveedor", error);
+        });
+    }
+}

@@ -41,27 +41,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                {%for proveedor in proveedores%}
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>{{proveedor.proveedorID}}</td>
-                    <td>{{proveedor.tiendaID}}</td>
-                    <td>{{proveedor.nombreProveedor}}</td>
-                    <td>{{proveedor.ciudad}}</td>
-                    <td>{{proveedor.telefono}}</td>
-                    <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="boton accion eliminar">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
-                </tr>
-                {%endfor%}
+            <tbody id="proveedores_info">
+                
             </tbody>
         </table>
     </section>

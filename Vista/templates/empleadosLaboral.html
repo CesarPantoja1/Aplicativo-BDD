@@ -43,27 +43,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                {% for empleados in empleadosLaboral %}
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>{{empleados.empleadoID}}</td>
-                    <td>{{empleados.tiendaID}}</td>
-                    <td>{{empleados.salario}}</td>
-                    <td>{{empleados.cargo}}</td>
-                    <td>{{empleados.fechaIngreso}}</td>
-                    <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="boton accion eliminar">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
-                </tr>
-                {%endfor%}
+            <tbody id="empleados_laboral">
+                
             </tbody>
         </table>
     </section>

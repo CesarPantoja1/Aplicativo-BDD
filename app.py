@@ -37,8 +37,7 @@ def clientesRegistro():
 
 @app.route("/clientesInfo")
 def clientesInfo():
-    clientesInfo = ClienteInfo.query.all()
-    return render_template("clientesInfo.html", clientesInfo=clientesInfo)  
+    return render_template("clientesInfo.html")  
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
@@ -59,8 +58,7 @@ def empleadoRegistro():
 
 @app.route("/empleadosInfo")
 def empleadosInfo():
-    empleadosInfo = EmpleadoInfo.query.all()
-    return render_template("empleadosInfo.html", empleadosInfo=empleadosInfo) 
+    return render_template("empleadosInfo.html") 
 
 @app.route("/empleadosLaboral")
 def empleadoLaboral():
@@ -115,6 +113,111 @@ def tienda():
     tiendas = Tienda.query.all()
     return render_template("tienda.html", tiendas=tiendas) 
 
+@app.route("/getClienteInfo", methods=["GET"])
+def api_clienteInfo():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clientesInfo = ClienteInfo.query.all()
+    return jsonify([clienteInfo.to_dict() for clienteInfo in clientesInfo])
+
+
+
+@app.route("/deleteClienteInfo/<int:clienteID>", methods=["DELETE"])
+def delete_clienteInfo(clienteID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clienteInfo = ClienteInfo.query.filter_by(clienteID=clienteID).first()
+    
+    if clienteInfo:
+        dbQuito.session.delete(clienteInfo)
+        dbQuito.session.commit()
+        return jsonify({"message": "Cliente eliminado correctamente"}), 200
+    else:
+        return jsonify({"error": "Cliente no encontrado"}), 404
+
+@app.route("/getClienteMembresia", methods=["GET"])
+def api_clienteMembresia():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clientesMembresia = ClienteMembresia.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([clienteMembresia.to_dict() for clienteMembresia in clientesMembresia])
+
+
+
+@app.route("/deleteClienteMembresia/<int:clienteID>/<int:tiendaID>", methods=["DELETE"])
+def delete_clienteMembresia(clienteID, tiendaID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clienteMembresia = ClienteMembresia.query.filter_by(clienteID=clienteID, tiendaID=tiendaID).first()
+    
+    if clienteMembresia:
+        dbQuito.session.delete(clienteMembresia)
+        dbQuito.session.commit()
+        return jsonify({"message": "Cliente eliminado correctamente"}), 200
+    else:
+        return jsonify({"error": "Cliente no encontrado"}), 404
+
+@app.route("/getEmpleadoInfo", methods=["GET"])
+def api_empleadoInfo():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleadosInfo = EmpleadoInfo.query.all()
+    return jsonify([empleadoInfo.to_dict() for empleadoInfo in empleadosInfo])
+
+
+
+@app.route("/deleteEmpleadoInfo/<int:empleadoID>", methods=["DELETE"])
+def delete_empleadoInfo(empleadoID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleadoInfo = EmpleadoInfo.query.filter_by(empleadoID=empleadoID).first()
+    
+    if empleadoInfo:
+        dbQuito.session.delete(empleadoInfo)
+        dbQuito.session.commit()
+        return jsonify({"message": "Empleado eliminado correctamente"}), 200
+    else:
+        return jsonify({"error": "Empleado no encontrado"}), 404
+
+@app.route("/getEmpleadoLaboral", methods=["GET"])
+def api_empleadoLaboral():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([empleadoLaboral.to_dict() for empleadoLaboral in empleadosLaboral])
+
+
+
+@app.route("/deleteEmpleadoLaboral/<int:empleadoID>/<int:tiendaID>", methods=["DELETE"])
+def delete_empleadoLaboral(empleadoID, tiendaID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleadoLaboral = EmpleadoLaboral.query.filter_by(empleadoID=empleadoID, tiendaID=tiendaID).first()
+    
+    if empleadoLaboral:
+        dbQuito.session.delete(empleadoLaboral)
+        dbQuito.session.commit()
+        return jsonify({"message": "Cliente eliminado correctamente"}), 200
+    else:
+        return jsonify({"error": "Cliente no encontrado"}), 404
+
+
 @app.route("/getProductos", methods=["GET"])
 def api_productos():
     tienda = session.get("tienda")  
@@ -140,6 +243,33 @@ def delete_producto(productoID, tiendaID):
         return jsonify({"message": "Producto eliminado correctamente"}), 200
     else:
         return jsonify({"error": "Producto no encontrado"}), 404
+
+@app.route("/getProveedores", methods=["GET"])
+def api_proveedores():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    proveedores = Proveedor.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([proveedor.to_dict() for proveedor in proveedores])
+
+
+
+@app.route("/deleteProveedor/<int:proveedorID>/<int:tiendaID>", methods=["DELETE"])
+def delete_proveedor(proveedorID, tiendaID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    proveedor = Proveedor.query.filter_by(proveedorID=proveedorID, tiendaID=tiendaID).first()
+    
+    if proveedor:
+        dbQuito.session.delete(proveedor)
+        dbQuito.session.commit()
+        return jsonify({"message": "Proveedor eliminado correctamente"}), 200
+    else:
+        return jsonify({"error": "Proveedor no encontrado"}), 404
+
 
 @app.route("/api/facturas", methods=["GET"])
 def api_facturas():

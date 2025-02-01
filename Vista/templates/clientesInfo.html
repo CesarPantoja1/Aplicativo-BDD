@@ -41,26 +41,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                {% for clientes in clientesInfo%}
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>{{clientes.clienteID}}</td>
-                    <td>{{clientes.nombreCliente}}</td>
-                    <td>{{clientes.telefono}}</td>
-                    <td>{{clientes.ciudad}}</td>
-                    <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="boton accion eliminar">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
+            <tbody id = 'clientes_info'>
+                
             </tbody>
         </table>
     </section>
