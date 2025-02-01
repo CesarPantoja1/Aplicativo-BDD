@@ -427,5 +427,36 @@ def insert_proveedor():
         dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+
+## UPDATE (PUT)
+@app.route("/updateProducto/<int:productoID>/<int:tiendaID>", methods=["PUT"])
+def update_producto(productoID, tiendaID):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    data = request.json
+    producto = Producto.query.filter_by(productoID=productoID, tiendaID=tiendaID).first()
+
+    print(data)
+    if not producto:
+        return jsonify({"error": "Producto no encontrado"}), 404
+
+    try:
+        producto.proveedorID = data.get("proveedorID", producto.proveedorID)
+        producto.nombreProducto = data.get("nombreProducto", producto.nombreProducto)
+        producto.precioProducto = data.get("precioProducto", producto.precioProducto)
+        producto.stockProducto = data.get("stockProducto", producto.stockProducto)
+
+        dbQuito.session.commit()
+
+        return jsonify({"message": "Producto actualizado con éxito"}), 200
+
+    except Exception as e:
+        dbQuito.session.rollback()
+        print(str(e))
+        return jsonify({"error": str(e)}), 500
+    
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  

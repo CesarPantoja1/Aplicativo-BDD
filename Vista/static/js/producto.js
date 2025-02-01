@@ -1,9 +1,11 @@
+import putProduct from "./services/ProductoService.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/getProductos")
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById("productos_info");
-            tbody.innerHTML = ""; 
+            tbody.innerHTML = "";
 
             data.forEach(producto => {
                 const row = document.createElement("tr");
@@ -17,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${producto.precioProducto.toFixed(2)}</td>
                     <td>${producto.stockProducto}</td>
                     <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        <button class="boton accion editar" data-producto='${JSON.stringify(producto)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
                         </button>
                     </td>
                     <td>
@@ -37,6 +39,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     eliminarProducto(productoID, tiendaID);
                 });
             });
+
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const producto = JSON.parse(this.getAttribute("data-producto"));
+                    abrirModalEdicion(producto);
+                });
+            });
         })
         .catch(error => {
             console.error("Error al cargar los productos:", error);
@@ -52,7 +61,7 @@ function eliminarProducto(productoID, tiendaID) {
         .then(data => {
             if (data.message) {
                 alert(data.message);
-                location.reload(); 
+                location.reload();
             } else {
                 alert("Error: " + data.error);
             }
@@ -62,3 +71,48 @@ function eliminarProducto(productoID, tiendaID) {
         });
     }
 }
+
+function abrirModalEdicion(producto) {
+    const modal = document.getElementById("modal-editar-producto");
+    modal.classList.add("show");
+
+    document.getElementById("edit-productoID").value = producto.productoID;
+    document.getElementById("edit-tiendaID").value = producto.tiendaID;
+    document.getElementById("edit-proveedorID").value = producto.proveedorID;
+    document.getElementById("edit-nombreProducto").value = producto.nombreProducto;
+    document.getElementById("edit-precioProducto").value = producto.precioProducto;
+    document.getElementById("edit-stockProducto").value = producto.stockProducto;
+}
+
+function cerrarModal() {
+    document.getElementById("modal-editar-producto").classList.remove("show");
+}
+
+async function actualizarProducto(event) {
+    event.preventDefault();
+    const form = document.getElementById("form-editar-producto");
+    const formData = new FormData(form);
+    const producto = Object.fromEntries(formData.entries());
+
+    producto.precioProducto = parseFloat(producto.precioProducto);
+    producto.stockProducto = parseInt(producto.stockProducto, 10);
+
+    console.log("Producto a actualizar:", producto);
+    
+    try {
+        const res = await putProduct(producto);
+
+        if (res.message) {
+            alert(res.message);
+            cerrarModal();
+            location.reload();
+        } else {
+            alert("Error: " + res.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+document.getElementById("form-editar-producto").addEventListener("submit", actualizarProducto);
+document.getElementById("cerrar-modal").addEventListener("click", cerrarModal);

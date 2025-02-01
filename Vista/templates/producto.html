@@ -47,10 +47,34 @@
             </tbody>
         </table>
     </section>
+    <section>
+        <div id="modal-editar-producto" class="modal">
+            <div class="modal-content">
+                <span id="cerrar-modal" class="close"">&times;</span>
+                <h2>Editar Producto</h2>
+                <form id="form-editar-producto">
+                    <input type="hidden" id="edit-productoID" name="productoID">
+                    <input type="hidden" id="edit-tiendaID" name="tiendaID">
+                    <input type="hidden" id="edit-proveedorID" name="proveedorID">
+                    
+                    <label for="edit-nombreProducto">Nombre:</label>
+                    <input type="text" id="edit-nombreProducto" name="nombreProducto" required>
+                    
+                    <label for="edit-precioProducto">Precio:</label>
+                    <input type="number" id="edit-precioProducto" name="precioProducto" step="0.01" required>
+                    
+                    <label for="edit-stockProducto">Stock:</label>
+                    <input type="number" id="edit-stockProducto" name="stockProducto" required>
+                    
+                    <button type="submit">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </section>
 </main>
 {% endblock %}
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/producto.js"></script>
+<script type="module"src="/static/js/producto.js"></script>
 {% endblock %}
