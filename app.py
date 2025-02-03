@@ -487,5 +487,63 @@ def update_proveedor():
         return jsonify({"error": str(e)}), 500
 
 
+@app.route('/empleadoInfo', methods=['PUT'])
+def update_empleado():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    
+    data = request.get_json()
+    empleado_id = data.get("empleadoID")
+    
+    if not empleado_id:
+        return jsonify({"error": "Falta empleadoID"}), 400
+
+    empleado = EmpleadoInfo.query.filter_by(empleadoID=empleado_id).first()
+    
+    if not empleado:
+        return jsonify({"error": "Empleado no encontrado"}), 404
+    
+    try:
+        empleado.nombreEmp = data.get("nombreEmp", empleado.nombreEmp)
+        empleado.telefono = data.get("telefono", empleado.telefono)
+        empleado.correo = data.get("correo", empleado.correo)
+        dbQuito.session.commit()
+        return jsonify({"message": "Empleado actualizado correctamente"}) , 200
+    
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/empleadoLaboral', methods=['PUT'])
+def update_empleado_laboral():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    
+    data = request.get_json()
+    empleado_id = data.get("empleadoID")
+    tienda_id = data.get("tiendaID")
+    
+    if not empleado_id or not tienda_id:
+        return jsonify({"error": "Falta empleadoID o tiendaID"}), 400
+
+    empleado = EmpleadoLaboral.query.filter_by(empleadoID=empleado_id, tiendaID=tienda_id).first()
+    
+    if not empleado:
+        return jsonify({"error": "Empleado no encontrado"}), 404
+
+    try:
+        empleado.salario = data.get("salario", empleado.salario)
+        empleado.cargo = data.get("cargo", empleado.cargo)
+        empleado.fechaIngreso = data.get("fechaIngreso", empleado.fechaIngreso)   
+        dbQuito.session.commit()
+        return jsonify({"message": "Empleado laboral actualizado correctamente"}), 200
+    
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
+    
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  

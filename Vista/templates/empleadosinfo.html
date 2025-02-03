@@ -46,10 +46,33 @@
             </tbody>
         </table>
     </section>
+    <section>
+        <div id="modal-editar-empleadoInfo" class="modal">
+            <div class="modal-content">
+                <span id="cerrar-modal-editar-empleadoInfo" class="close">&times;</span>
+                <h2>Editar Empleado</h2>
+                <form id="form-editar-empleadoInfo">
+                    <input type="hidden" id="edit-empleadoID" name="empleadoID">
+                    
+                    <label for="edit-nombreEmp">Nombre:</label>
+                    <input type="text" id="edit-nombreEmp" name="nombreEmp" required>
+                    
+                    <label for="edit-telefono">Teléfono:</label>
+                    <input type="number" id="edit-telefono" name="telefono" required>
+                    
+                    <label for="edit-correo">Correo:</label>
+                    <input type="email" id="edit-correo" name="correo" required>
+                    
+                    <button type="submit">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
 </main>
 {% endblock %}
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosinfo.js"></script>
+<script type="module" src="/static/js/empleadosinfo.js"></script>
 {% endblock %}

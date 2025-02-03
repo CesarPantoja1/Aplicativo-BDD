@@ -1,3 +1,5 @@
+import {putEmpleadoLaboral} from "./services/EmpleadoService.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/getEmpleadoLaboral")
         .then(response => response.json())
@@ -16,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${empleadoLaboral.cargo}</td>
                     <td>${empleadoLaboral.fechaIngreso}</td>
                     <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        <button class="boton accion editar" data-empleadoLaboral='${JSON.stringify(empleadoLaboral)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
                         </button>
                     </td>
                     <td>
@@ -34,6 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const empleadoID = this.getAttribute("data-id");
                     const tiendaID = this.getAttribute("data-tienda");
                     eliminarProducto(empleadoID, tiendaID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const empleadoLaboral = JSON.parse(this.getAttribute("data-empleadoLaboral"));
+                    abrirModalEdicion(empleadoLaboral);
                 });
             });
         })
@@ -61,3 +69,46 @@ function eliminarProducto(empleadoID, tiendaID) {
         });
     }
 }
+
+function abrirModalEdicion(empleadoLaboral) {
+    const modal = document.getElementById("modal-editar-empleado-laboral");
+    modal.classList.add("show");
+
+    document.getElementById("edit-empleadoID").value = empleadoLaboral.empleadoID;
+    document.getElementById("edit-tiendaID").value = empleadoLaboral.tiendaID;
+    document.getElementById("edit-salario").value = empleadoLaboral.salario;
+    document.getElementById("edit-cargo").value = empleadoLaboral.cargo;
+    document.getElementById("edit-fechaIngreso").value = empleadoLaboral.fechaIngreso;
+}
+
+function cerrarModal() {
+    document.getElementById("modal-editar-empleado-laboral").classList.remove("show");
+}
+
+async function actualizarEmpleadoLaboral(event) {
+    event.preventDefault();
+    const form = document.getElementById("form-editar-empleado-laboral");
+    const formData = new FormData(form);
+    const empleadoLaboral = Object.fromEntries(formData.entries());
+
+    empleadoLaboral.salario = parseFloat(empleadoLaboral.salario);
+
+    console.log("Empleado laboral a actualizar:", empleadoLaboral);
+    
+    try {
+        const res = await putEmpleadoLaboral(empleadoLaboral);
+
+        if (res.message) {
+            alert(res.message);
+            cerrarModal();
+            location.reload();
+        } else {
+            alert("Error: " + res.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+document.getElementById("form-editar-empleado-laboral").addEventListener("submit", actualizarEmpleadoLaboral);
+document.getElementById("cerrar-modal-empleado-laboral").addEventListener("click", cerrarModal);

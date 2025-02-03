@@ -48,10 +48,34 @@
             </tbody>
         </table>
     </section>
+    <section>
+        <div id="modal-editar-empleado-laboral" class="modal">
+            <div class="modal-content">
+                <span id="cerrar-modal-empleado-laboral" class="close">&times;</span>
+                <h2>Editar Empleado Laboral</h2>
+                <form id="form-editar-empleado-laboral">
+                    <input type="hidden" id="edit-empleadoID" name="empleadoID">
+                    <input type="hidden" id="edit-tiendaID" name="tiendaID">
+                    
+                    <label for="edit-salario">Salario:</label>
+                    <input type="number" id="edit-salario" name="salario" step="0.01" required>
+                    
+                    <label for="edit-cargo">Cargo:</label>
+                    <input type="text" id="edit-cargo" name="cargo" required>
+                    
+                    <label for="edit-fechaIngreso">Fecha de Ingreso:</label>
+                    <input type="date" id="edit-fechaIngreso" name="fechaIngreso" required>
+                    
+                    <button type="submit">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
 </main>
 {% endblock %}
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/empleadosLaboral.js"></script>
+<script type="module" src="/static/js/empleadosLaboral.js"></script>
 {% endblock %}
