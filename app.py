@@ -457,6 +457,35 @@ def update_producto(productoID, tiendaID):
         print(str(e))
         return jsonify({"error": str(e)}), 500
     
+@app.route('/proveedor', methods=['PUT'])
+def update_proveedor():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    
+    data = request.get_json()
+    proveedor_id = data.get("proveedorID")
+    tienda_id = data.get("tiendaID")
+    
+    if not proveedor_id or not tienda_id:
+        return jsonify({"error": "Falta proveedorID o tiendaID"}), 400
+
+    proveedor = Proveedor.query.filter_by(proveedorID=proveedor_id, tiendaID=tienda_id).first()
+    
+    if not proveedor:
+        return jsonify({"error": "Proveedor no encontrado"}), 404
+    
+    try:
+        proveedor.nombreProveedor = data.get("nombreProveedor", proveedor.nombreProveedor)
+        proveedor.ciudad = data.get("ciudad", proveedor.ciudad)
+        proveedor.telefono = data.get("telefono", proveedor.telefono)    
+        dbQuito.session.commit()
+        return jsonify({"message": "Proveedor actualizado correctamente"}), 200
+    
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  

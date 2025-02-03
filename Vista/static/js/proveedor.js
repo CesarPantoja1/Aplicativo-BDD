@@ -1,3 +1,5 @@
+import putProveedor from "./services/ProveedorService.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/getProveedores")
         .then(response => response.json())
@@ -16,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${proveedor.ciudad}</td>
                     <td>${proveedor.telefono}</td>
                     <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        <button class="boton accion editar" data-proveedor='${JSON.stringify(proveedor)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
                         </button>
                     </td>
                     <td>
@@ -34,6 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const proveedorID = this.getAttribute("data-id");
                     const tiendaID = this.getAttribute("data-tienda");
                     eliminarProducto(proveedorID, tiendaID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const proveedor = JSON.parse(this.getAttribute("data-proveedor"));
+                    abrirModalEdicion(proveedor);
                 });
             });
         })
@@ -61,3 +69,46 @@ function eliminarProducto(proveedorID, tiendaID) {
         });
     }
 }
+
+function abrirModalEdicion(proveedor) {
+    const modal = document.getElementById("modal-editar-proveedor");
+    modal.classList.add("show");
+
+    document.getElementById("edit-proveedorID").value = proveedor.proveedorID;
+    document.getElementById("edit-tiendaID").value = proveedor.tiendaID;
+    document.getElementById("edit-nombreProveedor").value = proveedor.nombreProveedor;
+    document.getElementById("edit-ciudad").value = proveedor.ciudad;
+    document.getElementById("edit-telefono").value = proveedor.telefono;
+}
+
+function cerrarModal() {
+    document.getElementById("modal-editar-proveedor").classList.remove("show");
+}
+
+async function actualizarProveedor(event) {
+    event.preventDefault();
+    const form = document.getElementById("form-editar-proveedor");
+    const formData = new FormData(form);
+    const proveedor = Object.fromEntries(formData.entries());
+
+    proveedor.telefono = parseInt(proveedor.telefono, 10);
+
+    console.log("Proveedor a actualizar:", proveedor);
+    
+    try {
+        const res = await putProveedor(proveedor);
+
+        if (res.message) {
+            alert(res.message);
+            cerrarModal();
+            location.reload();
+        } else {
+            alert("Error: " + res.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+document.getElementById("form-editar-proveedor").addEventListener("submit", actualizarProveedor);
+document.getElementById("cerrar-modal-editar-proveedor").addEventListener("click", cerrarModal);
