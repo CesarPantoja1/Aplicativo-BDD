@@ -46,20 +46,43 @@
                     <td>{{tienda.ubicacion}}</td>
                     <td>{{tienda.telefono}}</td>
                     <td>
-                        <button class="boton accion agregar">
+                        <button class="boton accion editar" 
+                            data-tienda='{{ tienda.to_dict() | tojson | safe }}'>
                             <img src="/static/images/mas.png" alt="Agregar"> Editar
                         </button>
                     </td>
-                    
+                         
                 </tr>
                 {%endfor%}
             </tbody>
         </table>
+    </section>
+    <section>
+        <div id="modal-editar-tienda" class="modal">
+            <div class="modal-content">
+                <span id="cerrar-modal-editar-tienda" class="close">&times;</span>
+                <h2>Editar Tienda</h2>
+                <form id="form-editar-tienda">
+                    <input type="hidden" id="edit-tiendaID" name="tiendaID">
+                    
+                    <label for="edit-nombreTienda">Nombre:</label>
+                    <input type="text" id="edit-nombreTienda" name="nombreTienda" required>
+                    
+                    <label for="edit-ubicacion">Ubicación:</label>
+                    <input type="text" id="edit-ubicacion" name="ubicacion" required>
+                    
+                    <label for="edit-telefono">Teléfono:</label>
+                    <input type="number" id="edit-telefono" name="telefono" required>
+                    
+                    <button type="submit">Actualizar</button>
+                </form>
+            </div>
+        </div>
     </section>
 </main>
 {% endblock %}
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/tienda.js"></script>
+<script type="module" src="/static/js/tienda.js"></script>
 {% endblock %}

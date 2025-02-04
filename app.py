@@ -436,7 +436,7 @@ def insert_proveedor():
         return jsonify({"error": str(e)}), 500
 
 
-## UPDATE (PUT)
+
 @app.route("/productos", methods=["PUT"])
 def update_producto():
     tienda = session.get("tienda")
@@ -450,7 +450,6 @@ def update_producto():
         return jsonify({"error": "Falta productoID o tiendaID"}), 400
     
     producto = Producto.query.filter_by(productoID=producto_id, tiendaID=tienda_id).first()
-
     if not producto:
         return jsonify({"error": "Producto no encontrado"}), 404
 
@@ -480,7 +479,6 @@ def update_proveedor():
         return jsonify({"error": "Falta proveedorID o tiendaID"}), 400
     
     proveedor = Proveedor.query.filter_by(proveedorID=proveedor_id, tiendaID=tienda_id).first()
-    
     if not proveedor:
         return jsonify({"error": "Proveedor no encontrado"}), 404
     
@@ -508,7 +506,6 @@ def update_empleado():
         return jsonify({"error": "Falta empleadoID"}), 400
 
     empleado = EmpleadoInfo.query.filter_by(empleadoID=empleado_id).first()
-    
     if not empleado:
         return jsonify({"error": "Empleado no encontrado"}), 404
     
@@ -537,7 +534,6 @@ def update_empleado_laboral():
         return jsonify({"error": "Falta empleadoID o tiendaID"}), 400
 
     empleado = EmpleadoLaboral.query.filter_by(empleadoID=empleado_id, tiendaID=tienda_id).first()
-    
     if not empleado:
         return jsonify({"error": "Empleado no encontrado"}), 404
 
@@ -677,7 +673,7 @@ def actualizar_cliente_membresia():
     if not cliente_id or not tienda_id:
         return jsonify({"error": "clienteID y tiendaID son requeridos"}), 400
     
-    cliente_membresia = clienteMembresia = ClienteMembresia.query.filter_by(clienteID=cliente_id, tiendaID=tienda_id).first()
+    cliente_membresia = ClienteMembresia.query.filter_by(clienteID=cliente_id, tiendaID=tienda_id).first()
     if not cliente_membresia:
         return jsonify({"error": "Membresía no encontrada"}), 404
 
@@ -694,14 +690,16 @@ def actualizar_cliente_membresia():
 
 @app.route('/clienteInfo', methods=['PUT'])
 def actualizar_cliente_info():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    
     data = request.json
     cliente_id = data.get('clienteID')
-
     if not cliente_id:
         return jsonify({"error": "ID del cliente es requerido"}), 400
 
     cliente = ClienteInfo.query.get(cliente_id)
-
     if not cliente:
         return jsonify({"error": "Cliente no encontrado"}), 404
 
@@ -710,12 +708,37 @@ def actualizar_cliente_info():
         cliente.telefono = data.get('telefono', cliente.telefono)
         cliente.ciudad = data.get('ciudad', cliente.ciudad)
         dbQuito.session.commit()
-        return jsonify({"message": "Cliente actualizado exitosamente"})
+        return jsonify({"message": "Cliente actualizado exitosamente"}), 200
     
     except Exception as e:
         dbQuito.session.rollback()
         return jsonify({"error": f"Error al actualizar el cliente: {str(e)}"}), 500
 
+@app.route("/tienda", methods=["PUT"])
+def actualizar_tienda():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    
+    data = request.get_json()
+    tienda_id = data.get("tiendaID")
+    if not tienda_id or not tienda_id:
+        return jsonify({"error": "Falta tiendaID "}), 400
+    
+    tienda = Tienda.query.filter_by(tiendaID=tienda_id).first()
+    if not tienda:
+        return jsonify({"error": "Tienda no encontrada"}), 404
+    
+    try:
+        tienda.nombreTienda = data["nombreTienda"]
+        tienda.ubicacion = data["ubicacion"]
+        tienda.telefono = data["telefono"]
+        dbQuito.session.commit()
+        return jsonify({"message": "Tienda actualizada correctamente"}),200
+    
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/api/clientes/<tienda>", methods=["GET"])
 def get_cliente_por_tienda(tienda):
