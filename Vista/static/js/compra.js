@@ -28,14 +28,12 @@ document.addEventListener("DOMContentLoaded", function () {
         agregarNuevaFila();
     });
 
-    // Evento delegado para cuando se cambia un producto
     document.querySelector(".articulos tbody").addEventListener("change", function (event) {
         if (event.target.classList.contains("articulo")) {
             obtenerPrecioProducto(event.target);
         }
     });
 
-    // Evento delegado para cuando cambia la cantidad
     document.querySelector(".articulos tbody").addEventListener("input", function (event) {
         if (event.target.classList.contains("cantidad")) {
             actualizarSubtotal(event.target);
@@ -50,7 +48,7 @@ function cargarOpciones(endpoint, datalistID) {
         .then(response => response.json())
         .then(data => {
             let datalist = document.getElementById(datalistID);
-            datalist.innerHTML = "";  // Limpiar las opciones actuales
+            datalist.innerHTML = "";  
             data.forEach(item => {
                 let option = document.createElement("option");
                 option.value = item.nombre.trim();
@@ -61,16 +59,16 @@ function cargarOpciones(endpoint, datalistID) {
 }
 
 function obtenerTelefono(endpoint, nombre, idTelefono) {
-    if (!nombre.trim()) return; // Evitar consultas vacías
+    if (!nombre.trim()) return; 
 
     fetch(endpoint + encodeURIComponent(nombre))
         .then(response => response.json())
         .then(data => {
             let telefonoElemento = document.getElementById(idTelefono);
             if (data.telefono) {
-                telefonoElemento.textContent = data.telefono; // Sobrescribir contenido
+                telefonoElemento.textContent = data.telefono; 
             } else {
-                telefonoElemento.textContent = "No disponible"; // En caso de error
+                telefonoElemento.textContent = "No disponible"; 
             }
         })
         .catch(error => console.error(`Error al obtener teléfono para ${nombre}:`, error));
@@ -99,7 +97,7 @@ function cargarProductos() {
         .then(response => response.json())
         .then(data => {
             let datalist = document.getElementById("articulos");
-            datalist.innerHTML = ""; // Limpiar el datalist antes de llenarlo
+            datalist.innerHTML = ""; 
 
             if (data.error) {
                 console.error("Error al cargar productos:", data.error);
@@ -108,7 +106,7 @@ function cargarProductos() {
 
             data.forEach(item => {
                 let option = document.createElement("option");
-                option.value = item.nombre.trim(); // Eliminar espacios extra
+                option.value = item.nombre.trim(); 
                 datalist.appendChild(option);
             });
 
@@ -119,16 +117,16 @@ function cargarProductos() {
 
 function obtenerPrecioProducto(inputProducto) {
     let nombreProducto = inputProducto.value.trim();
-    if (!nombreProducto) return; // Evitar consultas vacías
+    if (!nombreProducto) return; 
 
     fetch("/api/producto_precio/" + encodeURIComponent(nombreProducto))
         .then(response => response.json())
         .then(data => {
-            let fila = inputProducto.closest("tr"); // Obtener la fila actual
+            let fila = inputProducto.closest("tr");
 
             if (data.precio) {
                 fila.querySelector(".precio").textContent = `$${data.precio.toFixed(2)}`;
-                actualizarSubtotal(fila.querySelector(".cantidad")); // Calcular el subtotal de inmediato
+                actualizarSubtotal(fila.querySelector(".cantidad")); 
             } else {
                 fila.querySelector(".precio").textContent = "$0.00";
                 fila.querySelector(".subtotal").textContent = "$0.00";
@@ -138,13 +136,13 @@ function obtenerPrecioProducto(inputProducto) {
 }
 
 function actualizarSubtotal(inputCantidad) {
-    let fila = inputCantidad.closest("tr"); // Obtener la fila de la tabla
-    let cantidad = parseInt(inputCantidad.value) || 1; // Obtener cantidad (mínimo 1)
-    let precio = parseFloat(fila.querySelector(".precio").textContent.replace("$", "")) || 0; // Obtener precio
-    let subtotal = cantidad * precio; // Calcular subtotal
+    let fila = inputCantidad.closest("tr"); 
+    let cantidad = parseInt(inputCantidad.value) || 1; 
+    let precio = parseFloat(fila.querySelector(".precio").textContent.replace("$", "")) || 0; 
+    let subtotal = cantidad * precio; 
 
-    fila.querySelector(".subtotal").textContent = `$${subtotal.toFixed(2)}`; // Actualizar el subtotal
-    actualizarTotal(); // Llamar a la función que actualiza el total
+    fila.querySelector(".subtotal").textContent = `$${subtotal.toFixed(2)}`;
+    actualizarTotal(); 
 }
 
 function actualizarTotal() {
@@ -153,7 +151,7 @@ function actualizarTotal() {
         total += parseFloat(subtotal.textContent.replace("$", "")) || 0;
     });
 
-    document.querySelector(".total p").textContent = `$${total.toFixed(2)}`; // Actualizar el total
+    document.querySelector(".total p").textContent = `$${total.toFixed(2)}`; 
 }
 
 function agregarNuevaFila() {
@@ -172,6 +170,5 @@ function agregarNuevaFila() {
         <td class="subtotal">$0.00</td>
     `;
 
-    // Agregar la nueva fila a la tabla
     tabla.appendChild(nuevaFila);
 }
