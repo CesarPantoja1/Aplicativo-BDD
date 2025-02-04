@@ -1,3 +1,5 @@
+import {putClienteMembresia} from "./services/ClienteService.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/getClienteMembresia")
         .then(response => response.json())
@@ -16,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${clienteMembresia.estado}</td>
                     <td>${clienteMembresia.puntos}</td>
                     <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        <button class="boton accion editar" data-clienteMembresia='${JSON.stringify(clienteMembresia)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
                         </button>
                     </td>
                     <td>
@@ -34,6 +36,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     const clienteID = this.getAttribute("data-id");
                     const tiendaID = this.getAttribute("data-tienda");
                     eliminarProducto(clienteID, tiendaID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const clienteMembresia = JSON.parse(this.getAttribute("data-clienteMembresia"));
+                    abrirModalEdicion(clienteMembresia);
                 });
             });
         })
@@ -61,3 +69,45 @@ function eliminarProducto(clienteID, tiendaID) {
         });
     }
 }
+function abrirModalEdicion(clienteMembresia) {
+    const modal = document.getElementById("modal-editar-cliente-membresia");
+    modal.classList.add("show");
+
+    document.getElementById("edit-clienteID").value = clienteMembresia.clienteID;
+    document.getElementById("edit-tiendaID").value = clienteMembresia.tiendaID;
+    document.getElementById("edit-tipoMembresia").value = clienteMembresia.tipoMembresia;
+    document.getElementById("edit-estado").value = clienteMembresia.estado;
+    document.getElementById("edit-puntos").value = clienteMembresia.puntos;
+}
+
+function cerrarModal() {
+    document.getElementById("modal-editar-cliente-membresia").classList.remove("show");
+}
+
+async function actualizarClienteMembresia(event) {
+    event.preventDefault();
+    const form = document.getElementById("form-editar-cliente-membresia");
+    const formData = new FormData(form);
+    const clienteMembresia = Object.fromEntries(formData.entries());
+
+    clienteMembresia.puntos = parseInt(clienteMembresia.puntos, 10);
+
+    console.log("Cliente Membresía a actualizar:", clienteMembresia);
+    
+    try {
+        const res = await putClienteMembresia(clienteMembresia)
+
+        if (res.message) {
+            alert(res.message);
+            cerrarModal();
+            location.reload();
+        } else {
+            alert("Error: " + res.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+document.getElementById("form-editar-cliente-membresia").addEventListener("submit", actualizarClienteMembresia);
+document.getElementById("cerrar-modal-editar-cliente-membresia").addEventListener("click", cerrarModal);
