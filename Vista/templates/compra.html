@@ -1,0 +1,138 @@
+<!-- Herencia -->
+{% extends "home.html"%}
+
+{% block tittle %}
+<title>Compra</title>
+{% endblock %}
+
+<!-- Css -->
+{% block css %}
+<link rel="stylesheet" href="/static/css/compra.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+<!-- Contenido -->
+{% block content %}
+<main class="contenido">
+    <header class="cabecera">
+        <div class="titulo">
+            <h1>Compras</h1>
+            <p>Simulación de una compra</p>
+        </div>
+        <div class="acciones">
+            <button class="boton accion filtros">
+                <img src="/static/images/filtro.png" alt="Filtros"> Agregar
+            </button>
+        </div>
+    </header>
+
+    <div class="Apartado factura">
+        <div class="modalFact" id="modal">
+            
+            <div class="superior">
+                <div class="logo">
+                    <img src="/static/images/logofac.png" alt="Poli Market">
+                    <h1>FACTURA</h1>
+                </div>
+                <div class="detalles">
+                    <p>FACTURA: <strong id="numero_factura">Cargando...</strong></p>
+                    <p>FECHA: <strong id="fecha_factura">Cargando...</strong></p>
+                </div>
+            </div>
+
+            <div class="cliente_info">
+                <h2>INFORMACIÓN DEL CLIENTE</h2>
+                <p><strong>Nombre:</strong> 
+                    <input type="text" list="clientes_tienda" />
+                    <datalist id="clientes_tienda"></datalist>
+                </p>
+                <p><strong>Número:</strong> <strong id="cliente_telefono">Cargando...</strong></p>
+
+
+                
+                
+                
+                <p><strong>Tienda:</strong>
+                    <input type="text" list="tiendas" />
+
+                    <datalist id="tiendas">
+                        <option>Quito</option>
+                        <option>Cumbaya</option>
+                    </datalist>
+
+                </p>
+            </div>
+
+            <table class="articulos">
+                <thead>
+                    <tr>
+                        <th>ARTÍCULO</th>
+                        <th>CANT.</th>
+                        <th>PRECIO</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input list="articulos" name="articulo" class="articulo" placeholder="Selecciona un producto...">
+                            <datalist id="articulos"></datalist>
+                        </td>
+                        
+                        
+                        <td>
+                            <input type="number" class="cantidad" value="1" min="1" step="1">
+                        </td>
+                        <td class="precio">$0.00</td>
+                        <td class="subtotal">$0.00</td>
+                    </tr>
+                    
+                </tbody>
+                
+            </table>
+            
+            <button type="button" id="agregar-producto" class="boton-accion">Más productos</button>
+
+            <div class="total">
+                <h3>TOTAL</h3>
+                <p>$0.00</p>
+            </div>
+
+            <div class="pago">
+                <h2>INFORMACIÓN DE PAGO</h2>
+                <p><strong>Tipo:</strong>
+                    <input type="text" list="pago" />
+
+                    <datalist id="pago">
+                        <option>Efectivo</option>
+                        <option>Transferencia</option>
+                    </datalist>
+                </p>
+                <p><strong>Nombre del empleado:</strong> 
+                    <input type="text" list="empleados_tienda" />
+                    <datalist id="empleados_tienda"></datalist>
+                </p>
+                <p><strong>Número de teléfono:</strong> <strong id="empleado_telefono">Cargando...</strong></p>
+
+            </div>
+
+
+            <footer class="final">
+                <p>Contacto: 99999 | PoliMercado Quito | Quito</p>
+            </footer>
+        </div>
+
+
+    </div>
+
+
+
+
+
+</main>
+{% endblock %}
+
+<!-- Scripts -->
+{% block scriptjs %}
+<script src="/static/js/compra.js"></script>
+{% endblock %}

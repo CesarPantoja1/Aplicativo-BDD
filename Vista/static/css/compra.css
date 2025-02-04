@@ -1,0 +1,262 @@
+
+.contenido {
+    flex: 1;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
+/* Cabecera */
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.cabecera .titulo h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+.cabecera .titulo p {
+    margin: 5px 0 0 0;
+    font-size: 14px;
+    color: #888;
+}
+
+.cabecera .acciones {
+    display: flex;
+    gap: 10px;
+}
+
+.boton.accion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border: 1px solid #E0E0E0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500; 
+    color: #5A5A5A; 
+    background-color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s ease; 
+}
+
+.boton.accion img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.9; 
+}
+
+
+.boton.accion:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-color: #D0D0D0;
+    background-color: #F9FAFB;
+}
+
+
+/* Contenedor principal */
+.modalFact {
+    font-family: 'Poppins', Arial, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+   
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto; 
+
+    /* Imagen de fondo */
+    background-image: url('/static/images/fondofac.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+
+/* Encabezado */
+.superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.superior .logo {
+    display: flex;
+    align-items: center;
+}
+
+.superior .logo img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+.superior h1 {
+    font-size: 36px;
+    color: #003f66;
+    font-weight: 700; 
+}
+
+.detalles p {
+    font-size: 16px;
+    margin: 2px 0;
+    color: #666;
+    font-weight: 400; 
+}
+
+/* Información del cliente */
+.cliente_info {
+    margin: 20px 0;
+}
+
+.cliente_info h2 {
+    font-size: 20px;
+    font-weight: 600; 
+    color: #003f66;
+    margin-bottom: 10px;
+}
+
+.cliente_info p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #444;
+    font-weight: 400; 
+}
+
+/* Tabla de artículos */
+.articulos {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.articulos thead th {
+    background-color: #003f66;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600; 
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.articulos tbody td {
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    color: #444;
+    background: #f9f9f9; 
+    border-bottom: 1px solid #eaeaea;
+    font-weight: 400; 
+}
+
+
+.articulos tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Total */
+.total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    padding: 5px 10px;
+    background: #0B445B;
+    border-radius: 8px;
+}
+
+.total h3 {
+    font-size: 18px;
+    font-weight: 600; 
+    color: #ffffff;
+    margin: 0   ;
+}
+
+.total p {
+    font-size: 24px;
+    font-weight: 700; 
+    color: #ffffff;
+    margin: 0;
+}
+
+/* Información de pago */
+.pago {
+    margin: 10px 0;
+}
+
+.pago h2 {
+    font-size: 20px;
+    font-weight: 600; 
+    color: #003f66;
+    margin-bottom: 4px;
+}
+
+.pago p {
+    font-size: 16px;
+    margin: 1px 0;
+    color: #444;
+    font-weight: 400; 
+}
+
+
+.final {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    border-top: 1px solid #eaeaea;
+}
+
+/* Enlace a Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+.cerrar_modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+
+
+.boton-accion {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 15px;
+    background-color: #003f66;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.boton-accion:hover {
+    background-color: #005fa3;
+}
+

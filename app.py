@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, jsonify, url_for, flash, redirect, session
 from Modelo.database import dbQuito, ClienteMembresia, EmpleadoLaboral, Producto, Proveedor, Factura, DetalleFactura, Tienda, EmpleadoInfo, ClienteInfo, ClienteGeneral, EmpleadoGeneral
+from datetime import date
+
+
+
 
 app = Flask(__name__, template_folder='Vista/templates', static_folder='Vista/static')
 app.secret_key = "supersecretkey"
@@ -38,6 +42,10 @@ def clientesRegistro():
 @app.route("/clientesInfo")
 def clientesInfo():
     return render_template("clientesInfo.html")  
+
+@app.route("/compra")
+def compra():
+    return render_template("compra.html")  
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
@@ -544,6 +552,117 @@ def update_empleado_laboral():
         dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
     
+    
+@app.route("/api/clientes", methods=["GET"])
+def get_clientes():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clientes = ClienteGeneral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([{"nombre": cliente.nombreCliente.strip()} for cliente in clientes])
+
+@app.route("/api/empleados", methods=["GET"])
+def get_empleados():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleados = EmpleadoGeneral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([{"nombre": empleado.nombreEmp.strip()} for empleado in empleados])
+
+@app.route("/api/productos", methods=["GET"])
+def get_productos():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    productos = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([{"nombre": producto.nombreProducto.strip()} for producto in productos])
+
+@app.route("/api/tiendas", methods=["GET"])
+def get_tiendas():
+    tiendas = Tienda.query.all()
+    return jsonify([{"nombre": tienda.nombreTienda.strip()} for tienda in tiendas])
+@app.route("/api/cliente/<nombre>", methods=["GET"])
+def get_cliente_por_nombre(nombre):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    cliente = ClienteGeneral.query.filter_by(nombreCliente=nombre.strip(), tiendaID=1 if tienda == "QUITO" else 2).first()
+    
+    if cliente:
+        return jsonify({
+            "nombre": cliente.nombreCliente,
+            "telefono": cliente.telefono
+        })
+    else:
+        return jsonify({"error": "Cliente no encontrado"}), 404
+
+
+@app.route("/api/empleado/<nombre>", methods=["GET"])
+def get_empleado_por_nombre(nombre):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleado = EmpleadoGeneral.query.filter_by(nombreEmp=nombre.strip(), tiendaID=1 if tienda == "QUITO" else 2).first()
+    
+    if empleado:
+        return jsonify({
+            "nombre": empleado.nombreEmp,
+            "telefono": empleado.telefono
+        })
+    else:
+        return jsonify({"error": "Empleado no encontrado"}), 404
+
+
+@app.route("/api/proxima_factura", methods=["GET"])
+def get_proxima_factura():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    # Obtener la última factura de la tienda actual
+    ultima_factura = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2) \
+                                  .order_by(Factura.facturaID.desc()).first()
+    
+    # Si hay facturas, sumamos 1 al último ID, sino empezamos en 1
+    proximo_numero = ultima_factura.facturaID + 1 if ultima_factura else 1
+
+    return jsonify({"numero_factura": f"N°{proximo_numero}"})
+
+@app.route("/api/productos_tienda", methods=["GET"])
+def get_productos_por_tienda():
+    tienda = session.get("tienda")  # Obtener la tienda seleccionada en la sesión
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    # Determinar el ID de la tienda
+    tienda_id = 1 if tienda == "QUITO" else 2
+
+    # Filtrar los productos que pertenecen a la tienda seleccionada
+    productos = Producto.query.filter_by(tiendaID=tienda_id).all()
+
+    # Convertir los productos en un formato JSON
+    return jsonify([{"nombre": producto.nombreProducto} for producto in productos])
+
+@app.route("/api/producto_precio/<nombre>", methods=["GET"])
+def get_precio_producto(nombre):
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    tienda_id = 1 if tienda == "QUITO" else 2
+
+    producto = Producto.query.filter_by(nombreProducto=nombre.strip(), tiendaID=tienda_id).first()
+    
+    if producto:
+        return jsonify({"precio": producto.precioProducto})
+    else:
+        return jsonify({"error": "Producto no encontrado"}), 404
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  
