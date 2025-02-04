@@ -60,6 +60,7 @@ function fetchFacturas() {
 }
 
 function abrirFactura(facturaID) {
+    console.log(`Solicitud de apertura de factura con ID: ${facturaID}`);
     fetch(`/api/factura/${facturaID}`)
         .then(response => response.json())
         .then(data => {
@@ -67,6 +68,33 @@ function abrirFactura(facturaID) {
                 console.error("Error:", data.error);
                 return;
             }
+
+            console.log("Datos extraídos de la factura:", data); // Log para ver la información extraída
+
+            console.log("Factura:");
+            console.log(`ID: ${data.factura.facturaID}`);
+            console.log(`Fecha: ${data.factura.fechaFactura}`);
+            console.log(`Método de Pago: ${data.factura.metodoPago}`);
+            console.log(`Total: ${data.factura.total}`);
+
+            console.log("Cliente:");
+            console.log(`Nombre: ${data.cliente.nombreCliente}`);
+            console.log(`Teléfono: ${data.cliente.telefono}`);
+            console.log(`Tienda: ${data.factura.tiendaID == 1 ? "Quito" : "Cumbayá"}`);
+
+            console.log("Detalles de productos:");
+            data.detalles.forEach(detalle => {
+                console.log(`Producto: ${detalle.nombreProducto}`);
+                console.log(`Cantidad: ${detalle.cantidad}`);
+                console.log(`Precio: $${detalle.precio.toFixed(2)}`);
+                console.log(`Subtotal: $${(detalle.cantidad * detalle.precio).toFixed(2)}`);
+            });
+
+            console.log("Empleado:");
+            console.log(`Nombre: ${data.empleado.nombreEmp}`);
+            console.log(`Teléfono: ${data.empleado.telefono}`);
+
+
 
             document.querySelector(".detalles p:nth-child(1) strong").textContent = `N°${data.factura.facturaID}`;
             document.querySelector(".detalles p:nth-child(2) strong").textContent = data.factura.fechaFactura;
