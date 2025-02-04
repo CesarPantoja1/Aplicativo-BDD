@@ -717,5 +717,47 @@ def actualizar_cliente_info():
         return jsonify({"error": f"Error al actualizar el cliente: {str(e)}"}), 500
 
 
+@app.route("/api/clientes/<tienda>", methods=["GET"])
+def get_cliente_por_tienda(tienda):
+    # Ajustamos los nombres para que coincidan con las opciones del combo box
+    tienda = tienda.strip().lower()
+    if "quito" in tienda:
+        tienda_id = 1
+    elif "cumbayá" in tienda or "cumbaya" in tienda:
+        tienda_id = 2
+    else:
+        return jsonify({"error": "Tienda no válida"}), 400
+
+    clientes = ClienteGeneral.query.filter_by(tiendaID=tienda_id).all()
+    return jsonify([{"nombre": cliente.nombreCliente.strip()} for cliente in clientes])
+
+
+@app.route("/api/empleados/<tienda>", methods=["GET"])
+def get_empleado_por_tienda(tienda):
+    tienda = tienda.strip().lower()
+    if "quito" in tienda:
+        tienda_id = 1
+    elif "cumbayá" in tienda or "cumbaya" in tienda:
+        tienda_id = 2
+    else:
+        return jsonify({"error": "Tienda no válida"}), 400
+
+    empleados = EmpleadoGeneral.query.filter_by(tiendaID=tienda_id).all()
+    return jsonify([{"nombre": empleado.nombreEmp.strip()} for empleado in empleados])
+
+
+@app.route("/api/productos/<tienda>", methods=["GET"])
+def get_producto_por_tienda(tienda):
+    tienda = tienda.strip().lower()
+    if "quito" in tienda:
+        tienda_id = 1
+    elif "cumbayá" in tienda or "cumbaya" in tienda:
+        tienda_id = 2
+    else:
+        return jsonify({"error": "Tienda no válida"}), 400
+
+    productos = Producto.query.filter_by(tiendaID=tienda_id).all()
+    return jsonify([{"nombre": producto.nombreProducto.strip()} for producto in productos])
+
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  

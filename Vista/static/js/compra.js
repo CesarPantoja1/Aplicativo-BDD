@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", function () {
     asignarFechaActual();
     cargarProductos();
 
+    document.querySelector('input[list="tiendas"]').addEventListener("change", function () {
+        let tiendaSeleccionada = this.value.trim();
+        console.log("Tienda seleccionada:", tiendaSeleccionada);
+        if (tiendaSeleccionada) {
+            cargarOpciones(`/api/clientes/${tiendaSeleccionada}`, "clientes_tienda");
+            cargarOpciones(`/api/empleados/${tiendaSeleccionada}`, "empleados_tienda");
+            cargarOpciones(`/api/productos/${tiendaSeleccionada}`, "articulos");
+            
+        }
+
+    });
+
     document.querySelector("input[list='articulos']").addEventListener("change", function () {
         obtenerPrecioProducto(this.value);
     });
@@ -48,7 +60,7 @@ function cargarOpciones(endpoint, datalistID) {
         .then(response => response.json())
         .then(data => {
             let datalist = document.getElementById(datalistID);
-            datalist.innerHTML = "";  
+            datalist.innerHTML = "";  // Limpiar las opciones actuales
             data.forEach(item => {
                 let option = document.createElement("option");
                 option.value = item.nombre.trim();
