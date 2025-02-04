@@ -437,16 +437,20 @@ def insert_proveedor():
 
 
 ## UPDATE (PUT)
-@app.route("/updateProducto/<int:productoID>/<int:tiendaID>", methods=["PUT"])
-def update_producto(productoID, tiendaID):
+@app.route("/productos", methods=["PUT"])
+def update_producto():
     tienda = session.get("tienda")
     if not tienda:
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
     data = request.json
-    producto = Producto.query.filter_by(productoID=productoID, tiendaID=tiendaID).first()
+    producto_id = data.get("productoID")
+    tienda_id = data.get("tiendaID")
+    if not producto_id or not tienda_id:
+        return jsonify({"error": "Falta productoID o tiendaID"}), 400
+    
+    producto = Producto.query.filter_by(productoID=producto_id, tiendaID=tienda_id).first()
 
-    print(data)
     if not producto:
         return jsonify({"error": "Producto no encontrado"}), 404
 
@@ -455,9 +459,7 @@ def update_producto(productoID, tiendaID):
         producto.nombreProducto = data.get("nombreProducto", producto.nombreProducto)
         producto.precioProducto = data.get("precioProducto", producto.precioProducto)
         producto.stockProducto = data.get("stockProducto", producto.stockProducto)
-
         dbQuito.session.commit()
-
         return jsonify({"message": "Producto actualizado con éxito"}), 200
 
     except Exception as e:
@@ -474,10 +476,9 @@ def update_proveedor():
     data = request.get_json()
     proveedor_id = data.get("proveedorID")
     tienda_id = data.get("tiendaID")
-    
     if not proveedor_id or not tienda_id:
         return jsonify({"error": "Falta proveedorID o tiendaID"}), 400
-
+    
     proveedor = Proveedor.query.filter_by(proveedorID=proveedor_id, tiendaID=tienda_id).first()
     
     if not proveedor:
@@ -503,7 +504,6 @@ def update_empleado():
     
     data = request.get_json()
     empleado_id = data.get("empleadoID")
-    
     if not empleado_id:
         return jsonify({"error": "Falta empleadoID"}), 400
 
@@ -662,6 +662,59 @@ def get_precio_producto(nombre):
         return jsonify({"precio": producto.precioProducto})
     else:
         return jsonify({"error": "Producto no encontrado"}), 404
+
+
+@app.route('/clienteMembresia', methods=['PUT'])
+def actualizar_cliente_membresia():
+    tienda = session.get("tienda")
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    
+    data = request.json
+    cliente_id = data.get("clienteID")
+    tienda_id = data.get("tiendaID")
+
+    if not cliente_id or not tienda_id:
+        return jsonify({"error": "clienteID y tiendaID son requeridos"}), 400
+    
+    cliente_membresia = clienteMembresia = ClienteMembresia.query.filter_by(clienteID=cliente_id, tiendaID=tienda_id).first()
+    if not cliente_membresia:
+        return jsonify({"error": "Membresía no encontrada"}), 404
+
+    try:
+        cliente_membresia.tipoMembresia = data.get("tipoMembresia", cliente_membresia.tipoMembresia)
+        cliente_membresia.estado = data.get("estado", cliente_membresia.estado)
+        cliente_membresia.puntos = data.get("puntos", cliente_membresia.puntos)
+        dbQuito.session.commit()
+        return jsonify({"message": "Membresía actualizada correctamente"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route('/clienteInfo', methods=['PUT'])
+def actualizar_cliente_info():
+    data = request.json
+    cliente_id = data.get('clienteID')
+
+    if not cliente_id:
+        return jsonify({"error": "ID del cliente es requerido"}), 400
+
+    cliente = ClienteInfo.query.get(cliente_id)
+
+    if not cliente:
+        return jsonify({"error": "Cliente no encontrado"}), 404
+
+    try:
+        cliente.nombreCliente = data.get('nombreCliente', cliente.nombreCliente)
+        cliente.telefono = data.get('telefono', cliente.telefono)
+        cliente.ciudad = data.get('ciudad', cliente.ciudad)
+        dbQuito.session.commit()
+        return jsonify({"message": "Cliente actualizado exitosamente"})
+    
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": f"Error al actualizar el cliente: {str(e)}"}), 500
 
 
 if __name__ == '__main__':

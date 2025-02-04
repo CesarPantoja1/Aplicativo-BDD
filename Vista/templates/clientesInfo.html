@@ -46,10 +46,32 @@
             </tbody>
         </table>
     </section>
+    <section>
+        <div id="modal-editar-cliente-info" class="modal">
+            <div class="modal-content">
+                <span id="cerrar-modal-editar-cliente-info" class="close">&times;</span>
+                <h2>Editar Cliente Info</h2>
+                <form id="form-editar-cliente-info">
+                    <input type="hidden" id="edit-clienteID" name="clienteID">
+                    
+                    <label for="edit-nombreCliente">Nombre:</label>
+                    <input type="text" id="edit-nombreCliente" name="nombreCliente" required>
+                    
+                    <label for="edit-telefono">Teléfono:</label>
+                    <input type="number" id="edit-telefono" name="telefono" required>
+                    
+                    <label for="edit-ciudad">Ciudad:</label>
+                    <input type="text" id="edit-ciudad" name="ciudad" required>
+                    
+                    <button type="submit">Actualizar</button>
+                </form>
+            </div>
+        </div>
+    </section>
 </main>
 {% endblock %}
 
 <!-- Scripts -->
 {% block scriptjs %}
-<script src="/static/js/clientesInfo.js"></script>
+<script type="module" src="/static/js/clientesInfo.js"></script>
 {% endblock %}

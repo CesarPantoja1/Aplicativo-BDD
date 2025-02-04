@@ -78,7 +78,6 @@ function abrirModalEdicion(empleadoLaboral) {
     document.getElementById("edit-tiendaID").value = empleadoLaboral.tiendaID;
     document.getElementById("edit-salario").value = empleadoLaboral.salario;
     document.getElementById("edit-cargo").value = empleadoLaboral.cargo;
-    document.getElementById("edit-fechaIngreso").value = empleadoLaboral.fechaIngreso;
 }
 
 function cerrarModal() {

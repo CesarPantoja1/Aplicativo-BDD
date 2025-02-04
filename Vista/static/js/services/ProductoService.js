@@ -1,7 +1,7 @@
 export default async function putProduct(producto){
     const { productoID, tiendaID } = producto; 
 
-    const response = await fetch(`/updateProducto/${productoID}/${tiendaID}`, {
+    const response = await fetch("/productos", {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",

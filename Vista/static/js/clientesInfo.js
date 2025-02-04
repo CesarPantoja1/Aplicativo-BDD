@@ -1,3 +1,5 @@
+import {putClienteInfo} from "./services/ClienteService.js";
+
 document.addEventListener("DOMContentLoaded", function () {
     fetch("/getClienteInfo")
         .then(response => response.json())
@@ -15,8 +17,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     <td>${clienteInfo.telefono}</td>
                     <td>${clienteInfo.ciudad}</td>
                     <td>
-                        <button class="boton accion agregar">
-                            <img src="/static/images/mas.png" alt="Agregar"> Editar
+                        <button class="boton accion editar" data-clienteInfo='${JSON.stringify(clienteInfo)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
                         </button>
                     </td>
                     <td>
@@ -32,6 +34,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 button.addEventListener("click", function () {
                     const clienteID = this.getAttribute("data-id");
                     eliminarClienteInfo(clienteID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const clienteInfo = JSON.parse(this.getAttribute("data-clienteInfo"));
+                    abrirModalEdicion(clienteInfo);
                 });
             });
         })
@@ -59,3 +67,44 @@ function eliminarClienteInfo(clienteID) {
         });
     }
 }
+function abrirModalEdicion(clienteInfo) {
+    const modal = document.getElementById("modal-editar-cliente-info");
+    modal.classList.add("show");
+
+    document.getElementById("edit-clienteID").value = clienteInfo.clienteID;
+    document.getElementById("edit-nombreCliente").value = clienteInfo.nombreCliente;
+    document.getElementById("edit-telefono").value = clienteInfo.telefono;
+    document.getElementById("edit-ciudad").value = clienteInfo.ciudad;
+}
+
+function cerrarModal() {
+    document.getElementById("modal-editar-cliente-info").classList.remove("show");
+}
+
+async function actualizarClienteInfo(event) {
+    event.preventDefault();
+    const form = document.getElementById("form-editar-cliente-info");
+    const formData = new FormData(form);
+    const clienteInfo = Object.fromEntries(formData.entries());
+
+    clienteInfo.telefono = parseInt(clienteInfo.telefono, 10);
+
+    console.log("Cliente Info a actualizar:", clienteInfo);
+    
+    try {
+        const res = await putClienteInfo(clienteInfo)
+
+        if (res.message) {
+            alert(res.message);
+            cerrarModal();
+            location.reload();
+        } else {
+            alert("Error: " + res.error);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+document.getElementById("form-editar-cliente-info").addEventListener("submit", actualizarClienteInfo);
+document.getElementById("cerrar-modal-editar-cliente-info").addEventListener("click", cerrarModal);

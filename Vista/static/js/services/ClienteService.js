@@ -1,10 +1,10 @@
-export async function putEmpleadoInfo(empleadoInfo){
-    const response = await fetch("/empleadoInfo", {
+export async function putClienteInfo(clienteInfo){
+    const response = await fetch("/clienteInfo", {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(empleadoInfo),
+        body: JSON.stringify(clienteInfo),
     });
     const resData = await response.json();
     if ( !response.ok ){
@@ -14,13 +14,13 @@ export async function putEmpleadoInfo(empleadoInfo){
     return resData;
 }
 
-export async function putEmpleadoLaboral(empleadolaboral){
-    const response = await fetch("/empleadoLaboral", {
+export async function putClienteMembresia(clienteMembresia){
+    const response = await fetch("/clienteMembresia", {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify(empleadolaboral),
+        body: JSON.stringify(clienteMembresia),
     });
     const resData = await response.json();
     if ( !response.ok ){
@@ -30,4 +30,4 @@ export async function putEmpleadoLaboral(empleadolaboral){
     return resData;
 }
 
-export default { putEmpleadoInfo, putEmpleadoLaboral };
+export default { putClienteInfo, putClienteMembresia };
