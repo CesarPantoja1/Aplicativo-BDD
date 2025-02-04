@@ -429,16 +429,20 @@ def insert_proveedor():
 
 
 ## UPDATE (PUT)
-@app.route("/updateProducto/<int:productoID>/<int:tiendaID>", methods=["PUT"])
-def update_producto(productoID, tiendaID):
+@app.route("/productos", methods=["PUT"])
+def update_producto():
     tienda = session.get("tienda")
     if not tienda:
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
     data = request.json
-    producto = Producto.query.filter_by(productoID=productoID, tiendaID=tiendaID).first()
+    producto_id = data.get("productoID")
+    tienda_id = data.get("tiendaID")
+    if not producto_id or not tienda_id:
+        return jsonify({"error": "Falta productoID o tiendaID"}), 400
+    
+    producto = Producto.query.filter_by(productoID=producto_id, tiendaID=tienda_id).first()
 
-    print(data)
     if not producto:
         return jsonify({"error": "Producto no encontrado"}), 404
 
@@ -447,9 +451,7 @@ def update_producto(productoID, tiendaID):
         producto.nombreProducto = data.get("nombreProducto", producto.nombreProducto)
         producto.precioProducto = data.get("precioProducto", producto.precioProducto)
         producto.stockProducto = data.get("stockProducto", producto.stockProducto)
-
         dbQuito.session.commit()
-
         return jsonify({"message": "Producto actualizado con éxito"}), 200
 
     except Exception as e:
@@ -466,10 +468,9 @@ def update_proveedor():
     data = request.get_json()
     proveedor_id = data.get("proveedorID")
     tienda_id = data.get("tiendaID")
-    
     if not proveedor_id or not tienda_id:
         return jsonify({"error": "Falta proveedorID o tiendaID"}), 400
-
+    
     proveedor = Proveedor.query.filter_by(proveedorID=proveedor_id, tiendaID=tienda_id).first()
     
     if not proveedor:
@@ -495,7 +496,6 @@ def update_empleado():
     
     data = request.get_json()
     empleado_id = data.get("empleadoID")
-    
     if not empleado_id:
         return jsonify({"error": "Falta empleadoID"}), 400
 
