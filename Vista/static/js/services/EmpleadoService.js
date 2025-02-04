@@ -15,7 +15,7 @@ export async function putEmpleadoInfo(empleadoInfo){
 }
 
 export async function putEmpleadoLaboral(empleadolaboral){
-    const response = await fetch("/empleadoInfo", {
+    const response = await fetch("/empleadoLaboral", {
         method: 'PUT',
         headers: {
             "Content-Type": "application/json",
