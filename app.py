@@ -549,6 +549,11 @@ def update_empleado_laboral():
         return jsonify({"error": str(e)}), 500
     
     
+@app.route("/api/tiendas", methods=["GET"])
+def get_tiendas():
+    tiendas = Tienda.query.all()
+    return jsonify([{"nombre": f"{tienda.nombreTienda} ({tienda.tiendaID})"} for tienda in tiendas])
+
 @app.route("/api/clientes", methods=["GET"])
 def get_clientes():
     tienda = session.get("tienda")  
@@ -556,7 +561,7 @@ def get_clientes():
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
     clientes = ClienteGeneral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return jsonify([{"nombre": cliente.nombreCliente.strip()} for cliente in clientes])
+    return jsonify([{"nombre": f"{cliente.nombreCliente} ({cliente.clienteID})"} for cliente in clientes])
 
 @app.route("/api/empleados", methods=["GET"])
 def get_empleados():
@@ -565,7 +570,7 @@ def get_empleados():
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
     empleados = EmpleadoGeneral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return jsonify([{"nombre": empleado.nombreEmp.strip()} for empleado in empleados])
+    return jsonify([{"nombre": f"{empleado.nombreEmp} ({empleado.empleadoID})"} for empleado in empleados])
 
 @app.route("/api/productos", methods=["GET"])
 def get_productos():
@@ -574,19 +579,13 @@ def get_productos():
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
     productos = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return jsonify([{"nombre": producto.nombreProducto.strip()} for producto in productos])
+    return jsonify([{"nombre": f"{producto.nombreProducto} ({producto.productoID})"} for producto in productos])
 
-@app.route("/api/tiendas", methods=["GET"])
-def get_tiendas():
-    tiendas = Tienda.query.all()
-    return jsonify([{"nombre": tienda.nombreTienda.strip()} for tienda in tiendas])
-@app.route("/api/cliente/<nombre>", methods=["GET"])
-def get_cliente_por_nombre(nombre):
-    tienda = session.get("tienda")
-    if not tienda:
-        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
-    cliente = ClienteGeneral.query.filter_by(nombreCliente=nombre.strip(), tiendaID=1 if tienda == "QUITO" else 2).first()
+
+@app.route("/api/cliente/<int:tiendaID>/<nombre>", methods=["GET"])
+def get_cliente_por_nombre(tiendaID, nombre):
+    cliente = ClienteGeneral.query.filter_by(nombreCliente=nombre.strip(), tiendaID=tiendaID).first()
     
     if cliente:
         return jsonify({
@@ -596,14 +595,9 @@ def get_cliente_por_nombre(nombre):
     else:
         return jsonify({"error": "Cliente no encontrado"}), 404
 
-
-@app.route("/api/empleado/<nombre>", methods=["GET"])
-def get_empleado_por_nombre(nombre):
-    tienda = session.get("tienda")
-    if not tienda:
-        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
-
-    empleado = EmpleadoGeneral.query.filter_by(nombreEmp=nombre.strip(), tiendaID=1 if tienda == "QUITO" else 2).first()
+@app.route("/api/empleado/<int:tiendaID>/<nombre>", methods=["GET"])
+def get_empleado_por_nombre(tiendaID, nombre):
+    empleado = EmpleadoGeneral.query.filter_by(nombreEmp=nombre.strip(), tiendaID=tiendaID).first()
     
     if empleado:
         return jsonify({
@@ -616,18 +610,17 @@ def get_empleado_por_nombre(nombre):
 
 @app.route("/api/proxima_factura", methods=["GET"])
 def get_proxima_factura():
-    tienda = session.get("tienda")
-    if not tienda:
-        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    try:
+        # Obtener la última factura sin filtrar por tienda
+        ultima_factura = Factura.query.order_by(Factura.facturaID.desc()).first()
+        
+        # Si hay facturas, sumamos 1 al último ID, sino empezamos en 1
+        proximo_numero = ultima_factura.facturaID + 1 if ultima_factura else 1
 
-    # Obtener la última factura de la tienda actual
-    ultima_factura = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2) \
-                                  .order_by(Factura.facturaID.desc()).first()
-    
-    # Si hay facturas, sumamos 1 al último ID, sino empezamos en 1
-    proximo_numero = ultima_factura.facturaID + 1 if ultima_factura else 1
+        return jsonify({"numero_factura": f"N°{proximo_numero}"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    return jsonify({"numero_factura": f"N°{proximo_numero}"})
 
 @app.route("/api/productos_tienda", methods=["GET"])
 def get_productos_por_tienda():
@@ -641,24 +634,18 @@ def get_productos_por_tienda():
     # Filtrar los productos que pertenecen a la tienda seleccionada
     productos = Producto.query.filter_by(tiendaID=tienda_id).all()
 
-    # Convertir los productos en un formato JSON
-    return jsonify([{"nombre": producto.nombreProducto} for producto in productos])
+    # Convertir los productos en un formato JSON con nombre + ID
+    return jsonify([{"nombre": f"{producto.nombreProducto} ({producto.productoID})"} for producto in productos])
 
-@app.route("/api/producto_precio/<nombre>", methods=["GET"])
-def get_precio_producto(nombre):
-    tienda = session.get("tienda")
-    if not tienda:
-        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
-    tienda_id = 1 if tienda == "QUITO" else 2
-
-    producto = Producto.query.filter_by(nombreProducto=nombre.strip(), tiendaID=tienda_id).first()
+@app.route("/api/producto_precio/<int:tiendaID>/<nombre>", methods=["GET"])
+def get_precio_producto(tiendaID, nombre):
+    producto = Producto.query.filter_by(nombreProducto=nombre.strip(), tiendaID=tiendaID).first()
     
     if producto:
         return jsonify({"precio": producto.precioProducto})
     else:
         return jsonify({"error": "Producto no encontrado"}), 404
-
 
 @app.route('/clienteMembresia', methods=['PUT'])
 def actualizar_cliente_membresia():
@@ -742,7 +729,7 @@ def actualizar_tienda():
 
 @app.route("/api/clientes/<tienda>", methods=["GET"])
 def get_cliente_por_tienda(tienda):
-    # Ajustamos los nombres para que coincidan con las opciones del combo box
+    print(tienda)
     tienda = tienda.strip().lower()
     if "quito" in tienda:
         tienda_id = 1
@@ -752,11 +739,11 @@ def get_cliente_por_tienda(tienda):
         return jsonify({"error": "Tienda no válida"}), 400
 
     clientes = ClienteGeneral.query.filter_by(tiendaID=tienda_id).all()
-    return jsonify([{"nombre": cliente.nombreCliente.strip()} for cliente in clientes])
-
+    return jsonify([{"nombre": f"{cliente.nombreCliente} ({cliente.clienteID})"} for cliente in clientes])
 
 @app.route("/api/empleados/<tienda>", methods=["GET"])
 def get_empleado_por_tienda(tienda):
+    print(tienda)
     tienda = tienda.strip().lower()
     if "quito" in tienda:
         tienda_id = 1
@@ -766,11 +753,11 @@ def get_empleado_por_tienda(tienda):
         return jsonify({"error": "Tienda no válida"}), 400
 
     empleados = EmpleadoGeneral.query.filter_by(tiendaID=tienda_id).all()
-    return jsonify([{"nombre": empleado.nombreEmp.strip()} for empleado in empleados])
-
+    return jsonify([{"nombre": f"{empleado.nombreEmp} ({empleado.empleadoID})"} for empleado in empleados])
 
 @app.route("/api/productos/<tienda>", methods=["GET"])
 def get_producto_por_tienda(tienda):
+    print(tienda)
     tienda = tienda.strip().lower()
     if "quito" in tienda:
         tienda_id = 1
@@ -780,7 +767,79 @@ def get_producto_por_tienda(tienda):
         return jsonify({"error": "Tienda no válida"}), 400
 
     productos = Producto.query.filter_by(tiendaID=tienda_id).all()
-    return jsonify([{"nombre": producto.nombreProducto.strip()} for producto in productos])
+    return jsonify([{"nombre": f"{producto.nombreProducto} ({producto.productoID})"} for producto in productos])
+
+@app.route("/api/proximo_num_detalle", methods=["GET"])
+def get_proximo_num_detalle_global():
+    ultimo_detalle = DetalleFactura.query.order_by(DetalleFactura.numDetalle.desc()).first()
+    
+    proximo_numero = ultimo_detalle.numDetalle + 1 if ultimo_detalle else 1
+
+    return jsonify({"numDetalle": proximo_numero})
+
+
+
+@app.route("/api/insert_factura", methods=["POST"])
+def insert_factura():
+    data = request.json  # Recibir los datos en formato JSON
+    
+    try:
+        # Extraer los datos de la factura
+        facturaID = int(data["facturaID"])
+        tiendaID = int(data["tiendaID"])
+        empleadoID = int(data["empleadoID"])
+        clienteID = int(data["clienteID"])
+        fechaFactura = date.fromisoformat(data["fechaFactura"]).strftime('%Y-%m-%d')
+        metodoPago = data["metodoPago"]
+        total = round(float(data["total"]), 2)
+
+        # Verificar si la factura ya existe
+        factura_existente = Factura.query.filter_by(facturaID=facturaID, tiendaID=tiendaID).first()
+        if not factura_existente:
+            nueva_factura = Factura(
+                facturaID=facturaID,
+                tiendaID=tiendaID,
+                empleadoID=empleadoID,
+                clienteID=clienteID,
+                fechaFactura=fechaFactura,
+                metodoPago=metodoPago,
+                total=total
+            )
+            print(f"FacturaID: {facturaID}, TiendaID: {tiendaID}, EmpleadoID: {empleadoID}, ClienteID: {clienteID}, Fecha: {fechaFactura}, Pago: {metodoPago}, Total: {total}")
+            dbQuito.session.add(nueva_factura)
+            dbQuito.session.commit()  # Guardar primero la factura
+
+        # Guardar los detalles de la factura
+        for detalle in data["detallesFactura"]:
+            numDetalle = int(detalle["numDetalle"])
+            productoID = int(detalle["productoID"])
+            cantidad = int(detalle["cantidad"])
+            precio = float(detalle["precio"])
+
+            # Verificar si la factura realmente existe antes de insertar el detalle
+            factura_relacionada = Factura.query.filter_by(facturaID=facturaID, tiendaID=tiendaID).first()
+            if not factura_relacionada:
+                return jsonify({"error": "La factura no existe en la base de datos"}), 400
+
+            nuevo_detalle = DetalleFactura(
+                numDetalle=numDetalle,
+                tiendaID=tiendaID,
+                facturaID=facturaID,
+                productoID=productoID,
+                cantidad=cantidad,
+                precio=precio
+            )
+            dbQuito.session.add(nuevo_detalle)
+
+        # Confirmar los cambios en la base de datos
+        dbQuito.session.commit()
+        return jsonify({"message": "Factura y detalles registrados con éxito"}), 201
+
+    except Exception as e:
+        dbQuito.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)  
