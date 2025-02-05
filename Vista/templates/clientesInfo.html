@@ -2,8 +2,8 @@
 {% extends "home.html"%}
 
 
-{% block tittle %} 
-    <title>Información personal de clientes</title>
+{% block tittle %}
+<title>Información personal de clientes</title>
 {% endblock %}
 
 <!-- Css -->
@@ -20,13 +20,18 @@
             <p>Información personal de los clientes</p>
         </div>
         <div class="acciones">
-            
+
             <button class="boton accion filtros">
                 <img src="/static/images/filtro.png" alt="Filtros"> Filtrar
             </button>
-            
+
         </div>
     </header>
+
+    <!-- Search Bar -->
+    <section class="search_bar">
+        <input type="text" id="searchCliente" placeholder="Buscar por ID de cliente">
+    </section>
 
     <section class="tabla_clientes">
         <table>
@@ -41,8 +46,8 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody id = 'clientes_info'>
-                
+            <tbody id='clientes_info'>
+
             </tbody>
         </table>
     </section>
@@ -53,16 +58,16 @@
                 <h2>Editar Cliente Info</h2>
                 <form id="form-editar-cliente-info">
                     <input type="hidden" id="edit-clienteID" name="clienteID">
-                    
+
                     <label for="edit-nombreCliente">Nombre:</label>
                     <input type="text" id="edit-nombreCliente" name="nombreCliente" required>
-                    
+
                     <label for="edit-telefono">Teléfono:</label>
                     <input type="number" id="edit-telefono" name="telefono" required>
-                    
+
                     <label for="edit-ciudad">Ciudad:</label>
                     <input type="text" id="edit-ciudad" name="ciudad" required>
-                    
+
                     <button type="submit">Actualizar</button>
                 </form>
             </div>

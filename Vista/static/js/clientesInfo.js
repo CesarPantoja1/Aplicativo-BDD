@@ -1,51 +1,66 @@
-import {putClienteInfo} from "./services/ClienteService.js";
+import { putClienteInfo } from "./services/ClienteService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    fetch("/getClienteInfo")
-        .then(response => response.json())
-        .then(data => {
-            const tbody = document.getElementById("clientes_info");
-            tbody.innerHTML = ""; 
+    const searchInput = document.getElementById("searchCliente");
 
-            data.forEach(clienteInfo => {
-                const row = document.createElement("tr");
+    // Función para cargar clientes con el filtro
+    function cargarClientes(filtroID = "") {
+        fetch("/getClienteInfo")
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById("clientes_info");
+                tbody.innerHTML = ""; 
 
-                row.innerHTML = `
-                    <td><input type="checkbox"></td>
-                    <td>${clienteInfo.clienteID}</td>
-                    <td>${clienteInfo.nombreCliente}</td>
-                    <td>${clienteInfo.telefono}</td>
-                    <td>${clienteInfo.ciudad}</td>
-                    <td>
-                        <button class="boton accion editar" data-clienteInfo='${JSON.stringify(clienteInfo)}'>
-                            <img src="/static/images/mas.png" alt="Editar"> Editar
-                        </button>
-                    </td>
-                    <td>
-                        <button class="boton accion eliminar" data-id="${clienteInfo.clienteID}">
-                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
-                        </button>
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
+                data.forEach(clienteInfo => {
+                    if (filtroID && !clienteInfo.clienteID.toString().includes(filtroID)) return; // Filtra por ID
 
-            document.querySelectorAll(".boton.eliminar").forEach(button => {
-                button.addEventListener("click", function () {
-                    const clienteID = this.getAttribute("data-id");
-                    eliminarClienteInfo(clienteID);
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td><input type="checkbox"></td>
+                        <td>${clienteInfo.clienteID}</td>
+                        <td>${clienteInfo.nombreCliente}</td>
+                        <td>${clienteInfo.telefono}</td>
+                        <td>${clienteInfo.ciudad}</td>
+                        <td>
+                            <button class="boton accion editar" data-clienteInfo='${JSON.stringify(clienteInfo)}'>
+                                <img src="/static/images/mas.png" alt="Editar"> Editar
+                            </button>
+                        </td>
+                        <td>
+                            <button class="boton accion eliminar" data-id="${clienteInfo.clienteID}">
+                                <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
                 });
-            });
-            document.querySelectorAll(".boton.editar").forEach(button => {
-                button.addEventListener("click", function () {
-                    const clienteInfo = JSON.parse(this.getAttribute("data-clienteInfo"));
-                    abrirModalEdicion(clienteInfo);
+
+                // Event listeners para los botones de editar y eliminar
+                document.querySelectorAll(".boton.eliminar").forEach(button => {
+                    button.addEventListener("click", function () {
+                        const clienteID = this.getAttribute("data-id");
+                        eliminarClienteInfo(clienteID);
+                    });
                 });
+
+                document.querySelectorAll(".boton.editar").forEach(button => {
+                    button.addEventListener("click", function () {
+                        const clienteInfo = JSON.parse(this.getAttribute("data-clienteInfo"));
+                        abrirModalEdicion(clienteInfo);
+                    });
+                });
+            })
+            .catch(error => {
+                console.error("Error al cargar la información personal del cliente:", error);
             });
-        })
-        .catch(error => {
-            console.error("Error al cargar la informacion personal del cliente:", error);
-        });
+    }
+
+    // Evento de búsqueda para filtrar los clientes por ID
+    searchInput.addEventListener("input", function () {
+        cargarClientes(this.value);
+    });
+
+    cargarClientes(); // Cargar clientes por defecto al inicio
 });
 
 function eliminarClienteInfo(clienteID) {
@@ -67,6 +82,7 @@ function eliminarClienteInfo(clienteID) {
         });
     }
 }
+
 function abrirModalEdicion(clienteInfo) {
     const modal = document.getElementById("modal-editar-cliente-info");
     modal.classList.add("show");
