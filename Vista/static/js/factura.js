@@ -136,3 +136,22 @@ function abrirFactura(facturaID) {
         })
         .catch(error => console.error("Error al cargar los detalles de la factura:", error));
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById("searcFactura");
+
+    searchInput.addEventListener("input", function () {
+        const searchValue = searchInput.value.trim().toLowerCase();
+        const rows = document.querySelectorAll(".tabla_facturas tbody tr");
+
+        rows.forEach(row => {
+            const facturaID = row.children[1].textContent.toLowerCase();
+            if (facturaID.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+});

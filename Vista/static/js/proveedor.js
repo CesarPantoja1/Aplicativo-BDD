@@ -1,6 +1,23 @@
 import putProveedor from "./services/ProveedorService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searcProveedor");
+
+    searchInput.addEventListener("input", function () {
+        const searchValue = searchInput.value.trim().toLowerCase();
+        const rows = document.querySelectorAll("#proveedores_info tr");
+
+        rows.forEach(row => {
+            const proveedorID = row.children[1].textContent.toLowerCase();
+            if (proveedorID.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+    
     fetch("/getProveedores")
         .then(response => response.json())
         .then(data => {

@@ -1,6 +1,23 @@
 import putProduct from "./services/ProductoService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searcProducto");
+
+    searchInput.addEventListener("input", function () {
+        const searchValue = searchInput.value.trim().toLowerCase();
+        const rows = document.querySelectorAll("#productos_info tr");
+
+        rows.forEach(row => {
+            const productoID = row.children[1].textContent.toLowerCase();
+            if (productoID.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+
     fetch("/getProductos")
         .then(response => response.json())
         .then(data => {

@@ -1,7 +1,6 @@
 import { putClienteInfo } from "./services/ClienteService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
-    const searchInput = document.getElementById("searchCliente");
 
     // Función para cargar clientes con el filtro
     function cargarClientes(filtroID = "") {
@@ -55,12 +54,25 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    // Evento de búsqueda para filtrar los clientes por ID
-    searchInput.addEventListener("input", function () {
-        cargarClientes(this.value);
-    });
+    
 
     cargarClientes(); // Cargar clientes por defecto al inicio
+    const searchInput = document.getElementById("searchCliente");
+
+    searchInput.addEventListener("input", function () {
+        const searchValue = searchInput.value.trim().toLowerCase();
+        const rows = document.querySelectorAll("#clientes_info tr");
+
+        rows.forEach(row => {
+            const clienteID = row.children[1].textContent.toLowerCase();
+            if (clienteID.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+    
 });
 
 function eliminarClienteInfo(clienteID) {

@@ -1,6 +1,23 @@
 import {putClienteMembresia} from "./services/ClienteService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("searchClienteMemb");
+
+    searchInput.addEventListener("input", function () {
+        const searchValue = searchInput.value.trim().toLowerCase();
+        const rows = document.querySelectorAll("#clientes_membresia tr");
+
+        rows.forEach(row => {
+            const clienteID = row.children[1].textContent.toLowerCase();
+            if (clienteID.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+
     fetch("/getClienteMembresia")
         .then(response => response.json())
         .then(data => {
