@@ -541,32 +541,26 @@ def update_empleado():
 
 @app.route('/empleadoLaboral', methods=['PUT'])
 def update_empleado_laboral():
-    tienda = session.get("tienda")
-    if not tienda:
-        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
-    
-    data = request.get_json()
+    data = request.get_json()  # Obtener los datos enviados en JSON
     empleado_id = data.get("empleadoID")
-    tienda_id = data.get("tiendaID")
-    
-    if not empleado_id or not tienda_id:
-        return jsonify({"error": "Falta empleadoID o tiendaID"}), 400
+    tienda_id = data.get("tiendaID")  # Recibir tiendaID desde el frontend
 
+    # Buscar al empleado en la tienda especificada
     empleado = EmpleadoLaboral.query.filter_by(empleadoID=empleado_id, tiendaID=tienda_id).first()
-    if not empleado:
-        return jsonify({"error": "Empleado no encontrado"}), 404
 
     try:
+        # Actualizar solo si los valores están en la solicitud
         empleado.salario = data.get("salario", empleado.salario)
         empleado.cargo = data.get("cargo", empleado.cargo)
-        empleado.fechaIngreso = data.get("fechaIngreso", empleado.fechaIngreso)   
-        dbQuito.session.commit()
-        return jsonify({"message": "Empleado laboral actualizado correctamente"}), 200
-    
+        empleado.fechaIngreso = data.get("fechaIngreso", empleado.fechaIngreso)  
+
+        dbQuito.session.commit()  # Guardar cambios en la base de datos
+        return jsonify({"message": "Información laboral del empleado actualizada correctamente"}), 200
+
     except Exception as e:
         dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
-    
+
     
 @app.route("/api/tiendas", methods=["GET"])
 def get_tiendas():
@@ -668,30 +662,28 @@ def get_precio_producto(tiendaID, nombre):
 
 @app.route('/clienteMembresia', methods=['PUT'])
 def actualizar_cliente_membresia():
-    tienda = session.get("tienda")
-    if not tienda:
-        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+    data = request.json  # Obtener datos enviados desde el frontend
     
-    data = request.json
     cliente_id = data.get("clienteID")
-    tienda_id = data.get("tiendaID")
+    tienda_id = data.get("tiendaID")  # Ahora lo recibimos desde el formulario
 
-    if not cliente_id or not tienda_id:
-        return jsonify({"error": "clienteID y tiendaID son requeridos"}), 400
-    
+    # Buscar la membresía del cliente en la tienda específica
     cliente_membresia = ClienteMembresia.query.filter_by(clienteID=cliente_id, tiendaID=tienda_id).first()
-    if not cliente_membresia:
-        return jsonify({"error": "Membresía no encontrada"}), 404
-
+   
+    print(cliente_membresia)
     try:
+        # Actualizar los datos si están presentes en la solicitud
         cliente_membresia.tipoMembresia = data.get("tipoMembresia", cliente_membresia.tipoMembresia)
         cliente_membresia.estado = data.get("estado", cliente_membresia.estado)
         cliente_membresia.puntos = data.get("puntos", cliente_membresia.puntos)
-        dbQuito.session.commit()
+
+        dbQuito.session.commit()  # Guardar cambios en la base de datos
         return jsonify({"message": "Membresía actualizada correctamente"}), 200
 
     except Exception as e:
+        dbQuito.session.rollback()
         return jsonify({"error": str(e)}), 500
+
 
 
 @app.route('/clienteInfo', methods=['PUT'])

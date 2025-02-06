@@ -120,12 +120,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const formData = new FormData(form);
         const empleadoLaboral = Object.fromEntries(formData.entries());
 
+        // Convertir salario a número flotante
         empleadoLaboral.salario = parseFloat(empleadoLaboral.salario);
 
         console.log("Empleado laboral a actualizar:", empleadoLaboral);
 
         try {
-            const res = await putEmpleadoLaboral(empleadoLaboral);
+            const res = await putEmpleadoLaboral(empleadoLaboral); // Se enviará el tiendaID correcto
 
             if (res.message) {
                 alert(res.message);

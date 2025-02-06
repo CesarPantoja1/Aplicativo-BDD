@@ -204,8 +204,9 @@ function abrirModalEdicion(clienteMembresia) {
     const modal = document.getElementById("modal-editar-cliente-membresia");
     modal.classList.add("show");
 
+    // Asignar valores al formulario
     document.getElementById("edit-clienteID").value = clienteMembresia.clienteID;
-    document.getElementById("edit-tiendaID").value = clienteMembresia.tiendaID;
+    document.getElementById("edit-tiendaID").value = clienteMembresia.tiendaID; // Extrae la tienda desde la fila
     document.getElementById("edit-tipoMembresia").value = clienteMembresia.tipoMembresia;
     document.getElementById("edit-estado").value = clienteMembresia.estado;
     document.getElementById("edit-puntos").value = clienteMembresia.puntos;
@@ -226,7 +227,8 @@ async function actualizarClienteMembresia(event) {
     console.log("Cliente Membresía a actualizar:", clienteMembresia);
     
     try {
-        const res = await putClienteMembresia(clienteMembresia)
+        console.log("Cliente Membresía a actualizar:", clienteMembresia);
+        const res = await putClienteMembresia(clienteMembresia)  // Se enviará el tiendaID correcto
 
         if (res.message) {
             alert(res.message);
