@@ -156,6 +156,24 @@ def api_clienteMembresia():
     clientesMembresia = ClienteMembresia.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return jsonify([clienteMembresia.to_dict() for clienteMembresia in clientesMembresia])
 
+@app.route("/getClienteMembresiaRemoto", methods=["GET"])
+def api_clienteMembresiaRemoto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clientesMembresia = ClienteMembresia.query.all()
+    return jsonify([clienteMembresia.to_dict() for clienteMembresia in clientesMembresia])
+
+@app.route("/getClienteMembresiaLocal", methods=["GET"])
+def api_clienteMembresiaLocal():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    clientesMembresia = ClienteMembresia.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([clienteMembresia.to_dict() for clienteMembresia in clientesMembresia])
+
 
 
 @app.route("/deleteClienteMembresia/<int:clienteID>/<int:tiendaID>", methods=["DELETE"])

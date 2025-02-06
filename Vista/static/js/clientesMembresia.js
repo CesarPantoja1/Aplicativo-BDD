@@ -1,6 +1,120 @@
 import {putClienteMembresia} from "./services/ClienteService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.remoto").addEventListener("click", function () {
+        mostrarClienteRemoto();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.local").addEventListener("click", function () {
+        mostrarClienteLocal();
+    });
+});
+
+function mostrarClienteLocal() {
+    fetch("/getClienteMembresiaLocal")
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById("clientes_membresia");
+            tbody.innerHTML = ""; 
+
+            data.forEach(clienteMembresia => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${clienteMembresia.clienteID}</td>
+                    <td>${clienteMembresia.tiendaID}</td>
+                    <td>${clienteMembresia.tipoMembresia}</td>
+                    <td>${clienteMembresia.estado}</td>
+                    <td>${clienteMembresia.puntos}</td>
+                    <td>
+                        <button class="boton accion editar" data-clienteMembresia='${JSON.stringify(clienteMembresia)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="boton accion eliminar" data-id="${clienteMembresia.clienteID}" data-tienda="${clienteMembresia.tiendaID}">
+                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll(".boton.eliminar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const clienteID = this.getAttribute("data-id");
+                    const tiendaID = this.getAttribute("data-tienda");
+                    eliminarProducto(clienteID, tiendaID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const clienteMembresia = JSON.parse(this.getAttribute("data-clienteMembresia"));
+                    abrirModalEdicion(clienteMembresia);
+                });
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar las membresias de los clientes:", error);
+        });
+    
+}
+
+function mostrarClienteRemoto() {
+    fetch("/getClienteMembresiaRemoto")
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById("clientes_membresia");
+            tbody.innerHTML = ""; 
+
+            data.forEach(clienteMembresia => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${clienteMembresia.clienteID}</td>
+                    <td>${clienteMembresia.tiendaID}</td>
+                    <td>${clienteMembresia.tipoMembresia}</td>
+                    <td>${clienteMembresia.estado}</td>
+                    <td>${clienteMembresia.puntos}</td>
+                    <td>
+                        <button class="boton accion editar" data-clienteMembresia='${JSON.stringify(clienteMembresia)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="boton accion eliminar" data-id="${clienteMembresia.clienteID}" data-tienda="${clienteMembresia.tiendaID}">
+                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll(".boton.eliminar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const clienteID = this.getAttribute("data-id");
+                    const tiendaID = this.getAttribute("data-tienda");
+                    eliminarProducto(clienteID, tiendaID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const clienteMembresia = JSON.parse(this.getAttribute("data-clienteMembresia"));
+                    abrirModalEdicion(clienteMembresia);
+                });
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar las membresias de los clientes:", error);
+        });
+    
+}
+
+document.addEventListener("DOMContentLoaded", function () {
 
     const searchInput = document.getElementById("searchClienteMemb");
 
