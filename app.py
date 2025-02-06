@@ -226,6 +226,25 @@ def api_empleadoLaboral():
     empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return jsonify([empleadoLaboral.to_dict() for empleadoLaboral in empleadosLaboral])
 
+@app.route("/getEmpleadoRemoto", methods=["GET"])
+def api_empleadoRemoto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleadosLaboral = EmpleadoLaboral.query.all()
+    return jsonify([empleadoLaboral.to_dict() for empleadoLaboral in empleadosLaboral])
+
+@app.route("/getEmpleadoLocal", methods=["GET"])
+def api_empleadoLocal():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([empleadoLaboral.to_dict() for empleadoLaboral in empleadosLaboral])
+
+
 
 
 @app.route("/deleteEmpleadoLaboral/<int:empleadoID>/<int:tiendaID>", methods=["DELETE"])
@@ -253,6 +272,23 @@ def api_productos():
     productos = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
     return jsonify([producto.to_dict() for producto in productos])
 
+@app.route("/getProductosRemoto", methods=["GET"])
+def api_productosRemoto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    productos = Producto.query.all()
+    return jsonify([producto.to_dict() for producto in productos])
+
+@app.route("/getProductosLocal", methods=["GET"])
+def api_productosLocal():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    productos = Producto.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([producto.to_dict() for producto in productos])
 
 
 @app.route("/deleteProducto/<int:productoID>/<int:tiendaID>", methods=["DELETE"])
@@ -272,6 +308,24 @@ def delete_producto(productoID, tiendaID):
 
 @app.route("/getProveedores", methods=["GET"])
 def api_proveedores():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    proveedores = Proveedor.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([proveedor.to_dict() for proveedor in proveedores])
+
+@app.route("/getProveedoresRemoto", methods=["GET"])
+def api_proveedoresRemoto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    proveedores = Proveedor.query.all()
+    return jsonify([proveedor.to_dict() for proveedor in proveedores])
+
+@app.route("/getProveedoresLocal", methods=["GET"])
+def api_proveedoresLocal():
     tienda = session.get("tienda")  
     if not tienda:
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
@@ -299,6 +353,24 @@ def delete_proveedor(proveedorID, tiendaID):
 
 @app.route("/api/facturas", methods=["GET"])
 def api_facturas():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    facturas = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([factura.to_dict() for factura in facturas])
+
+@app.route("/api/facturasRemoto", methods=["GET"])
+def api_facturasRemoto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    facturas = Factura.query.all()
+    return jsonify([factura.to_dict() for factura in facturas])
+
+@app.route("/api/facturasLocal", methods=["GET"])
+def api_facturasLocal():
     tienda = session.get("tienda")  
     if not tienda:
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400

@@ -1,6 +1,94 @@
 const cerrarModal = document.getElementById('cerrar');
 const modal = document.getElementById('modal');
 const overlay = document.getElementById('overlay');
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.remoto").addEventListener("click", function () {
+        mostrarFacturaRemoto();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.local").addEventListener("click", function () {
+        mostrarFacturaLocal();
+    });
+});
+
+
+function mostrarFacturaRemoto() {
+    fetch("/api/facturasRemoto")
+    .then(response => response.json())
+    .then(data => {
+        if (data.error) {
+            console.error("Error:", data.error);
+            return;
+        }
+
+        const tbody = document.querySelector(".tabla_facturas tbody");
+        tbody.innerHTML = ""; 
+
+        data.forEach(factura => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><input type="checkbox"></td>
+                <td>${factura.facturaID}</td>
+                <td>${factura.clienteID}</td>
+                <td>${factura.tiendaID}</td>
+                <td>${factura.empleadoID}</td>
+                <td>${factura.fechaFactura}</td>
+                <td>${factura.metodoPago}</td>
+                <td>${factura.total}</td>
+                <td>
+                    <button class="boton accion agregar" data-factura-id="${factura.facturaID}">
+                        <img src="/static/images/mas.png" alt="Agregar"> Generar factura
+                    </button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => console.error("Error cargando facturas:", error));
+}
+
+
+function mostrarFacturaLocal() {
+    fetch("/api/facturasLocal")
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Error:", data.error);
+                return;
+            }
+
+            const tbody = document.querySelector(".tabla_facturas tbody");
+            tbody.innerHTML = ""; 
+
+            data.forEach(factura => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${factura.facturaID}</td>
+                    <td>${factura.clienteID}</td>
+                    <td>${factura.tiendaID}</td>
+                    <td>${factura.empleadoID}</td>
+                    <td>${factura.fechaFactura}</td>
+                    <td>${factura.metodoPago}</td>
+                    <td>${factura.total}</td>
+                    <td>
+                        <button class="boton accion agregar" data-factura-id="${factura.facturaID}">
+                            <img src="/static/images/mas.png" alt="Agregar"> Generar factura
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => console.error("Error cargando facturas:", error));
+}
+
 
 document.addEventListener("click", function (event) {
     if (event.target.closest(".agregar")) {
