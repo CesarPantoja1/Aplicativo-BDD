@@ -39,6 +39,10 @@ def home():
     cantidad_productos = Producto.query.count()
     cantidad_proveedores = Proveedor.query.count()
     
+    print(cantidad_clientes)
+    print(cantidad_empleados)
+    print(cantidad_productos)
+    print(cantidad_proveedores)
 
     return render_template(
         "home.html",
