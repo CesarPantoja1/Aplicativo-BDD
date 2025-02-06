@@ -101,22 +101,22 @@
                 <div class="contenedor_tarjetas">
                     <div class="tarjeta tarjeta_azul_claro">
                         <h3 class="titulo_tarjeta">Clientes</h3>
-                        <p class="numero_tarjeta">7,265</p>
+                        <p class="numero_tarjeta">{{ cantidad_clientes }}</p>
                         <p class="cambio_tarjeta positivo">+11.01% <span class="icono">↗</span></p>
                     </div>
                     <div class="tarjeta tarjeta_azul">
                         <h3 class="titulo_tarjeta">Empleados</h3>
-                        <p class="numero_tarjeta">3,671</p>
+                        <p class="numero_tarjeta">{{ cantidad_empleados }}</p>
                         <p class="cambio_tarjeta negativo">-0.03% <span class="icono">↘</span></p>
                     </div>
                     <div class="tarjeta tarjeta_azul_claro">
                         <h3 class="titulo_tarjeta">Productos</h3>
-                        <p class="numero_tarjeta">156</p>
+                        <p class="numero_tarjeta">{{ cantidad_productos }}</p>
                         <p class="cambio_tarjeta positivo">+15.03% <span class="icono">↗</span></p>
                     </div>
                     <div class="tarjeta tarjeta_azul">
                         <h3 class="titulo_tarjeta">Proveedores</h3>
-                        <p class="numero_tarjeta">2,318</p>
+                        <p class="numero_tarjeta">{{ cantidad_proveedores }}</p>
                         <p class="cambio_tarjeta positivo">+6.08% <span class="icono">↗</span></p>
                     </div>
                 </div>
@@ -194,6 +194,7 @@
     <script src="/static/js/home.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    
     {% block scriptjs %}
 
     {% endblock %}

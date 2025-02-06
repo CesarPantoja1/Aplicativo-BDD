@@ -32,7 +32,23 @@ def home():
     tienda = session.get("tienda")
     if not tienda:
         return redirect(url_for("ingreso"))
-    return render_template("home.html", usuario=tienda)
+
+    # Contar todos los registros en las tablas sin filtrar por tienda
+    cantidad_clientes = ClienteGeneral.query.count()
+    cantidad_empleados = EmpleadoGeneral.query.count()
+    cantidad_productos = Producto.query.count()
+    cantidad_proveedores = Proveedor.query.count()
+    
+
+    return render_template(
+        "home.html",
+        usuario=tienda,
+        cantidad_clientes=cantidad_clientes,
+        cantidad_empleados=cantidad_empleados,
+        cantidad_productos=cantidad_productos,
+        cantidad_proveedores=cantidad_proveedores
+    )
+
 
 
 @app.route("/clientesRegistro")
