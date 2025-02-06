@@ -1,6 +1,124 @@
 import putProduct from "./services/ProductoService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.remoto").addEventListener("click", function () {
+        mostrarProductoRemoto();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.local").addEventListener("click", function () {
+        mostrarProductoLocal();
+    });
+});
+
+function mostrarProductoRemoto() {
+    fetch("/getProductosRemoto")
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.getElementById("productos_info");
+        tbody.innerHTML = "";
+
+        data.forEach(producto => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><input type="checkbox"></td>
+                <td>${producto.productoID}</td>
+                <td>${producto.tiendaID}</td>
+                <td>${producto.proveedorID}</td>
+                <td>${producto.nombreProducto}</td>
+                <td>${producto.precioProducto.toFixed(2)}</td>
+                <td>${producto.stockProducto}</td>
+                <td>
+                    <button class="boton accion editar" data-producto='${JSON.stringify(producto)}'>
+                        <img src="/static/images/mas.png" alt="Editar"> Editar
+                    </button>
+                </td>
+                <td>
+                    <button class="boton accion eliminar" data-id="${producto.productoID}" data-tienda="${producto.tiendaID}">
+                        <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.querySelectorAll(".boton.eliminar").forEach(button => {
+            button.addEventListener("click", function () {
+                const productoID = this.getAttribute("data-id");
+                const tiendaID = this.getAttribute("data-tienda");
+                eliminarProducto(productoID, tiendaID);
+            });
+        });
+
+        document.querySelectorAll(".boton.editar").forEach(button => {
+            button.addEventListener("click", function () {
+                const producto = JSON.parse(this.getAttribute("data-producto"));
+                abrirModalEdicion(producto);
+            });
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar los productos:", error);
+    });
+
+}
+
+function mostrarProductoLocal() {
+    fetch("/getProductosLocal")
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.getElementById("productos_info");
+        tbody.innerHTML = "";
+
+        data.forEach(producto => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><input type="checkbox"></td>
+                <td>${producto.productoID}</td>
+                <td>${producto.tiendaID}</td>
+                <td>${producto.proveedorID}</td>
+                <td>${producto.nombreProducto}</td>
+                <td>${producto.precioProducto.toFixed(2)}</td>
+                <td>${producto.stockProducto}</td>
+                <td>
+                    <button class="boton accion editar" data-producto='${JSON.stringify(producto)}'>
+                        <img src="/static/images/mas.png" alt="Editar"> Editar
+                    </button>
+                </td>
+                <td>
+                    <button class="boton accion eliminar" data-id="${producto.productoID}" data-tienda="${producto.tiendaID}">
+                        <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.querySelectorAll(".boton.eliminar").forEach(button => {
+            button.addEventListener("click", function () {
+                const productoID = this.getAttribute("data-id");
+                const tiendaID = this.getAttribute("data-tienda");
+                eliminarProducto(productoID, tiendaID);
+            });
+        });
+
+        document.querySelectorAll(".boton.editar").forEach(button => {
+            button.addEventListener("click", function () {
+                const producto = JSON.parse(this.getAttribute("data-producto"));
+                abrirModalEdicion(producto);
+            });
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar los productos:", error);
+    });
+
+}
+
+document.addEventListener("DOMContentLoaded", function () {
 
     const searchInput = document.getElementById("searcProducto");
 

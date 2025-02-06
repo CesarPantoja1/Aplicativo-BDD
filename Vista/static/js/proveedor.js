@@ -1,6 +1,118 @@
 import putProveedor from "./services/ProveedorService.js";
 
 document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.remoto").addEventListener("click", function () {
+        mostrarProveedorRemoto();
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector(".boton.local").addEventListener("click", function () {
+        mostrarProveedorLocal();
+    });
+});
+
+function mostrarProveedorRemoto() {
+    fetch("/getProveedoresRemoto")
+    .then(response => response.json())
+    .then(data => {
+        const tbody = document.getElementById("proveedores_info");
+        tbody.innerHTML = ""; 
+
+        data.forEach(proveedor => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td><input type="checkbox"></td>
+                <td>${proveedor.proveedorID}</td>
+                <td>${proveedor.tiendaID}</td>
+                <td>${proveedor.nombreProveedor}</td>
+                <td>${proveedor.ciudad}</td>
+                <td>${proveedor.telefono}</td>
+                <td>
+                    <button class="boton accion editar" data-proveedor='${JSON.stringify(proveedor)}'>
+                        <img src="/static/images/mas.png" alt="Editar"> Editar
+                    </button>
+                </td>
+                <td>
+                    <button class="boton accion eliminar" data-id="${proveedor.proveedorID}" data-tienda="${proveedor.tiendaID}">
+                        <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.querySelectorAll(".boton.eliminar").forEach(button => {
+            button.addEventListener("click", function () {
+                const proveedorID = this.getAttribute("data-id");
+                const tiendaID = this.getAttribute("data-tienda");
+                eliminarProducto(proveedorID, tiendaID);
+            });
+        });
+        document.querySelectorAll(".boton.editar").forEach(button => {
+            button.addEventListener("click", function () {
+                const proveedor = JSON.parse(this.getAttribute("data-proveedor"));
+                abrirModalEdicion(proveedor);
+            });
+        });
+    })
+    .catch(error => {
+        console.error("Error al cargar los proveedores", error);
+    });
+}
+
+function mostrarProveedorLocal() {
+    fetch("/getProveedoresLocal")
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById("proveedores_info");
+            tbody.innerHTML = ""; 
+
+            data.forEach(proveedor => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${proveedor.proveedorID}</td>
+                    <td>${proveedor.tiendaID}</td>
+                    <td>${proveedor.nombreProveedor}</td>
+                    <td>${proveedor.ciudad}</td>
+                    <td>${proveedor.telefono}</td>
+                    <td>
+                        <button class="boton accion editar" data-proveedor='${JSON.stringify(proveedor)}'>
+                            <img src="/static/images/mas.png" alt="Editar"> Editar
+                        </button>
+                    </td>
+                    <td>
+                        <button class="boton accion eliminar" data-id="${proveedor.proveedorID}" data-tienda="${proveedor.tiendaID}">
+                            <img src="/static/images/basura.png" alt="Eliminar"> Delete
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            document.querySelectorAll(".boton.eliminar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const proveedorID = this.getAttribute("data-id");
+                    const tiendaID = this.getAttribute("data-tienda");
+                    eliminarProducto(proveedorID, tiendaID);
+                });
+            });
+            document.querySelectorAll(".boton.editar").forEach(button => {
+                button.addEventListener("click", function () {
+                    const proveedor = JSON.parse(this.getAttribute("data-proveedor"));
+                    abrirModalEdicion(proveedor);
+                });
+            });
+        })
+        .catch(error => {
+            console.error("Error al cargar los proveedores", error);
+        });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
 
     const searchInput = document.getElementById("searcProveedor");
 

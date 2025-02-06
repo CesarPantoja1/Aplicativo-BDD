@@ -200,6 +200,7 @@ function eliminarProducto(clienteID, tiendaID) {
         });
     }
 }
+
 function abrirModalEdicion(clienteMembresia) {
     const modal = document.getElementById("modal-editar-cliente-membresia");
     modal.classList.add("show");
