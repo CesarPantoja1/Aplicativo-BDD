@@ -101,21 +101,11 @@ def proveedor():
 
 @app.route("/factura")
 def factura():
-    tienda = session.get("tienda")  
-    if not tienda:
-        return redirect(url_for("ingreso"))
-
-    facturas = Factura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return render_template("factura.html", facturas=facturas)  
+    return render_template("factura.html")  
 
 @app.route("/detalleFactura")
 def detalleFactura():
-    tienda = session.get("tienda")  
-    if not tienda:
-        return redirect(url_for("ingreso"))
-
-    detallesFactura = DetalleFactura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return render_template("detalleFactura.html", detallesFactura=detallesFactura) 
+    return render_template("detalleFactura.html") 
 
 @app.route("/tienda")
 def tienda():
@@ -350,6 +340,33 @@ def delete_proveedor(proveedorID, tiendaID):
         return jsonify({"message": "Proveedor eliminado correctamente"}), 200
     else:
         return jsonify({"error": "Proveedor no encontrado"}), 404
+    
+@app.route("/api/detallefacturas", methods=["GET"])
+def api_detalleFacturas():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    detallesFactura = DetalleFactura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([detalleFactura.to_dict() for detalleFactura in detallesFactura])
+
+@app.route("/api/detallefacturasRemoto", methods=["GET"])
+def api_detalleFacturasRemoto():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    detallesFactura = DetalleFactura.query.all()
+    return jsonify([detalleFactura.to_dict() for detalleFactura in detallesFactura])
+
+@app.route("/api/detallefacturasLocal", methods=["GET"])
+def api_detalleFacturasLocal():
+    tienda = session.get("tienda")  
+    if not tienda:
+        return jsonify({"error": "No se ha seleccionado una tienda"}), 400
+
+    detallesFactura = DetalleFactura.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
+    return jsonify([detalleFactura.to_dict() for detalleFactura in detallesFactura])
 
 
 @app.route("/api/facturas", methods=["GET"])
