@@ -23,7 +23,7 @@ function mostrarFacturaRemoto() {
             return;
         }
 
-        const tbody = document.querySelector(".tabla_facturas tbody");
+        const tbody = document.getElementById("factura_info");
         tbody.innerHTML = ""; 
 
         data.forEach(factura => {
@@ -119,7 +119,7 @@ function fetchFacturas() {
                 return;
             }
 
-            const tbody = document.querySelector(".tabla_facturas tbody");
+            const tbody = document.getElementById("factura_info");
             tbody.innerHTML = ""; 
 
             data.forEach(factura => {

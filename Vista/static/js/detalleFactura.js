@@ -1,3 +1,40 @@
+function fetchDetalleFacturas() {
+    fetch("/api/facturas")
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                console.error("Error:", data.error);
+                return;
+            }
+
+            const tbody = document.getElementById("detalleFactura_info");
+            tbody.innerHTML = ""; 
+
+            data.forEach(factura => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td><input type="checkbox"></td>
+                    <td>${factura.facturaID}</td>
+                    <td>${factura.clienteID}</td>
+                    <td>${factura.tiendaID}</td>
+                    <td>${factura.empleadoID}</td>
+                    <td>${factura.fechaFactura}</td>
+                    <td>${factura.metodoPago}</td>
+                    <td>${factura.total}</td>
+                    <td>
+                        <button class="boton accion agregar" data-factura-id="${factura.facturaID}">
+                            <img src="/static/images/mas.png" alt="Agregar"> Generar factura
+                        </button>
+                    </td>
+                `;
+
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => console.error("Error cargando facturas:", error));
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById("searcDetalle");
 

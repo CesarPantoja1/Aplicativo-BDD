@@ -49,12 +49,7 @@ def compra():
 
 @app.route("/clientesMembresia")
 def clientesMembresia():
-    tienda = session.get("tienda") 
-    if not tienda:
-        return redirect(url_for("ingreso"))
-    
-    clientesMembresia = ClienteMembresia.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return render_template("clientesMembresia.html", clientesMembresia=clientesMembresia) 
+    return render_template("clientesMembresia.html") 
 
 @app.route("/register")
 def register():
@@ -70,12 +65,7 @@ def empleadosInfo():
 
 @app.route("/empleadosLaboral")
 def empleadoLaboral():
-    tienda = session.get("tienda")  
-    if not tienda:
-        return redirect(url_for("ingreso"))
-
-    empleadosLaboral = EmpleadoLaboral.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return render_template("empleadosLaboral.html", empleadosLaboral=empleadosLaboral) 
+    return render_template("empleadosLaboral.html") 
 
 @app.route("/productoRegistro")
 def productoRegistro():
@@ -91,12 +81,7 @@ def proveedorRegistro():
 
 @app.route("/proveedor")
 def proveedor():
-    tienda = session.get("tienda")  
-    if not tienda:
-        return redirect(url_for("ingreso"))
-
-    proveedores = Proveedor.query.filter_by(tiendaID=1 if tienda == "QUITO" else 2).all()
-    return render_template("proveedor.html", proveedores=proveedores)  
+    return render_template("proveedor.html")  
 
 @app.route("/factura")
 def factura():

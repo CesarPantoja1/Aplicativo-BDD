@@ -20,11 +20,11 @@
         </div>
         <div class="acciones">
             
-            <button class="boton accion filtros">
-                <img src="/static/images/ojo.png" alt="Filtros"> Local
+            <button class="boton accion local">
+                <img src="/static/images/ojo.png" alt="local"> Local
             </button>
-            <button class="boton accion filtros">
-                <img src="/static/images/ojo.png" alt="Filtros"> Remota
+            <button class="boton accion remoto">
+                <img src="/static/images/ojo.png" alt="remoto"> Remota
             </button>
             
         </div>
@@ -47,18 +47,8 @@
                     <th>Precio</th>
                 </tr>
             </thead>
-            <tbody>
-                {%for detalle in detallesFactura%}
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>{{detalle.numDetalle}}</td>
-                    <td>{{detalle.tiendaID}}</td>
-                    <td>{{detalle.facturaID}}</td>
-                    <td>{{detalle.productoID}}</td>
-                    <td>{{detalle.cantidad}}</td>
-                    <td>{{detalle.precio}}</td>
-                </tr>
-                {%endfor%}
+            <tbody id="detalleFactura_info">
+                
             </tbody>
         </table>
     </section>
