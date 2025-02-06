@@ -21,7 +21,7 @@ function insertarProveedor() {
         const proveedorData = {
             proveedorID: parseInt(proveedorID),
             tiendaID: parseInt(tiendaID),
-            nombreProveedor: parseInt(nombreProveedor),
+            nombreProveedor: nombreProveedor,
             ciudad: ciudad,
             telefono: parseFloat(telefono),
         };

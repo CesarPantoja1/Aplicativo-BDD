@@ -417,6 +417,7 @@ def insert_proveedor():
         return jsonify({"error": "No se ha seleccionado una tienda"}), 400
 
     data = request.json 
+    print(data)
 
     try:
         nuevo_proveedor = Proveedor(
